@@ -1,6 +1,7 @@
-let a = 5;
-let b = 6;
-console.log(a + b);
+function printStars() {
 
-let d = 3;
-console.log(d);
+    console.log("*");
+    console.log("0000");
+}
+
+printStars();
