@@ -1,5 +1,5 @@
 function loadingBar(inputNum){
-    
+
     if(inputNum < 100){
         console.log(`${inputNum}% [${bar(inputNum)}]`);
         console.log(`Still loading...`);
