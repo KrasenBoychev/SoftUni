@@ -5,6 +5,4 @@ function personalInfo(firstName, lastName, age) {
         person.age = age;
         return person;
 }
-personalInfo("Peter", 
-"Pan",
-"20");
+console.log(personalInfo("Peter", "Pan", "20"));
