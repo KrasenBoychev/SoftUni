@@ -1,12 +1,13 @@
-function employees(names) {
-    let person = {};
+function employees(list) {
+   let employeeList = {};
 
-    for (let i = 0; i < names.length; i++) {
-        let name = names[i];
-        person.name = name;
-        let phoneNum = name.length;
-        console.log(`Name: ${name} -- Personal Number: ${phoneNum}`);
-    }
+   list.forEach(person => {
+        employeeList[person] = person.length;
+   });
+
+   for (const key in employeeList) {
+        console.log(`Name: ${key} -- Personal Number: ${employeeList[key]}`);
+   }
 }
 employees([
     'Silas Butler',
