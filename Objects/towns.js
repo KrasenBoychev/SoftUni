@@ -1,25 +1,15 @@
-function towns(input) {
-    class townInfo {
-        constructor(town, latitude, longitude) {
-            this.town = town;
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
-        print() {
-            console.log(`{ town: '${this.town}', latitude: '${this.latitude}', longitude: '${this.longitude}' }`);
-        }
-    }
+function towns(list) {
+    
+    let townInfo = {};
 
-    let allTowns = [];
-    for (let i = 0; i < input.length; i++) {
-        let townData = input[i].split(` | `);
-        let town, latitude, longitude;
-        [town, latitude, longitude] = [townData[0], Number(townData[1]).toFixed(2), Number(townData[2]).toFixed(2)]
-        allTowns.push(new townInfo(town, latitude, longitude));
-    }
+    for (const line of list) {
+        let [townName, latitude, longitude] = line.split(` | `);
 
-    for (let el of allTowns) {
-        el.print()
+        townInfo.town = townName;
+        townInfo.latitude = Number(latitude).toFixed(2);
+        townInfo.longitude = Number(longitude).toFixed(2);
+
+        console.log(townInfo);
     }
 }
 towns(['Sofia | 42.696552 | 23.32601',
