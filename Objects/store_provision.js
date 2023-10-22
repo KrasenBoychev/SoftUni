@@ -1,28 +1,25 @@
-function storeProvision(currStock, orderedProducts) {
-    let result = {
-        printResult() {
-            console.log(`${result.name} -> ${result.value}`);
-        }
-    }
+function storeProvision(available, delivery) {
+   
+    const storedProducts = {};
+    const availableLength = available.length;
+    const deliveryLength = delivery.length;
 
-    for (let i = 0; i < orderedProducts.length; i += 2) {
-        let product = orderedProducts[i];
-        let orderedQty = Number(orderedProducts[i + 1]);
-        if (currStock.includes(product)) {
-            let indexCurrStock = currStock.indexOf(product);
-            let currQty = Number(currStock[indexCurrStock + 1]);
-            currStock[indexCurrStock + 1] = currQty + orderedQty;
-        } else {
-            currStock.push(product, orderedQty);
-        }
-    }
+    for (let index = 0; index < availableLength; index += 2) {
+        const currentProduct = available[index];
+        storedProducts[currentProduct] = Number(available[index + 1]);
+    } 
 
-    for (let j = 0; j < currStock.length; j += 2) {
-        result.name = currStock[j];
-        result.value = currStock[j+1];
-        result.printResult();
+    for (let index = 0; index < deliveryLength; index += 2) {
+        const currentProduct = delivery[index];
+        if (!storedProducts.hasOwnProperty(currentProduct)) {
+            storedProducts[currentProduct] = 0;
+        } 
+        storedProducts[currentProduct] += Number(delivery[index + 1]);
     }
-
+    
+    for (const product in storedProducts) {
+        console.log(`${product} -> ${storedProducts[product]}`);
+    }
 }
 storeProvision([
     'Chips', '5', 'CocaCola', '9', 'Bananas',
