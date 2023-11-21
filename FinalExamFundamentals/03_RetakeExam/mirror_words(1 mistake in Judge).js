@@ -1,5 +1,5 @@
 function mirrorWords([input]) {
-    let patternValidPairs = /[^@#\w\W]*(?<sep>[@#])(?<words>(?<wordOne>[A-Za-z][A-Za-z][A-Za-z]+)\k<sep>*(?<wordTwo>[A-Za-z][A-Za-z][A-Za-z]+))\k<sep>[^@#\w\W]*/g;
+    let patternValidPairs = /[^@#\w\W]*(?<sep>[@#])(?<words>(?<wordOne>[A-Za-z][A-Za-z][A-Za-z]+)\k<sep>\k<sep>?(?<wordTwo>[A-Za-z][A-Za-z][A-Za-z]+))\k<sep>[^@#\w\W]*/g;
 
     let pairsFound = [...input.matchAll(patternValidPairs)];
     let storeValidPairs = [];
