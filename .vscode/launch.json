@@ -11,7 +11,9 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\FinalExamFundamentals\\03_RetakeExam\\secret_chat.js"
+            "program": "${file}",
+            "cwd": "${workspaceRoot}",
+            "outputCapture": "std"
         }
     ]
 }
