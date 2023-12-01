@@ -24,10 +24,10 @@ function comments(input) {
             if (username in users && articleName in articles) {
                 let [commentTitle, commentContent] = comment.split(`, `);
 
-                //let userNamesInArticle = Object.keys(articles[articleName]);
-                //if (userNamesInArticle.includes(username) == false) {
+                let userNamesInArticle = Object.keys(articles[articleName]);
+                if (userNamesInArticle.includes(username) == false) {
                     articles[articleName][username] = {};
-               // }
+                }
                 articles[articleName][username][commentTitle] = commentContent;
             }
         }
@@ -44,8 +44,11 @@ function comments(input) {
         
         for (let userComment of sortedUsers) {
             let commentInfo = Object.entries(userComment[1]);
-            let [commentTitle, commentContent] = commentInfo[0];
+
+            for (let comment of commentInfo) {
+            let [commentTitle, commentContent] = comment;
             console.log(`--- From user ${userComment[0]}: ${commentTitle} - ${commentContent}`);
+            }
         }
     }
 }
@@ -72,4 +75,6 @@ comments(['user Mark',
         'Mark posts on Steven: title, Run', 
         'someUser posts on Movies: Like',
         `user Krasen`,
-        `Krasen posts on Steve: test, Sort`]);
+        `Krasen posts on Steve: test, Sort`,
+        `Mark posts on Steven: test, secondTime`
+        ]);
