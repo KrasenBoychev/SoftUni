@@ -1,0 +1,193 @@
+/* latin-ext */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 100;
+    src: url(https://fonts.gstatic.com/s/lato/v24/S6u8w4BMUTPHh30AUi-qJCY.woff2) format('woff2');
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 100;
+    src: url(https://fonts.gstatic.com/s/lato/v24/S6u8w4BMUTPHh30AXC-q.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 300;
+    src: url(https://fonts.gstatic.com/s/lato/v24/S6u9w4BMUTPHh7USSwaPGR_p.woff2) format('woff2');
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 300;
+    src: url(https://fonts.gstatic.com/s/lato/v24/S6u9w4BMUTPHh7USSwiPGQ.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHjxAwXjeu.woff2) format('woff2');
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  body {
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+  }
+
+  .topMenu ul {
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    line-height: 30px;
+    background-color: #293F50;
+  }
+
+  .topMenu li {
+    width: 100px;
+    margin: 0 5px;
+    padding: 4px 0;
+    text-align: center;
+    text-transform: uppercase;
+    display: inline-block;
+  }
+
+  .topMenu li a {
+    text-decoration: none;
+    color: #51645C;
+  }
+
+  header {
+    text-align: center;
+    background-color: #293F50;
+  }
+
+  header p:nth-child(1) {
+    margin: 0;
+    text-align: right;
+    padding-right: 20px;
+    color: #51645C;
+  }
+
+  header h1 {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    text-transform: uppercase;
+    color: #D5DADD;
+    font-weight: 300;
+  }
+
+  header p:nth-child(3) {
+    margin-bottom: 10px;
+    color: #51645C;
+    font-size: 130%;
+  }
+
+  header p:nth-child(4) {
+    margin: 0;
+    color: #7C7E71;
+  }
+
+  header button {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 50px;
+    background-color: #293F50;
+    border-radius: 15px;
+    border-color: white;
+    color: white;
+    text-transform: uppercase;
+  }
+
+  header button:hover {
+    background-color: white;
+    color: #293F50;
+    cursor: pointer;
+  }
+
+  main {
+    padding: 0;
+    margin: 10px 0;
+    height: 400px;
+    border: 1px solid;
+    border-color: #B8C0C5;
+    text-align: center;
+  }
+
+  figure {
+    margin-top: 0;
+    width: 300px;
+    height: 500px;
+    text-align: left;
+    color: #B8C0C5;
+    display: inline-block;
+  }
+
+  figure h5 {
+    text-transform: uppercase;
+  }
+
+  section h3 {
+    font-weight: 300;
+  }
+
+  figure img {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+  }
+
+  figure p {
+    font-size: 80%;
+  }
+
+  footer {
+    height: 80px;
+    background-color: #293F50;
+    color: white;
+  }
+
+  footer p {
+    display: inline-block;
+    padding-top: 30px;
+    padding-left: 10px;
+  }
+
+  .bottomMenu {
+    display: inline;
+    float: right;
+    padding-top: 30px;
+   padding-right: 10px;
+  }
+
+  .bottomMenu li {
+    display: inline-block;
+    width: 70px;
+    margin: 0 5px;
+    text-align: center;
+    padding: 0;
+    font-size: 90%;
+  }
+
+  .bottomMenu li a {
+    text-decoration: none;
+    color: white;
+  }
