@@ -1,0 +1,44 @@
+body {
+    font-family: "Lato", sans-serif;
+    color: #ffffff;
+}
+
+.container {
+    margin: auto;
+    padding: 0 10px;
+    background-image: url(background-image.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 800px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 80px;
+    padding: 80px 0;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 27px;
+    font-weight: 100;
+    margin: 20px;
+}
+
+.btn {
+    color: #ffffff;
+    background: none;
+    border: 5px solid #ffffff;
+    border-radius: 15px;
+    margin-top: 40px;
+    padding: 15px 45px;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #000;
+    border-color: #000;
+    cursor: pointer;
+}
