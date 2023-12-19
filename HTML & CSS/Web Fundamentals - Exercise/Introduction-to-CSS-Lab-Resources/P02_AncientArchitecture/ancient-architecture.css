@@ -117,11 +117,6 @@ article p:last-of-type span:first-of-type a::before {
     padding: 10px;
 }
 
-article p:last-of-type {
-    align-self: bottom;
-}
-
-
 footer {
     margin: 50px 0;
     padding: 10px 0 10px 0;
