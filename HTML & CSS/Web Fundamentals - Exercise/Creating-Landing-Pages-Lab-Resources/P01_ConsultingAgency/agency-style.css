@@ -325,8 +325,14 @@ header button {
 /* partners */
 
 .partners {
-    height: 100px;
-   
+    padding: 40px 0 10px 0;
+    text-align: center;
+}
+
+.partners img {
+    display: inline-block;
+    width: 120px;
+    height: 50px;
 }
 /* footer */
 
