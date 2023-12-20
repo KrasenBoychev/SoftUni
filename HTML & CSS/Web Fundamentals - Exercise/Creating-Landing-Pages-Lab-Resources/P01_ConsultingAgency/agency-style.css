@@ -334,5 +334,62 @@ header button {
     width: 120px;
     height: 50px;
 }
+
 /* footer */
 
+footer {
+    padding: 10px 80px;
+    background-color: black;
+    color: white;
+}
+
+.consulting {
+    width: 20%;
+}
+
+.consulting h6 {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.contact {
+    margin-top: 15px;
+    margin-left: 20px;
+    list-style-type: none;
+}
+
+.contact li {
+    font-size: small;
+    padding-bottom: 10px;
+    line-height: 1.2em;
+}
+
+.socialMedia {
+    margin-left: 50px;
+}
+
+.socialMedia li {
+    display: inline-block;
+}
+
+.socialMedia li:not(:last-child) {
+    padding-right: 15px;
+}
+
+.socialMedia li i {
+    background-color: grey;
+    border-radius: 50%;
+    color: black;
+}
+
+.fa-facebook-f, .fa-linkedin  {
+    padding: 10px 8px;
+}
+
+.fa-twitter {
+    padding: 11px 8px;
+}
+
+.fa-youtube{
+    padding: 10px 6px;
+}
