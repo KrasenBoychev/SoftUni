@@ -89,9 +89,65 @@ header button {
 
 /* main */
 
-.industries :nth-child(1) {
-    
+.services {
+    text-align: center;
+    padding-top: 20px;
 }
+
+.services h1 {
+    font-size: 300%;
+    font-weight: bold;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+
+.services ul li {
+    display: inline-block;
+    width: 30%;
+    text-align: left;
+    padding: 10px 10px 40px 10px;
+}
+
+.services ul li article {
+    width: 85%;
+    float: right;
+    margin-top: 10px;
+}
+
+.services ul li article h5 {
+    font-weight: bold;
+    font-size: 110%;
+    padding-bottom: 10px;
+}
+
+.services ul li article p {
+    line-height: 1em;
+}
+
+.services ul li span i {
+    font-size: 150%;
+    border-radius: 50%;
+    background-color: #090820;
+    color: white;
+}
+
+.fa-plane {
+    transform: rotate(-45deg);
+    padding: 23px 10px;
+}
+
+.fa-cart-shopping, .fa-arrow-up-right-dots, .fa-building-columns, .fa-truck {
+    padding: 22px 10px;
+}
+
+.fa-lightbulb {
+    padding: 22px 13px;
+   
+}
+
+
+
 
 
 
