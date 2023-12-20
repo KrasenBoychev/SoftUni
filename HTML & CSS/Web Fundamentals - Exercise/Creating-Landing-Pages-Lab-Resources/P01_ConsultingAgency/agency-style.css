@@ -238,5 +238,95 @@ header button {
     font-size: small;
 }
 
+/* founderMessage */
+
+.founderMessage {
+    position: relative;
+    overflow: hidden;
+}
+
+.founderMessage img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+}
+
+.message {
+    width: 30%;
+    height: 280px;
+    position: relative;
+    float: right;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    padding: 40px 30px;
+}
+
+.message::after{
+    content: '';
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.6; 
+}
+
+
+.message > p {
+    position: relative;
+    z-index: 1;
+    font-size: 90%;
+    text-indent: 2px;
+    opacity: 1;
+    &::before {
+        content: '\201C';
+        color: #BA925E;
+        padding-bottom: 3px;
+    }
+
+    &::after {
+        content: '\201D';
+        color: #BA925E;
+    }
+}
+
+.founder {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 78%;
+    margin-top: 12px;
+    background-color: black;
+    color: white;
+}
+
+.founder div {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
+
+.founder div:first-child {
+    margin-top: 30px;
+    font-size: 160%;
+}
+
+.founder div:last-child {
+   float: right;
+   font-size: 80%;
+   color: grey;
+   margin-top: 5px;
+}
+
+/* partners */
+
+.partners {
+    height: 100px;
+   
+}
 /* footer */
 
