@@ -1,0 +1,63 @@
+body {
+    font-family:  Georgia, "Times New Roman", serif;
+}
+
+form {
+    background-color: #F7F7F7;
+    color:  #888;
+    width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid;
+}
+
+h1, p {
+   padding-left: 40px;
+}
+
+h1 {
+    margin-bottom: 0;
+}
+
+p {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    padding-top: 5px;
+    padding-right: 8px;
+    vertical-align: top;
+}
+
+input, select, textarea {
+    margin-bottom: 30px;
+    width: 400px;
+    height: 25px;
+    vertical-align: text-top;
+}
+
+#message {
+    height: 200px;
+    resize: none;
+}
+
+select {
+    height: 30px;
+}
+
+#send {
+    color: #FFF;
+    background-color: #E27575;
+    border: none;
+    border-radius: 5px;
+    margin-left: 110px;
+    width: 200px;
+    height: 40px;
+}
+
+
