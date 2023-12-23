@@ -1,0 +1,27 @@
+body {
+    width: 300px;
+    color: #2d2d2d;
+}
+
+fieldset {
+    padding-top: 10px;
+}
+
+form {
+    width: 80%;
+}
+
+input, select, textarea {
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 1px 0 1px 1px;
+    border: 1px solid;
+}
+
+textarea {
+    height: 150px;
+}
+
+select {
+    width: 101%;
+}
