@@ -1,18 +1,100 @@
 /* reset.css */
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
-body {line-height:1.5;}
-table {border-collapse:separate;border-spacing:0;}
-caption, th, td {text-align:left;font-weight:normal;}
-table, td, th {vertical-align:middle;}
-blockquote:before, blockquote:after, q:before, q:after {content:"";}
-blockquote, q {quotes:"" "";}
-a img {border:none;}
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+code,
+del,
+dfn,
+em,
+img,
+q,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+
+body {
+    line-height: 1.5;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+caption,
+th,
+td {
+    text-align: left;
+    font-weight: normal;
+}
+
+table,
+td,
+th {
+    vertical-align: middle;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+}
+
+blockquote,
+q {
+    quotes: "" "";
+}
+
+a img {
+    border: none;
+}
 
 /* document */
 
 html {
     height: 100%;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 body {
@@ -76,7 +158,7 @@ header button {
         color: black;
         background-color: #BA925E;
         cursor: pointer;
-    
+
         .fa-chevron-right {
             color: black;
         }
@@ -139,37 +221,44 @@ header button {
     padding: 23px 10px;
 }
 
-.fa-cart-shopping, .fa-arrow-up-right-dots, .fa-building-columns, .fa-truck {
+.fa-cart-shopping,
+.fa-arrow-up-right-dots,
+.fa-building-columns,
+.fa-truck {
     padding: 22px 10px;
 }
 
 .fa-lightbulb {
     padding: 22px 13px;
-   
+
 }
 
 .helpEnterpreneurs {
-    overflow: hidden;
     position: relative;
+    height: 20vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.helpEnterpreneurs img {
-    opacity: 0.4;
+.helpEnterpreneurs::before {
+    content: "";
+    background-image: url(images/steel-bg.jpg);
+    background-size: cover;
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: auto;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.4;
 }
 
 .helpEnterpreneurs p {
     position: relative;
     margin: auto;
-    padding-top: 20px;
-    padding-bottom: 30px;
     width: 40%;
     text-align: center;
-    vertical-align: middle;
     font-size: 140%;
     font-weight: bold;
 
@@ -181,20 +270,28 @@ header button {
 /* whyTradersChooseUs */
 
 .whyTradersChooseUs {
-    overflow: hidden;
     position: relative;
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     color: white;
 }
 
-.whyTradersChooseUs img {
-    filter: brightness(50%);
+.whyTradersChooseUs::before {
+    content: "";
+    background-image: url(images/background-choose-us.jpg);
+    background-size: cover;
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: auto;
-} 
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    filter: brightness(50%);
+}
+
 
 .content ul {
     display: flex;
@@ -240,7 +337,7 @@ header button {
 
 /* founderMessage */
 
-.founderMessage {
+/* .founderMessage {
     position: relative;
     overflow: hidden;
 }
@@ -251,9 +348,28 @@ header button {
     top: 0;
     width: 100%;
     height: auto;
+} */
+
+.founderMessage {
+    position: relative;
+    height: 72vh;
+    width: 100%;
+    display: flex;
+    justify-content: right;
 }
 
-.message {
+.founderMessage::before {
+    content: "";
+    background-image: url(images/consulting-woman.jpg);
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+/* .message {
     width: 30%;
     height: 280px;
     position: relative;
@@ -264,7 +380,7 @@ header button {
     padding: 40px 30px;
 }
 
-.message::after{
+.message::after {
     content: '';
     background-color: white;
     width: 100%;
@@ -272,16 +388,37 @@ header button {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0.6; 
+    opacity: 0.6;
+} */
+
+.message {
+    position: relative;
+    height: 70%;
+    width: 30%;
+    justify-content: right;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    padding: 40px 30px;
+}
+
+.message::before {
+    content: "";
+    background-color: white;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.6;
 }
 
 
-.message > p {
+.message>p {
     position: relative;
-    z-index: 1;
     font-size: 90%;
     text-indent: 2px;
-    opacity: 1;
+
     &::before {
         content: '\201C';
         color: #BA925E;
@@ -296,7 +433,6 @@ header button {
 
 .founder {
     position: relative;
-    z-index: 1;
     width: 100%;
     height: 78%;
     margin-top: 12px;
@@ -316,10 +452,10 @@ header button {
 }
 
 .founder div:last-child {
-   float: right;
-   font-size: 80%;
-   color: grey;
-   margin-top: 5px;
+    float: right;
+    font-size: 80%;
+    color: grey;
+    margin-top: 5px;
 }
 
 /* partners */
@@ -338,24 +474,32 @@ header button {
 /* footer */
 
 footer {
-    padding: 10px 80px;
+    padding: 10px 80px 50px 80px;
     background-color: black;
     color: white;
+    text-align: center;
+}
+
+footer div {
+    width: 25%;
+    display: inline-block;
+}
+
+footer div h6 {
+    font-weight: bold;
+    font-size: 120%;
+    text-align: left;
 }
 
 .consulting {
-    width: 20%;
-}
-
-.consulting h6 {
-    font-weight: bold;
-    font-size: 120%;
+    float: left;
 }
 
 .contact {
     margin-top: 15px;
     margin-left: 20px;
     list-style-type: none;
+    text-align: left;
 }
 
 .contact li {
@@ -365,7 +509,8 @@ footer {
 }
 
 .socialMedia {
-    margin-left: 50px;
+    float: right;
+    margin-right: 70px;
 }
 
 .socialMedia li {
@@ -382,7 +527,8 @@ footer {
     color: black;
 }
 
-.fa-facebook-f, .fa-linkedin  {
+.fa-facebook-f,
+.fa-linkedin {
     padding: 10px 8px;
 }
 
@@ -390,6 +536,54 @@ footer {
     padding: 11px 8px;
 }
 
-.fa-youtube{
+.fa-youtube {
     padding: 10px 6px;
+}
+
+
+.footerNav ul {
+    list-style-type: none;
+    text-align: left;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.footerNav ul:last-child {
+    float: right;
+    margin-right: 90px;
+}
+
+.footerNav ul li a {
+    text-decoration: none;
+    font-size: small;
+    color: #BA925E;
+}
+
+.instagramWidget {
+    float: right;
+}
+
+.instagramWidget h6 {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.instagramWidget ul {
+    float: right;
+    margin: 0;
+    padding: 0;
+}
+
+.instagramWidget ul li {
+    float: left;
+    list-style-type: none;
+    width: 75px;
+    height: 75px;
+    margin: 0;
+    padding: 0;
+}
+
+.instagramWidget ul li img {
+    width: 100%;
+    height: 100%;
 }
