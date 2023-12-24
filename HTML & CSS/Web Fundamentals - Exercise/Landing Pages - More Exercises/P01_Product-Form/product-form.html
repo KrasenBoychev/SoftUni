@@ -18,12 +18,23 @@
             <p>120&#36;</p>
             <form action="">
                 <label for="size">Choose Size</label><br>
-                <select name="" id="size">
-                    <option value="xs">XS</option>
-                    <option value="s">S</option>
-                    <option value="m">M</option>
-                    <option value="l">L</option>
-                </select>
+                <div class="select-group">
+                    <button class="button" id="button">XS</button>
+                    <div id="dropdown" class="dropdown hidden">
+                        <label class="select-item" for="extra-small">XS</label>
+                        <input class="option" id="extra-small" type="radio" name="where" value="xs">
+
+
+                        <label class="select-item" for="small">S</label>
+                        <input class="option" id="small" type="radio" name="where" value="s">
+
+                        <label class="select-item" for="medium">M</label>
+                        <input class="option" id="medium" type="radio" name="where" value="m">
+
+                        <label class="select-item" for="large">L</label>
+                        <input class="option" id="large" type="radio" name="where" value="l">
+                    </div>
+                </div>
                 <br>
                 <label for="nameOnCard">Name on card</label><br>
                 <input type="text" id="name" placeholder="Enter your name">
@@ -35,6 +46,8 @@
             </form>
         </div>
     </main>
+
+    <script src="buttons.js"></script>
 </body>
 
 </html>

@@ -113,8 +113,8 @@ p {
     color: #565656;
 }
 
-input:not(:last-of-type), select {
-    margin: 12px 0 12px 15px;
+input:not(:last-of-type) {
+    margin: 10px 0 12px 15px;
     width: 200px;
     height: 30px;
     padding-left: 5px;
@@ -124,13 +124,56 @@ input:not(:last-of-type) {
     margin-top: 15px;
 }
 
-select {
-    border: none;
+.select-group {
+    position: relative;
+    margin: 15px 0 0 15px;
+}
+
+.button {
+    width: 100%;
+    height: 30px;
     background-color: #42c9ca;
     color: #ffffff;
-    appearance: none;
     outline: 0;
+    border: none;
+    text-align: left;
+    padding-left: 10px;
+    font-size: small;
 }
+
+.option {
+    display: none;
+    
+}
+
+.dropdown {
+    border: none;
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dropdown label {
+    display: block;
+}
+
+.select-item {
+    background-color: white;
+    color: white;
+    background-color: #42c9ca;
+    height: 20px;
+    padding-left: 10px;
+    font-size: small;
+
+    &:hover {
+        background-color:#1e90ff;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
 
 #name, #card {
     border: none;
@@ -149,8 +192,14 @@ select {
     width: 60%;
     border-radius: 20px;
     text-transform: uppercase;
-    color: white;
-    background-color: #42c9ca;
+    color: #42c9ca;
+    background-color: white;
     padding: 10px 0;
-    border: none;
+    border: 2px solid #42c9ca;
+
+    &:hover {
+        color: white;
+    background-color: #42c9ca;
+    cursor: pointer;
+    }
 }
