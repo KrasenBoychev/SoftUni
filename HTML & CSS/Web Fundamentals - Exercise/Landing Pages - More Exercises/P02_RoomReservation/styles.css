@@ -77,8 +77,9 @@ header {
     margin: 1px 0;
 }
 
-.create-reservation div {
+.create-reservation > div {
     display: inline-block;
+    height: 200px;
 }
 
 .details {
@@ -90,6 +91,17 @@ header {
     width: 50%;
 }
 
+form div {
+    display: inline-flex;
+    
+}
 
+.select-a-room select {
+    width: 100px
+}
 
 /* Button */
+
+.button {
+    float: right;
+}
