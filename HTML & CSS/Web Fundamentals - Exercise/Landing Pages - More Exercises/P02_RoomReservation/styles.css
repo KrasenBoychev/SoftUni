@@ -73,35 +73,102 @@ header {
 
 /* Personal Details - Request a Reservation */
 
+.create-reservation {
+    height: 140px;
+    border-bottom-style: dashed;
+    border-bottom-color: #dbdbdb;
+    padding-top: 20px;
+}
+
 .create-reservation h2 {
     margin: 1px 0;
 }
 
 .create-reservation > div {
     display: inline-block;
-    height: 200px;
+    height: 100%;
 }
 
 .details {
     width: 20%;
 }
 
+.details h2 {
+    margin-bottom: 5px;
+}
+
+.details input {
+    height: 25px;
+    width: 90%;
+    margin-bottom: 10px;
+    border: 1px solid grey;
+    padding-left: 5px;
+}
+
+
 .reservation {
     float: right;
     width: 50%;
 }
 
-form div {
-    display: inline-flex;
-    
+.reservation div {
+    display: inline-block;
+    margin-top: 2px;
+    margin-bottom: 8px;
+}
+
+.reservation div > * {
+    width: 100%;
+}
+
+.reservation label {
+    font-size: 90%;
+}
+
+.reservation input, .reservation select {
+    height: 20px;
+    margin-top: 5px;
+    border: 1px solid grey;
+    padding: 2px;
+}
+
+.select-a-room {
+    width: 60%;
 }
 
 .select-a-room select {
-    width: 100px
+    height: 25px;
+}
+
+.number-of-rooms {
+    width: 38%;
+}
+
+.check-in, .check-out {
+    width: 48.5%;
+}
+
+.check-in {
+    margin-right: 5px;
 }
 
 /* Button */
 
 .button {
     float: right;
+    margin-top: 20px;
+}
+
+.button input {
+    padding: 10px 40px;
+    border-radius: 10%;
+    font-weight: bold;
+    color: white;
+    background-color: #32a2e4;
+    border: none;
+
+    &:hover {
+        background-color: #3bbc96;
+        cursor: pointer;
+    }
 }
