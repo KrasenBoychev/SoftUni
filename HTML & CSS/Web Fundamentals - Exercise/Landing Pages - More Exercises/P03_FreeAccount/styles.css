@@ -47,11 +47,18 @@ input {
     padding: 5px 10px;
 }
 
-form > input:first-of-type {
+.username {
+    display: inline-block;
+    position: relative;
 
     &::after {
-      
+        position: absolute;
+        top: 15px;
+        left: 240px;
+        font-family: 'FontAwesome';
         content: '\f00c';
+        border: 2px solid red;
+        padding: 5px;
     }
 }
 
