@@ -5,7 +5,8 @@ html {
 body {
     font-family: Tahoma, Helvetica, sans-serif;
     width: 800px;
-    margin: auto;
+    margin: 10px auto;
+    padding: 20px 40px;
     background-color: white;
     text-align: center;
 }
@@ -15,5 +16,65 @@ h1 {
 }
 
 p {
-    border-bottom: 1px solid grey;
+    font-size: 13px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eeeeee;
+    
+}
+
+body > div {
+    display: inline-flex;
+    width: 30%;
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+div > * {
+    width: 100%;
+}
+
+form > * {
+    width: 100%;
+    margin: 8px 0;
+}
+
+input {
+    border: 2px solid #eeeeee;
+    border-radius: 5px;
+    height: 30px;
+    padding: 5px 10px;
+}
+
+form > input:first-of-type {
+
+    &::after {
+      
+        content: '\f00c';
+    }
+}
+
+.new-account {
+    margin-right: 100px;
+}
+
+form label:first-child {
+    font-weight: bold;
+}
+
+.checkbox-area {
+    display: inline-flex;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    filter: brightness(92%);
+}
+
+.checkbox-area label {
+    font-size: 12px;
+    margin-left: 5px;
 }
