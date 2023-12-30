@@ -41,6 +41,10 @@ form > * {
     margin: 8px 0;
 }
 
+form > div:first-of-type {
+    margin-top: 15px;
+}
+
 input {
     border: 2px solid #eeeeee;
     border-radius: 5px;
@@ -54,7 +58,7 @@ input {
 
     &::after {
         position: absolute;
-        top: 9px;
+        top: 8px;
         left: 265px;
         font-family: 'FontAwesome';
         content: '\f00c';
@@ -72,7 +76,6 @@ input {
     }
    
 }
-
 
 .new-account {
     margin-left: 50px;
@@ -101,5 +104,37 @@ form label:first-child {
 .login {
     float: right;
     margin-right: 100px;
+}
+
+a {
+    margin-left: 2px;
+    font-size: 13px;
+    color: red;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+form > input:last-of-type {
+    width: 170px;
+    height: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 0;
+    border: 1px solid grey;
+    box-shadow: 3px 4px #eeeeee;
+
+    &:hover {
+        background-color: #afdf67;
+        cursor: pointer;
+    }
+}
+
+.login form > input:last-of-type {
+    width: 100px;
 }
 
