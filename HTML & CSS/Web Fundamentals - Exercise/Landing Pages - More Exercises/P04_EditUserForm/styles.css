@@ -219,7 +219,7 @@ form>* {
   margin: 8px 0;
 }
 
-label {
+label, p {
   font-size: 14px;
 }
 
@@ -245,17 +245,18 @@ input[type = password], .groups {
 
 .groups {
   background-color: white;
-  padding: 5px 15px;
+  padding: 2px;
   border-top: 5px solid #324e5b;
   border-left: 5px solid #324e5b;
 }
 
-.groups > * {
-  margin: 10px 0;
+.groups > input {
+  margin-top: 15px;
+  margin-left: 15px;
 }
 
-.groups input {
-  border-radius: 0%;
+.groups > input:last-of-type {
+  margin-bottom: 15px;
 }
 
 a {
@@ -264,6 +265,38 @@ a {
   cursor: default;
 }
 
-input[type=button] {
+p {
+  margin-top: 25px;
+}
+
+.buttons{
+  text-align: right;
+  margin-top: 15px;
+}
+
+.buttons > input {
+  width: 40%;
   font-size: 15px;
 }
+
+.buttons > input:first-of-type {
+  margin-right: 30px;
+  border-right: 5px solid orange;
+  border-bottom: 5px solid orange;
+  border-top: none;
+  border-left: none;
+  color: orange;
+  font-weight: bold;
+}
+
+.buttons > input:last-of-type {
+  margin-right: 20px;
+  border-right: 5px solid #324e5b;
+  border-bottom: 5px solid #324e5b;
+  border-top: none;
+  border-left: none;
+  color: #324e5b;
+  font-weight: bold;
+}
+
+
