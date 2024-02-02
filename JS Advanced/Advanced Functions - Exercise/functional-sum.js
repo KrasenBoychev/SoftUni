@@ -1,10 +1,14 @@
-let add = (function () {
-    let total = 0;
-    return function sum(a) {
-        total += a;
-        sum.toString = () => total;
-        return sum;
+function add(n) {
+    let temp = 0;
+
+    function recursive(x) {
+        temp += x;
+        
+        return recursive;
     }
-})();
+
+    recursive.toString = () => temp;
+    return recursive(n);
+}
 
 console.log(add(1)(6)(-3).toString());
