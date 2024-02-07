@@ -7,8 +7,10 @@ function createCalculator() {
     }
 }
 
-const result = createCalculator();
-result.add(5);
-console.log(result.get());
+createCalculator().add(5);
+console.log(createCalculator().get());
+
+// result.subtract(-5);
+// console.log(result.get());
 
 export { createCalculator };
