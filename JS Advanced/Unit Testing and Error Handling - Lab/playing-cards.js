@@ -15,7 +15,11 @@ function playingCards(face, suit) {
         throw new Error(`Error`);
     }
 
-    return card.toString();
+    card.toString = function () {
+        return `${face}${card[face]}`;
+    }
+
+    return card;
 }
 
 playingCards('3', 'S');

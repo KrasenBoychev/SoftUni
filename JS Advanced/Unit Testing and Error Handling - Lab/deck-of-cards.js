@@ -25,7 +25,7 @@ function printDeckOfCards(input) {
     
         let card = {};
         
-        if (validFaces.includes(face) || !(suit in validSuits)) {
+        if (validFaces.includes(face) && (suit in validSuits)) {
             card[face] = validSuits[suit];
         } else {
             console.log(`Invalid card: ${face}${suit}`);
