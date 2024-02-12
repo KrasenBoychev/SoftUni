@@ -59,3 +59,5 @@ const motorcycleRider = {
 
   }
 };
+
+export {motorcycleRider};
