@@ -40,7 +40,7 @@ function solution() {
         }
         view() {
             this.views[`views`] += 1;
-            return this.views;
+            return this;
         }
         toString() {
             this.print.push(`Views: ${this.views[`views`]}`);
