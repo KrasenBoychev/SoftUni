@@ -40,16 +40,15 @@ function createComputerHierarchy() {
             this.weight = weight;
             this.color = color;
             this.battery = battery;
-            this._battery = this.battery;
         }
 
         get battery() {
             return this._battery;
         }
 
-        set battery(battery) {
-            if (battery instanceof Battery) {
-                this._battery = battery;
+        set battery(b) {
+            if (b instanceof Battery) {
+                this._battery = b;
             } else {
                 throw new TypeError(``);
             } 
@@ -61,17 +60,15 @@ function createComputerHierarchy() {
             super(manufacturer, processorSpeed, ram, hardDiskSpace);
             this.keyboard = keyboard;
             this.monitor = monitor;
-            this._keyboard = this.keyboard;
-            this._monitor = this.monitor;
         }
 
         get keyboard() {
             return this._keyboard;
         }
 
-        set keyboard(keyboard) {
-            if (keyboard instanceof Keyboard) {
-                this._keyboard = keyboard;
+        set keyboard(k) {
+            if (k instanceof Keyboard) {
+                this._keyboard = k;
             } else {
                 throw new TypeError(``);
             } 
@@ -81,9 +78,9 @@ function createComputerHierarchy() {
             return this._monitor;
         }
 
-        set monitor(monitor) {
-            if (monitor instanceof Monitor) {
-                this._monitor = monitor;
+        set monitor(m) {
+            if (m instanceof Monitor) {
+                this._monitor = m;
             } else {
                 throw new TypeError(``);
             } 
