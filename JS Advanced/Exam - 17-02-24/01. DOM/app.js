@@ -18,8 +18,8 @@ function solve() {
   let body = document.querySelector('.body');
   let backImg = document.getElementById('back-img');
 
-  function add(e) {
-    e.preventDefault();
+  function add(event) {
+    event.preventDefault();
 
     let name = inputs.name.value;
     let height = inputs.height.value;
@@ -28,12 +28,12 @@ function solve() {
     let attribute = inputs.specialAttribute.value;
 
     for (let [key, value] of Object.entries(inputs)) {
-      if (value.value == '' || typeof(value.value) != 'string') {
+      if (value.value === '' || typeof(value.value) !== 'string') {
         return;
       }
     }
 
-    if (typeof(Number(height)) != 'number') {
+    if (typeof(Number(height)) !== 'number' || height <= 0) {
       return;
     }
 
@@ -99,22 +99,21 @@ function solve() {
     backBtn.addEventListener('click', back);
     body.appendChild(backBtn);
     
-    backImg.hidden = '';
+    backImg.hidden = false;
   }
 
   function back() {
-    window.location.reload();
+    window.addEventListener("load", solve);
   }
 
   function createList(name, height, location, creator, attribute) {
     let liEl = createEl('li');
-    liEl.className = 'snowman-info';
 
     let articleEl = createEl('article');
     liEl.appendChild(articleEl);
 
     let p1 = createEl('p', `Name: ${name}`);
-    let p2 = createEl('p', `Height: ${height}`);
+    let p2 = createEl('p', `Height: ${Number(height)}`);
     let p3 = createEl('p', `Location: ${location}`);
     let p4 = createEl('p', `Creator: ${creator}`);
     let p5 = createEl('p', `Attribute: ${attribute}`);
