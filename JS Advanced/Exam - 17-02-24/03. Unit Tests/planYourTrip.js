@@ -52,4 +52,4 @@ const planYourTrip = {
   },
 };
 
-module.exports = planYourTrip;
+export {planYourTrip};
