@@ -103,7 +103,7 @@ function solve() {
   }
 
   function back() {
-    window.addEventListener("load", solve);
+    window.location.reload();
   }
 
   function createList(name, height, location, creator, attribute) {
