@@ -31,3 +31,7 @@ body {
     color: white;
     text-align: center;
 }
+
+.hide {
+    display: none;
+}
