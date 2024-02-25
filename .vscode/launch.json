@@ -30,7 +30,7 @@
                 "<node_internals>/**"
             ],
             "program": "${file}",
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceFolder}",
             "outputCapture": "std"
         }
     ]
