@@ -26,10 +26,8 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${file}",
+            "skipFiles": ["<node_internals>/**"],
+            "program": "${workspaceFolder}",
             "cwd": "${workspaceFolder}",
             "outputCapture": "std"
         }
