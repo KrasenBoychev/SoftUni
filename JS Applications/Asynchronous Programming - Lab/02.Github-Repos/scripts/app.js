@@ -18,6 +18,7 @@ function onHeaders(response) {
 }
 
 function onSuccess(data) {
+	debugger
 	list.replaceChildren(...data.map(createListItems));
 }
 
