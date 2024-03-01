@@ -1,12 +1,12 @@
 async function getRecipes() {
-    const response = await fetch('http://localhost:3030/jsonstore/cookbook/recipes');
+    const response = await fetch('http://localhost:3030/data/recipes');
     const recipes = await response.json();
 
-    return Object.values(recipes);
+    return recipes;
 }
 
 async function getRecipeById(id) {
-    const response = await fetch('http://localhost:3030/jsonstore/cookbook/details/' + id);
+    const response = await fetch('http://localhost:3030/data/recipes/' + id);
     const recipe = await response.json();
 
     return recipe;
@@ -46,7 +46,18 @@ function createRecipeCard(recipe) {
     return result;
 }
 
+function checkUser() {
+    const userData = JSON.parse(localStorage.getItem('user'));
+
+    if (userData) {
+        document.getElementById('user').style.display = 'inline-block';
+    } else {
+        document.getElementById('guest').style.display = 'inline-block';
+    }
+}
+
 window.addEventListener('load', async () => {
+    checkUser();
     const main = document.querySelector('main');
 
     const recipes = await getRecipes();
