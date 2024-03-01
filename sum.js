@@ -1,1 +1,1 @@
-console.log('krasi');
+console.log('1');
