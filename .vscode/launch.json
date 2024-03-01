@@ -27,8 +27,8 @@
             "request": "launch",
             "name": "Launch Program",
             "skipFiles": ["<node_internals>/**"],
-            "program": "${workspaceFolder}",
-            "cwd": "${workspaceFolder}",
+            "program": "${file}",
+            "cwd": "${workspaceRoot}",
             "outputCapture": "std"
         }
     ]
