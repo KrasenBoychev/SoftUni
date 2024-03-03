@@ -132,8 +132,37 @@ async function onCreate(e) {
     onLoadCatch();
 }
 
-function onUpdate(e) {
+async function onUpdate(e) {
+    const id = e.target.dataset.id;
+
+    const divCatch = e.target.parentElement;
+    const inputFields = divCatch.querySelectorAll("input");
+    let angler = inputFields[0].value;
+    let weight = inputFields[1].value;
+    let species = inputFields[2].value;
+    let location = inputFields[3].value;
+    let bait = inputFields[4].value;
+    let captureTime = inputFields[5].value;
+    let _ownerId = userData._id;
+
+    if (!angler || !weight || !species || !location || !bait || !captureTime) {
+        return;
+    }
+
+    let data = {
+        angler,
+        weight,
+        species,
+        location,
+        bait,
+        captureTime,
+        _ownerId
+    }
     
+    const option = createOption("PUT", data)
+    await fetch(endPoints.catches + "/" + id, option);
+
+    onLoadCatch();
 }
 
 async function onDelete(e) {
