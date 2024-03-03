@@ -15,6 +15,7 @@ document.getElementById('loadBooks').addEventListener('click', loadBooks);
 
 formRef.addEventListener('submit', createBook);
 
+loadBooks();
 async function loadBooks(e) {
     try {
         const res = await fetch(url);
@@ -113,14 +114,14 @@ async function onSave(e) {
         throw new Error(err.message);
     }
 
+    titleRef.value = "";
+    authorRef.value = "";
+
     h3Ref.textContent = 'FORM';
     btnRef.textContent = 'Submit';
 
     formRef.removeEventListener('submit', onSave);
     formRef.addEventListener('submit', createBook);
-    
-    titleRef.value = "";
-    authorRef.value = "";
 
     loadBooks();
 }
