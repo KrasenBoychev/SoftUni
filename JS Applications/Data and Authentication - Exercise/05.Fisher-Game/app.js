@@ -52,6 +52,7 @@ async function onLogout(e) {
 async function onLoadCatch(e) {
     const response = await fetch(endPoints.catches);
     const data = await response.json();
+    catchesContainer.innerHTML = "";
     data.forEach(x => {
         let div = listAllCathes(x);
         catchesContainer.appendChild(div);
@@ -59,21 +60,22 @@ async function onLoadCatch(e) {
 }
 
 function listAllCathes(data) {
+    let isOwner = hasOwner(data._ownerId);
     let div = document.createElement('div');
     div.classList.add("catch");
 
     div.innerHTML += `<label>Angler</label>`;
-    div.innerHTML += `<input type="text" class="angler" value="${data.angler}">`;
+    div.innerHTML += `<input type="text" class="angler" ${isOwner ? "" : "disabled"} value="${data.angler}">`;
     div.innerHTML += `<label>Weight</label>`;
-    div.innerHTML += `<input type="text" class="weight" value="${data.weight}">`;
+    div.innerHTML += `<input type="text" class="weight" ${isOwner ? "" : "disabled"} value="${data.weight}">`;
     div.innerHTML += `<label>Species</label>`;
-    div.innerHTML += `<input type="text" class="species" value="${data.species}">`;
+    div.innerHTML += `<input type="text" class="species" ${isOwner ? "" : "disabled"} value="${data.species}">`;
     div.innerHTML += `<label>Location</label>`;
-    div.innerHTML += `<input type="text" class="location" value="${data.location}">`;
+    div.innerHTML += `<input type="text" class="location" ${isOwner ? "" : "disabled"} value="${data.location}">`;
     div.innerHTML += `<label>Bait</label>`;
-    div.innerHTML += `<input type="text" class="bait" value="${data.bait}">`;
+    div.innerHTML += `<input type="text" class="bait" ${isOwner ? "" : "disabled"} value="${data.bait}">`;
     div.innerHTML += `<label>Capture Time</label>`;
-    div.innerHTML += `<input type="text" class="captureTime" value="${data.captureTime}">`;
+    div.innerHTML += `<input type="text" class="captureTime" ${isOwner ? "" : "disabled"} value="${data.captureTime}">`;
    
     const updateBtn = document.createElement('button');
     updateBtn.classList.add('update');
@@ -134,8 +136,16 @@ function onUpdate(e) {
     
 }
 
-function onDelete(e) {
-    
+async function onDelete(e) {
+    const id = e.target.dataset.id;
+    const option = {
+        method: "DELETE",
+        headers: {
+            "X-Authorization": userData.accessToken
+        }
+    }
+    await fetch(endPoints.catches + "/" + id, option);
+    onLoadCatch();
 }
 
 function createOption(method, data) {
