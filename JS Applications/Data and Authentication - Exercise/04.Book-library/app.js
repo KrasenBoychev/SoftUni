@@ -66,12 +66,14 @@ function appendBook(book) {
 async function onEdit(e) {
     const id = e.target.dataset.id;
 
+    let titleElement = e.target.parentElement.parentElement.querySelector('td');
+    let authorElement = e.target.parentElement.parentElement.querySelectorAll('td')[1];
+    titleRef.value = titleElement.textContent;
+    authorRef.value = authorElement.textContent;
+
     try {
         const res = await fetch(url + "/" + id);
         const data = await res.json();
-
-        titleRef.value = data.title;
-        authorRef.value = data.author;
 
         h3Ref.textContent = 'Edit FORM';
         btnRef.textContent = 'Save';
