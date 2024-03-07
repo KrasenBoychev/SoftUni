@@ -1,1 +1,0 @@
-import { openTopic } from "./app.js";
