@@ -1,6 +1,7 @@
 import { addMovieFunc } from "./addMovie.js";
 import { endpoints, navElements, showSection } from "./app.js";
 import { newElement } from "./createElement.js";
+import { details } from "./movieDetails.js";
 
 export function homePage(event) {
     event?.preventDefault();
@@ -55,76 +56,25 @@ async function showAllMovies() {
     }
 }
 
-function showMovie({title, description, img}) {
-    // const sectionEl = newElement('section');
-    // sectionEl.id = "movie-example";
-    // sectionEl.classList.add("view-section");
-    // ulElement.appendChild(sectionEl);
+function showMovie({_id, title, img, _ownerId}) {
 
-    const divContainer = newElement('div');
-    divContainer.classList.add("container");
-    ulElement.appendChild(divContainer);
-
-    const divRow = newElement('div');
-    divRow.classList.add("row", "bg-light", "text-dark");
-    divContainer.appendChild(divRow);
-
-    const h1MovieTitle = newElement('h1', `Movie title: ${title}`);
-    divRow.appendChild(h1MovieTitle);
-
-    const divColMdEight = newElement('div');
-    divColMdEight.classList.add("col-md-8");
-    divRow.appendChild(divColMdEight);
+    const liEl = newElement('li')
+    ulElement.appendChild(liEl);
 
     const imgEl = newElement('img');
-    imgEl.classList.add("img-thumbnail");
+    //imgEl.classList.add("img-thumbnail");
     imgEl.src = `${img}`;
     imgEl.alt = "Movie";
-    divColMdEight.appendChild(imgEl);
+    liEl.appendChild(imgEl);
 
-    const divColMdFour = newElement('div');
-    divColMdFour.classList.add("col-md-4", "text-center")
-    divRow.appendChild(divColMdFour);
+    const h1MovieTitle = newElement('h1', `Movie title: ${title}`);
+    liEl.appendChild(h1MovieTitle);
 
-    const h3El = newElement('h3', "Movie Description");
-    h3El.classList.add("my-3");
-    divColMdFour.appendChild(h3El);
+    const btnDetails = newElement('button', "Details");
+    btnDetails.dataset.id = _ownerId;
+    liEl.appendChild(btnDetails);
 
-    const pEl = newElement('p', description);
-    divColMdFour.appendChild(pEl);
-
-    const aDelete = newElement('a', "Delete");
-    aDelete.classList.add("btn", "btn-danger");
-    aDelete.href = "#";
-    divColMdFour.appendChild(aDelete);
-
-    const aEdit = newElement('a', "Edit");
-    aEdit.classList.add("btn", "btn-warning");
-    aEdit.href = "#";
-    divColMdFour.appendChild(aEdit);
-
-    const aLike = newElement('a', "Like");
-    aLike.classList.add("btn", "btn-primary");
-    aLike.href = "#";
-    divColMdFour.appendChild(aLike);
-
-    aDelete.addEventListener('click', onDelete);
-    aEdit.addEventListener('click', onEdit);
-    aLike.addEventListener('click', onLike);
-
-    const spanEl = newElement('span', `Liked 1`);
-    spanEl.classList.add("enrolled-span");
-    divColMdFour.appendChild(spanEl);
+    btnDetails.addEventListener('click', details);
 }
 
-function onDelete(params) {
-    
-}
 
-function onEdit(params) {
-    
-}
-
-function onLike(params) {
-    
-}
