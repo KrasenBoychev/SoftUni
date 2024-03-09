@@ -1,4 +1,5 @@
 import { endpoints, showSection } from "./app.js";
+import { homePage } from "./home.js";
 
 export function addMovieFunc(event) {
     event.preventDefault();
@@ -16,9 +17,9 @@ async function submitMovie(event) {
 
     data.title = data.title.trim();
     data.description  = data.description.trim();
-    data.image  = data.image.trim();
+    data.img  = data.img.trim();
 
-    if (!data.title || !data.description || data.image) {
+    if (!data.title || !data.description || !data.img) {
         alert('The input fields must be filled!');
         return;
     }
