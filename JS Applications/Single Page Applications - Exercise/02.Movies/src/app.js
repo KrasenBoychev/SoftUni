@@ -1,5 +1,6 @@
 import { homePage } from "./home.js";
 import { loginPage } from "./login.js";
+import { logout } from "./logout.js";
 import { registerPage } from "./register.js";
 
 export const endpoints = {
@@ -9,7 +10,8 @@ export const endpoints = {
     addLike: `http://localhost:3030/data/likes?where=movieId%3D%22{movieId}%22%20and%20_ownerId%3D%22{userId}%22`,
     likes: `http://localhost:3030/data/likes`,
     register: `http://localhost:3030/users/register`,
-    login: `http://localhost:3030/users/login`
+    login: `http://localhost:3030/users/login`,
+    logout: 'http://localhost:3030/users/logout'
 }
 
 export const navElements = {
@@ -22,10 +24,14 @@ export const navElements = {
 
 homePage();
 
+/**
+ * @param {Array} currSectionId 
+ */
 export function showSection(currSectionId) {
     const sections = document.querySelectorAll('section');
+
     for (const section of sections) {
-        if (section.id == currSectionId) {
+        if (currSectionId.includes(section.id)) {
             section.style.display = 'block';
             continue;
         } 
@@ -33,5 +39,7 @@ export function showSection(currSectionId) {
     }
 };
 
+navElements.movies.addEventListener('click', homePage)
 navElements.register.addEventListener('click', registerPage);
 navElements.login.addEventListener('click', loginPage);
+navElements.logout.addEventListener('click', logout);

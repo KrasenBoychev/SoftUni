@@ -65,11 +65,4 @@ export async function validate(event) {
     event.target.reset();
 
     homePage();
-
-    navElements.welcomeMsg.textContent = `Welcome, ${data.email}`;
-    navElements.welcomeMsg.style.display = 'block';
-    navElements.logout.style.display = 'block';
-
-    navElements.login.style.display = 'none';
-    navElements.register.style.display = 'none';
 }

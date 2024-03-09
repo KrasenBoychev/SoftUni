@@ -3,7 +3,7 @@ import { validate } from "./formValidation.js";
 
 export function registerPage(event) {
     event.preventDefault();
-    showSection("form-sign-up");
+    showSection(["form-sign-up"]);
 
     navElements.welcomeMsg.style.display = 'none';
     navElements.logout.style.display = 'none';
