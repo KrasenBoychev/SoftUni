@@ -1,4 +1,5 @@
 import { endpoints, showSection } from "./app.js";
+import { newElement } from "./createElement.js";
 
 export async function details(event) {
     event.preventDefault();
@@ -9,7 +10,8 @@ export async function details(event) {
         return;
     }
 
-    const movieId = event.target.parentElement.dataset.id;
+    const liEl = event.target.parentElement
+    const movieId = liEl.dataset.id;
 
     try {
         const response = await fetch(endpoints.movies + "/" + movieId);
@@ -20,27 +22,33 @@ export async function details(event) {
             alert(err.message);
         }
 
-        const movieExampleSection = document.getElementById("movie-example");
-        movieExampleSection.querySelector('h1').textContent = `Movie title: ${data.title}`;
-        movieExampleSection.querySelector('img').src = data.img;
-        movieExampleSection.querySelector('p').textContent = data.description;
+        liEl.removeChild(event.target);
+
+        const pEl = newElement('p');
+        pEl.textContent = data.description;
+        liEl.appendChild(pEl);
+
+        // const movieExampleSection = document.getElementById("movie-example");
+        // movieExampleSection.querySelector('h1').textContent = `Movie title: ${data.title}`;
+        // movieExampleSection.querySelector('img').src = data.img;
+        // movieExampleSection.querySelector('p').textContent = data.description;
 
         const id = event.target.dataset.id;
 
         if (userData._ownerId == id) {
-            movieExampleSection.querySelector('.btn-danger').style.display = 'block';
-            movieExampleSection.querySelector('.btn-warning').style.display = 'block';
-            movieExampleSection.querySelector('.btn-primary').style.display = 'none';
-            movieExampleSection.querySelector('span').style.display = 'none';
+            // movieExampleSection.querySelector('.btn-danger').style.display = 'block';
+            // movieExampleSection.querySelector('.btn-warning').style.display = 'block';
+            // movieExampleSection.querySelector('.btn-primary').style.display = 'none';
+            // movieExampleSection.querySelector('span').style.display = 'none';
 
         } else {
-            movieExampleSection.querySelector('.btn-danger').style.display = 'none';
-            movieExampleSection.querySelector('.btn-warning').style.display = 'none';
-            movieExampleSection.querySelector('.btn-primary').style.display = 'block';
-            movieExampleSection.querySelector('span').style.display = 'block';
+            // movieExampleSection.querySelector('.btn-danger').style.display = 'none';
+            // movieExampleSection.querySelector('.btn-warning').style.display = 'none';
+            // movieExampleSection.querySelector('.btn-primary').style.display = 'block';
+            // movieExampleSection.querySelector('span').style.display = 'block';
         }
 
-        showSection("movie-example");
+       // showSection("movie-example");
 
     } catch (err) {
         alert(err.message);

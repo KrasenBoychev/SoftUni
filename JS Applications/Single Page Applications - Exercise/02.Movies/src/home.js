@@ -58,11 +58,12 @@ async function showAllMovies() {
 
 function showMovie({_id, title, img, _ownerId}) {
 
-    const liEl = newElement('li')
+    const liEl = newElement('li');
+    liEl.dataset.id = _id;
     ulElement.appendChild(liEl);
 
     const imgEl = newElement('img');
-    //imgEl.classList.add("img-thumbnail");
+    imgEl.classList.add("img-thumbnail");
     imgEl.src = `${img}`;
     imgEl.alt = "Movie";
     liEl.appendChild(imgEl);
