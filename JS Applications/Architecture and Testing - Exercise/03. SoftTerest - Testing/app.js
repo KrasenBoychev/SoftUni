@@ -1,8 +1,12 @@
+import { hasUser } from "./src/utils/userUtils.js";
+import { showRegisterView } from "./src/views/registerView.js";
 
 document.querySelectorAll("div[data-selection='section']").forEach(div => div.remove());
 
+const main = document.querySelector("main");
 const nav = document.querySelector('nav'); 
 nav.addEventListener('click', onNavigate);
+updateNav();
 
 const routes = {
     "/": () => console.log("home"),
@@ -10,16 +14,27 @@ const routes = {
     "/dashboard": () => console.log("dashboard"),
     "/create": () => console.log("create"),
     "/login": () => console.log("login"),
-    "/register": () => console.log("register"),
+    "/register": showRegisterView,
     "/details": () => console.log("details"),
     "/logout": () => console.log("logout"),
     "*": () => console.log("404 Page not found")
 }
 
 function updateNav() {
-    const hasUser = "??"
-    const guestA = document.querySelectorAll("div[data-permission='guest']");
-    const userA = document.querySelectorAll("div[data-permission='user']");
+    const isUserExist = hasUser();
+    const guestA = document.querySelectorAll("a[data-permission='guest']");
+    const userA = document.querySelectorAll("a[data-permission='user']");
+    if (isUserExist) {
+        guestA.forEach(a => a.style.display = "none");
+        userA.forEach(a => a.style.display = "block");
+    } else {
+        guestA.forEach(a => a.style.display = "block");
+        userA.forEach(a => a.style.display = "none");
+    }
+}
+
+function renderer(view) {
+    main.replaceChildren(view);
 }
 
 function onNavigate(e) {
@@ -37,10 +52,14 @@ function onNavigate(e) {
     goTo(viewName);
 }
 
+let ctx = {
+    render: renderer
+}
+
 function goTo(name) {
-    const handler = routes(name);
-    if (typeof(handler) != "function") {
+    const handler = routes[name];
+    if (typeof(handler) !== "function") {
          return routes["*"]();
     }
-    handler(name)
+    handler(ctx);
 }
