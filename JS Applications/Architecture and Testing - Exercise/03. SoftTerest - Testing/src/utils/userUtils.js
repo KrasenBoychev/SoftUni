@@ -14,9 +14,14 @@ function removeUser() {
     sessionStorage.removeItem("userData");
 }
 
+function hasOwner(id) {
+    return getUser()?._id === id;
+}
+
 export {
     getUser,
     hasUser,
     removeUser,
-    setUser
+    setUser,
+    hasOwner
 }

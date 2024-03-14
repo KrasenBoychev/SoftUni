@@ -1,5 +1,8 @@
 import { logout } from "./src/api/userService.js";
 import { hasUser, removeUser } from "./src/utils/userUtils.js";
+import { showCreateView } from "./src/views/createView.js";
+import { showDashboardView } from "./src/views/dashboardView.js";
+import { showDetailView } from "./src/views/detailsView.js";
 import { showHomeView } from "./src/views/homeView.js";
 import { showLoginView } from "./src/views/loginView.js";
 import { showRegisterView } from "./src/views/registerView.js";
@@ -14,11 +17,11 @@ updateNav();
 const routes = {
     "/": showHomeView,
     "/home": showHomeView,
-    "/dashboard": () => console.log("dashboard"),
-    "/create": () => console.log("create"),
+    "/dashboard": showDashboardView,
+    "/create": showCreateView,
     "/login": showLoginView,
     "/register": showRegisterView,
-    "/details": () => console.log("details"),
+    "/details": showDetailView,
     "/logout": async () => {
         await logout();
         removeUser();
@@ -66,10 +69,12 @@ let ctx = {
     updateNav
 }
 
-function goTo(name) {
+function goTo(name, ...params) {
     const handler = routes[name];
     if (typeof(handler) !== "function") {
          return routes["*"]();
     }
-    handler(ctx);
+    handler(ctx, params);
 }
+
+goTo("/");
