@@ -1,8 +1,13 @@
+import { register } from "../api/userService.js";
+import { setUser } from "../utils/userUtils.js";
+
 const registerSection = document.querySelector("div[data-view-name='register']");
 const form = registerSection.querySelector("form").addEventListener("submit", onSubmit);
 
+let context = null;
 export function showRegisterView(ctx) {
-    ctx.render(registerSection);
+    context = ctx;
+    context.render(registerSection);
 }
 
 async function onSubmit(e) {
@@ -14,5 +19,9 @@ async function onSubmit(e) {
         return alert("Register Error");
     } 
 
-    "?"
+    const userData = await register({email, password});
+    setUser(userData);
+    context.goTo("/home");
+    context.updateNav();
+    form.clear();
 }
