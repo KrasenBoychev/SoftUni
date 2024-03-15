@@ -1,38 +1,33 @@
 import { html, render } from "./node_modules/lit-html/lit-html.js";
 import { towns } from "./towns.js";
 
-const root = document.getElementById('towns');
-
 const searchBtn = Array.from(document.getElementsByTagName('button'))[0];
-searchBtn.addEventListener('click', loadTowns);
+searchBtn.addEventListener('click', search);
 
-const divResult = document.getElementById('result');
+const townsRoot = document.getElementById('towns');
+const resultRoot = document.getElementById('result');
+const inputRef = document.getElementById('searchText');
 
-const template = (towns, townInput) => html`
-<ul>
-   ${towns.map((town) => html`<li class=${classType(town, townInput)}>${town}</li>`)}
-</ul>
-`
-
-start();
-
-function start() {
-   render(template(towns), root);
+update();
+function update(match) {
+   render(ulTemplate(towns, match), townsRoot)
 }
 
-function loadTowns() {
-   let townInput = document.getElementById('searchText').value;
-   if (townInput.length == 0) {
-      townInput = "1";
-   }
-   render(template(towns, townInput), root);
-
-   const activeElements = document.querySelectorAll('.active');
-   divResult.textContent = `${activeElements.length} matches found`;
+function ulTemplate(towns, match) {
+   return html`<ul>${towns.map(town => createLiTemplate(town, match?.includes(town)))}</ul>`
 }
 
-function classType(currTown, townInput) {
-   if (currTown.startsWith(townInput)) {
-      return 'active';
-   }
+function createLiTemplate(town, isActive) {
+   return html`<li class=${isActive ? "active" : ""}>${town}</li>`
+}
+
+function search() {
+   const searchText = inputRef.value;
+   const match = towns.filter(town => town.includes(searchText));
+   update(match);
+   renderMatchCount(match.length);
+}
+
+function renderMatchCount(count) {
+   render (html`${count} matches found`, resultRoot);
 }

@@ -49,7 +49,7 @@ function solve() {
          const valueLowerCase = value.toLowerCase();
          const inputTextLowerCase = inputText.toLowerCase();
 
-         if (valueLowerCase.startsWith(inputTextLowerCase)) {
+         if (valueLowerCase.includes(inputTextLowerCase)) {
             return 'select';
          }
       }
