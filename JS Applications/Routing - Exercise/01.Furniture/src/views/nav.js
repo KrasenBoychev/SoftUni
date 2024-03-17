@@ -1,5 +1,6 @@
 import { html, page, renderNav } from "../lib.js";
 import { clearUserData, getUserData } from "../util.js";
+import { logout } from "../data/users.js";
 
 const guestNavTemplate = () => html`
     <div id="guest">
@@ -27,11 +28,10 @@ export function showNav() {
     }
 }
 
-async function onLogout(event) {
-    event.preventDefault();
-
+async function onLogout() {
+    logout();
     clearUserData();
-
     page.redirect('/catalog');
+    showNav();
 }
 

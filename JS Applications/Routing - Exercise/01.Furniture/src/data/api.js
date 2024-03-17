@@ -20,7 +20,7 @@ async function request(method, url, data) {
     }
 
     try {
-        const res = await fetch(host + url, options)
+        const res = await fetch(host + url, options);
 
         if(!res.ok) {
             if (res.status == 403) {
