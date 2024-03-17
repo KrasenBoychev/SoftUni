@@ -1,4 +1,4 @@
-import { saveUserData, clearUserData } from "../util.js";
+import { saveUserData } from "../util.js";
 import { get, post } from "./api.js";
 
 export async function register(email, password) {
