@@ -1,5 +1,6 @@
 import { getFurniture } from "../data/furniture.js";
-import { html, render } from "../lib.js";
+import { html, renderContent } from "../lib.js";
+import { showNav } from "./nav.js";
 
 const homeTemplate = (furniture) => html`
     <div class="row space-top">
@@ -33,5 +34,6 @@ const itemTemplate = (item) => html`
 
 export async function showHome(ctx) {
     const furniture = await getFurniture();
-    render(homeTemplate(furniture))
+    renderContent(homeTemplate(furniture));
+    showNav();
 }

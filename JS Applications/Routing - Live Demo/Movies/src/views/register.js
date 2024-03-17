@@ -56,7 +56,6 @@ export function showRegister(ctx) {
 }
 
 async function onRegister({email, password, repeatPassword}) {
-  debugger
     if (!email || !password) {
         return alert('All fields are required!');
     }
