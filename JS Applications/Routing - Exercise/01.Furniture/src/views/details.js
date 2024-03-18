@@ -26,8 +26,8 @@ const detailsTemplate = (furniture, isOwner) => html`
                 <div>
                     ${isOwner ? 
                         html`
-                        <a href=”#” class="btn btn-info">Edit</a>
-                        <a href=”#” class="btn btn-red">Delete</a>
+                        <a href="/catalog/${furniture._id}/edit" class="btn btn-info">Edit</a>
+                        <a href="/delete" class="btn btn-red">Delete</a>
                         `
                       : html``
                     }
