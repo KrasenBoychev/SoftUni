@@ -1,4 +1,4 @@
-import { get, post, put } from "./api.js";
+import { get, post, put, del } from "./api.js";
 
 export async function getFurniture() {
     return get('/data/catalog');
@@ -14,6 +14,10 @@ export async function createFurniture() {
 
 export async function editFurniture(id, data) {
     return put('/data/catalog/' + id, data);
+}
+
+export async function deleteFurniture(id) {
+    return del('/data/catalog/' + id);
 }
 
 export function validateForm(make, model, year, description, price, img, isValid) {

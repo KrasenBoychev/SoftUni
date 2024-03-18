@@ -1,5 +1,5 @@
-import { getFurnitureById } from "../data/furniture.js";
-import { html, renderContent } from "../lib.js";
+import { getFurnitureById, deleteFurniture } from "../data/furniture.js";
+import { html, page, renderContent } from "../lib.js";
 import { getUserData } from "../util.js";
 
 const detailsTemplate = (furniture, isOwner) => html`
@@ -27,7 +27,7 @@ const detailsTemplate = (furniture, isOwner) => html`
                     ${isOwner ? 
                         html`
                         <a href="/catalog/${furniture._id}/edit" class="btn btn-info">Edit</a>
-                        <a href="/delete" class="btn btn-red">Delete</a>
+                        <a href="#" class="btn btn-red" @click=${deleteItem}>Delete</a>
                         `
                       : html``
                     }
@@ -36,8 +36,11 @@ const detailsTemplate = (furniture, isOwner) => html`
         </div>
 `;
 
+let furnitureId = null;
+
 export async function showDetails(ctx) {
-    const furnitureId = ctx.params.furnitureId;
+    const id = ctx.params.furnitureId;
+    furnitureId = id;
     const furniture = await getFurnitureById(furnitureId);
 
     const userData = getUserData();
@@ -46,5 +49,11 @@ export async function showDetails(ctx) {
     renderContent(detailsTemplate(furniture, isOwner));
 }
 
+async function deleteItem() {
+    alert('Are you sure you want to delete this item?');
 
+    await deleteFurniture(furnitureId);
+
+    page.redirect('/catalog');
+}
 
