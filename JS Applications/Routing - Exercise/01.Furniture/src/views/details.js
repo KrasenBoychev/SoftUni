@@ -12,7 +12,7 @@ const detailsTemplate = (furniture, isOwner) => html`
             <div class="col-md-4">
                 <div class="card text-white bg-primary">
                     <div class="card-body">
-                        <img src="${(furniture.img).slice(1)}" />npm
+                        <img src="${(furniture.img).slice(1)}" />
                     </div>
                 </div>
             </div>

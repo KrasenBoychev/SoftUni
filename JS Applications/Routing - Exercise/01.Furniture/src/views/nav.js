@@ -12,7 +12,7 @@ const guestNavTemplate = () => html`
 const userNavTemplate = () => html`
             <div id="user">
                 <a id="createLink" href="/create" >Create Furniture</a>
-                <a id="profileLink" href="/my-furniture" >My Publications</a>
+                <a id="profileLink" href="/my-publications" >My Publications</a>
                 <a id="logoutBtn" href="javascript:void(0)" @click=${onLogout}>Logout</a>
             </div>
 `;
