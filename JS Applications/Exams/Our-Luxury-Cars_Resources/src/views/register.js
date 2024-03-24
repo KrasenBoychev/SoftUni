@@ -1,53 +1,53 @@
-// import { register } from "../data/users.js";
-// import { html, page, renderContent } from "../lib.js";
-// import { createSubmitHandler } from "../util.js";
+import { register } from "../data/users.js";
+import { html, page, renderContent } from "../lib.js";
+import { createSubmitHandler } from "../util.js";
 
-// const registerTemplate = (onRegister) => html`
-//     <div class="row space-top">
-//             <div class="col-md-12">
-//                 <h1>Register New User</h1>
-//                 <p>Please fill all fields.</p>
-//             </div>
-//         </div>
-//         <form @submit=${onRegister}>
-//             <div class="row space-top">
-//                 <div class="col-md-4">
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="email">Email</label>
-//                         <input class="form-control" id="email" type="text" name="email">
-//                     </div>
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="password">Password</label>
-//                         <input class="form-control" id="password" type="password" name="password">
-//                     </div>
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="rePass">Repeat</label>
-//                         <input class="form-control" id="rePass" type="password" name="rePass">
-//                     </div>
-//                     <input type="submit" class="btn btn-primary" value="Register" />
-//                 </div>
-//             </div>
-//         </form>
-// `;
+const registerTemplate = (onRegister) => html`
+<section id="register">
+          <div class="form">
+            <h2>Register</h2>
+            <form class="register-form" @submit=${onRegister}>
+              <input
+                type="text"
+                name="email"
+                id="register-email"
+                placeholder="email"
+              />
+              <input
+                type="password"
+                name="password"
+                id="register-password"
+                placeholder="password"
+              />
+              <input
+                type="password"
+                name="re-password"
+                id="repeat-password"
+                placeholder="repeat password"
+              />
+              <button type="submit">register</button>
+              <p class="message">Already registered? <a href="#">Login</a></p>
+            </form>
+          </div>
+        </section>
+`;
 
 
 
-// export function showRegister() {
-//     renderContent(registerTemplate(createSubmitHandler(onRegister)));
-// }
+export function showRegister() {
+    renderContent(registerTemplate(createSubmitHandler(onRegister)));
+}
 
-// async function onRegister({email, password, rePass}) {
-//     if (!email || !password) {
-//         return alert('All fields are required!');
-//     }
+async function onRegister(data) {
+    if (!data.email || !data.password) {
+        return alert('All fields are required!');
+    }
 
-//     if (password != rePass) {
-//         return alert('Passwords don\'t match!');
-//     }
+    if (data.password != data['re-password']) {
+        return alert('Passwords don\'t match!');
+    }
 
-//        //TODO fancier validation
+    await register(data.email, data.password);
 
-//     await register(email, password);
-
-//     page.redirect('/catalog');
-// }
+    page.redirect('/');
+}

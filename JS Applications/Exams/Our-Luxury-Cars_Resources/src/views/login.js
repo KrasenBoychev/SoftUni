@@ -1,42 +1,38 @@
-// import { login } from "../data/users.js";
-// import { html, page, renderContent } from "../lib.js";
-// import { createSubmitHandler } from "../util.js";
+import { login } from "../data/users.js";
+import { html, page, renderContent } from "../lib.js";
+import { createSubmitHandler } from "../util.js";
 
-// const loginTemplate = (onLogin) => html`
-//     <div class="row space-top">
-//             <div class="col-md-12">
-//                 <h1>Login User</h1>
-//                 <p>Please fill all fields.</p>
-//             </div>
-//         </div>
-//         <form @submit=${onLogin}>
-//             <div class="row space-top">
-//                 <div class="col-md-4">
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="email">Email</label>
-//                         <input class="form-control" id="email" type="text" name="email">
-//                     </div>
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="password">Password</label>
-//                         <input class="form-control" id="password" type="password" name="password">
-//                     </div>
-//                     <input type="submit" class="btn btn-primary" value="Login" />
-//                 </div>
-//             </div>
-//         </form>
-// `;
+const loginTemplate = (onLogin) => html`
+    <section id="login">
+          <div class="form">
+            <h2>Login</h2>
+            <form class="login-form" @submit=${onLogin}>
+              <input type="text" name="email" id="email" placeholder="email" />
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="password"
+              />
+              <button type="submit">login</button>
+              <p class="message">
+                Not registered? <a href="#">Create an account</a>
+              </p>
+            </form>
+          </div>
+    </section>
+`;
 
-// export function showLogin() {
-//     renderContent(loginTemplate(createSubmitHandler(onLogin)));
-// }
+export function showLogin() {
+    renderContent(loginTemplate(createSubmitHandler(onLogin)));
+}
 
-// async function onLogin({email, password}) {
-//     if (!email || !password) {
-//         return alert('All fields are required!');
-//     }
-//        //TODO fancier validation
+async function onLogin({email, password}) {
+    if (!email || !password) {
+        return alert('All fields are required!');
+    }
 
-//     await login(email, password);
+    await login(email, password);
 
-//     page.redirect('/catalog');
-// }
+    page.redirect('/');
+}

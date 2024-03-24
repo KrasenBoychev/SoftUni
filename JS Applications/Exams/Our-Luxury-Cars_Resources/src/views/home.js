@@ -11,8 +11,6 @@ const homeTemplate = () => html`
 `;
 
 export async function showHome(ctx) {
-    const isUser = getUserData();
-
     renderContent(homeTemplate());
     showNav();
 }
