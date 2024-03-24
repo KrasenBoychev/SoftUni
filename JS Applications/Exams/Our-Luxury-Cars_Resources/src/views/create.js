@@ -1,70 +1,66 @@
-// import { createFurniture, validateForm } from "../data/furniture.js";
-// import { html, page, renderContent } from "../lib.js";
-// import { createSubmitHandler } from "../util.js";
+import { createCar, validateForm } from "../data/cars.js";
+import { html, page, renderContent } from "../lib.js";
+import { createSubmitHandler } from "../util.js";
 
-// createSubmitHandler
+const createCarTemplate = (onCreate) => html`
+    <section id="create">
+          <div class="form form-auto">
+            <h2>Share Your Car</h2>
+            <form class="create-form" @submit=${onCreate}>
+              <input type="text" name="model" id="model" placeholder="Model"/>
+              <input
+                type="text"
+                name="imageUrl"
+                id="car-image"
+                placeholder="Your Car Image URL"
+              />
+              <input
+                type="text"
+                name="price"
+                id="price"
+                placeholder="Price in Euro"
+              />
+              <input
+                type="number"
+                name="weight"
+                id="weight"
+                placeholder="Weight in Kg"
+              />
+              <input
+                type="text"
+                name="speed"
+                id="speed"
+                placeholder="Top Speed in Kmh"
+              />
+              <textarea
+                id="about"
+                name="about"
+                placeholder="More About The Car"
+                rows="10"
+                cols="50"
+              ></textarea>
+              <button type="submit">Add</button>
+            </form>
+          </div>
+        </section>
+`;
 
-// const createItemTemplate = (onCreate) => html`
-// <div class="row space-top">
-//             <div class="col-md-12">
-//                 <h1>Create New Furniture</h1>
-//                 <p>Please fill all fields.</p>
-//             </div>
-//         </div>
-//         <form @submit=${onCreate}>
-//             <div class="row space-top">
-//                 <div class="col-md-4">
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-make">Make</label>
-//                         <input class="form-control" id="new-make" type="text" name="make">
-//                     </div>
-//                     <div class="form-group has-success">
-//                         <label class="form-control-label" for="new-model">Model</label>
-//                         <input class="form-control" id="new-model" type="text" name="model">
-//                     </div>
-//                     <div class="form-group has-danger">
-//                         <label class="form-control-label" for="new-year">Year</label>
-//                         <input class="form-control" id="new-year" type="number" name="year">
-//                     </div>
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-description">Description</label>
-//                         <input class="form-control" id="new-description" type="text" name="description">
-//                     </div>
-//                 </div>
-//                 <div class="col-md-4">
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-price">Price</label>
-//                         <input class="form-control" id="new-price" type="number" name="price">
-//                     </div>
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-image">Image</label>
-//                         <input class="form-control" id="new-image" type="text" name="img">
-//                     </div>
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-material">Material (optional)</label>
-//                         <input class="form-control" id="new-material" type="text" name="material">
-//                      </div>
-//                     <input type="submit" class="btn btn-primary" value="Create" />
-//                 </div>
-//             </div>
-//         </form>
-// `;
+export function showCreate() {
+    renderContent(createCarTemplate(createSubmitHandler(onCreate)));
+}
 
-// export function showCreate() {
-//     renderContent(createItemTemplate(createSubmitHandler(onCreate)));
-// }
+async function onCreate({ imageUrl, price, weight, speed, about }) {
+    let isValid = true;
 
-// async function onCreate({ make, model, year, description, price, img }) {
-//     let isValid = true;
+    isValid = validateForm(imageUrl, price, weight, speed, about, isValid);
 
-//     isValid = validateForm(make, model, year, description, price, img, isValid);
+    if (isValid == false) {
+        alert("All fields are required!")
+        return;
+    }
 
-//     if (isValid == false) {
-//         return;
-//     }
+    await createCar({imageUrl, price, weight, speed, about});
 
-//     await createFurniture();
+    page.redirect('/dashboard');
 
-//     page.redirect('/catalog');
-
-// }
+}
