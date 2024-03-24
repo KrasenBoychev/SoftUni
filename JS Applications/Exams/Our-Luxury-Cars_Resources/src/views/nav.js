@@ -22,7 +22,7 @@ const userNavTemplate = () => html`
 
           <!-- Logged-in users -->
           <div class="user">
-            <a href="/add-your-car">Add Your Car</a>
+            <a href="/create">Add Your Car</a>
             <a href="javascript:void(0)" @click=${onLogout}>Logout</a>
         </div>
 `;

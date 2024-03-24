@@ -1,6 +1,7 @@
 import { createCar, validateForm } from "../data/cars.js";
 import { html, page, renderContent } from "../lib.js";
 import { createSubmitHandler } from "../util.js";
+import { showNav } from "./nav.js";
 
 const createCarTemplate = (onCreate) => html`
     <section id="create">
@@ -47,6 +48,8 @@ const createCarTemplate = (onCreate) => html`
 
 export function showCreate() {
     renderContent(createCarTemplate(createSubmitHandler(onCreate)));
+
+    showNav();
 }
 
 async function onCreate({ model, imageUrl, price, weight, speed, about }) {

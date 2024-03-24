@@ -32,7 +32,7 @@ const noCarsTemplate = () => html`
 export async function showOurCars() {
     const cars = await getCars();
 
-    if (cars) {
+    if (cars.length > 0) {
         renderContent(ourCarsTemplate(cars));
     } else {
         renderContent(noCarsTemplate());

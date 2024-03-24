@@ -11,7 +11,7 @@ page('/', showHome);
 page('/login', showLogin);
 page('/register', showRegister);
 page('/dashboard', showOurCars);
-page('/add-your-car', showCreate);
+page('/create', showCreate);
 page('/details/:id', showDetails);
 page('/edit/:id', showEdit);
 
