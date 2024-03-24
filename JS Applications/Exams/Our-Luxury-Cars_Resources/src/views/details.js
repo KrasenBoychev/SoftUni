@@ -1,59 +1,51 @@
-// import { getFurnitureById, deleteFurniture } from "../data/furniture.js";
-// import { html, page, renderContent } from "../lib.js";
-// import { getUserData } from "../util.js";
+import { getCarById } from "../data/cars.js";
+import { html, page, renderContent } from "../lib.js";
+import { getUserData } from "../util.js";
 
-// const detailsTemplate = (furniture, isOwner) => html`
-//     <div class="row space-top">
-//             <div class="col-md-12">
-//                 <h1>Furniture Details</h1>
-//             </div>
-//         </div>
-//         <div class="row space-top">
-//             <div class="col-md-4">
-//                 <div class="card text-white bg-primary">
-//                     <div class="card-body">
-//                         <img src="${(furniture.img).slice(1)}" />
-//                     </div>
-//                 </div>
-//             </div>
-//             <div class="col-md-4">
-//                 <p>Make: <span>${furniture.make}</span></p>
-//                 <p>Model: <span>${furniture.model}</span></p>
-//                 <p>Year: <span>${furniture.year}</span></p>
-//                 <p>Description: <span>${furniture.description}</span></p>
-//                 <p>Price: <span>${furniture.price}</span></p>
-//                 <p>Material: <span>${furniture.material}</span></p>
-//                 <div>
-//                     ${isOwner ? 
-//                         html`
-//                         <a href="/catalog/${furniture._id}/edit" class="btn btn-info">Edit</a>
-//                         <a href="#" class="btn btn-red" @click=${deleteItem}>Delete</a>
-//                         `
-//                       : html``
-//                     }
-//                 </div>
-//             </div>
-//         </div>
-// `;
+const detailsTemplate = (car, isOwner) => html`
+    <section id="details">
+          <div id="details-wrapper">
+            <img id="details-img" src="${car.imageUrl}" alt="example1" />
+            <p id="details-title">${car.model}</p>
+            <div id="info-wrapper">
+              <div id="details-description">
+                <p class="price">Price: €${car.price}</p>
+                <p class="weight">Weight: ${car.weight} kg</p>
+                <p class="top-speed">Top Speed: ${car.speed} kph</p>
+                <p id="car-description">${car.about}</p>
+              </div>
+              <!--Edit and Delete are only for creator-->
+              ${isOwner ? html`
+                            <div id="action-buttons">
+                                <a href="" id="edit-btn">Edit</a>
+                                <a href="" id="delete-btn">Delete</a>
+                             </div> `
+                        : ""
+                }
+             
+            </div>
+          </div>
+        </section>
+`;
 
-// let furnitureId = null;
+let carId = null;
 
-// export async function showDetails(ctx) {
-//     const id = ctx.params.furnitureId;
-//     furnitureId = id;
-//     const furniture = await getFurnitureById(furnitureId);
+export async function showDetails(ctx) {
+    const id = ctx.params.id;
+    carId = id;
+    const car = await getCarById(carId);
 
-//     const userData = getUserData();
-//     const isOwner = furniture._ownerId == userData?._id;
+    const userData = getUserData();
+    const isOwner = car._ownerId == userData?._id;
 
-//     renderContent(detailsTemplate(furniture, isOwner));
-// }
+    renderContent(detailsTemplate(car, isOwner));
+}
 
-// async function deleteItem() {
-//     alert('Are you sure you want to delete this item?');
+async function deleteItem() {
+    alert('Are you sure you want to delete this item?');
 
-//     await deleteFurniture(furnitureId);
+    await deleteFurniture(furnitureId);
 
-//     page.redirect('/catalog');
-// }
+    page.redirect('/');
+}
 
