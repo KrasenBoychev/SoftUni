@@ -16,6 +16,10 @@ export function editCarById(id, data) {
     return put('/data/cars/' + id, data);
 }
 
+export function deleteCarById(id) {
+    return del('/data/cars/' + id);
+}
+
 export function validateForm(model, imageUrl, price, weight, speed, about, isValid) {
     if (!model || !imageUrl || !price || !weight || !speed || !about) {
         isValid = false;

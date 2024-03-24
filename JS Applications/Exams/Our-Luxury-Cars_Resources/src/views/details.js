@@ -1,5 +1,5 @@
-import { getCarById } from "../data/cars.js";
-import { html, page, renderContent } from "../lib.js";
+import { getCarById, deleteCarById } from "../data/cars.js";
+import { html, renderContent } from "../lib.js";
 import { getUserData } from "../util.js";
 
 const detailsTemplate = (car, isOwner) => html`
@@ -18,7 +18,7 @@ const detailsTemplate = (car, isOwner) => html`
               ${isOwner ? html`
                             <div id="action-buttons">
                                 <a href="/edit/${car._id}" id="edit-btn">Edit</a>
-                                <a href="" id="delete-btn">Delete</a>
+                                <a href="/dashboard" id="delete-btn" @click=${deleteCar}>Delete</a>
                              </div> `
                         : ""
                 }
@@ -41,11 +41,9 @@ export async function showDetails(ctx) {
     renderContent(detailsTemplate(car, isOwner));
 }
 
-async function deleteItem() {
+async function deleteCar() {
     alert('Are you sure you want to delete this item?');
 
-    await deleteFurniture(furnitureId);
-
-    page.redirect('/');
+    await deleteCarById(carId);
 }
 
