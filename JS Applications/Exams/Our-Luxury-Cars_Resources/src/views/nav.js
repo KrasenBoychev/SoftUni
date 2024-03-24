@@ -15,11 +15,10 @@ const guestNavTemplate = () => html`
 `;
 
 const userNavTemplate = () => html`
-        <div>
+          <div>
             <a href="/dashboard">Our Cars</a>
             <a href="/search">Search</a>
           </div>
-
           <!-- Logged-in users -->
           <div class="user">
             <a href="/create">Add Your Car</a>
