@@ -4,7 +4,7 @@ import { logout } from "../data/users.js";
 
 const guestNavTemplate = () => html`
           <div>
-            <a href="/our-cars">Our Cars</a>
+            <a href="/dashboard">Our Cars</a>
             <a href="/search">Search</a>
           </div>
            <!-- Guest users -->
@@ -16,7 +16,7 @@ const guestNavTemplate = () => html`
 
 const userNavTemplate = () => html`
         <div>
-            <a href="/our-cars">Our Cars</a>
+            <a href="/dashboard">Our Cars</a>
             <a href="/search">Search</a>
           </div>
 
