@@ -1,85 +1,81 @@
-// import { validateForm, editFurniture, getFurnitureById } from "../data/furniture.js";
-// import { html, page, renderContent } from "../lib.js";
-// import { createSubmitHandler } from "../util.js";
+import { editCarById, getCarById, validateForm } from "../data/cars.js";
+import { html, page, renderContent } from "../lib.js";
+import { createSubmitHandler } from "../util.js";
 
-// const editItemTemplate = (onEdit) => html`
-// <div class="row space-top">
-//             <div class="col-md-12">
-//                 <h1>Edit Furniture</h1>
-//                 <p>Please fill all fields.</p>
-//             </div>
-//         </div>
-//         <form @submit=${onEdit}>
-//             <div class="row space-top">
-//                 <div class="col-md-4">
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-make">Make</label>
-//                         <input class="form-control" id="new-make" type="text" name="make" value="">
-//                     </div>
-//                     <div class="form-group has-success">
-//                         <label class="form-control-label" for="new-model">Model</label>
-//                         <input class="form-control" id="new-model" type="text" name="model" value="">
-//                     </div>
-//                     <div class="form-group has-danger">
-//                         <label class="form-control-label" for="new-year">Year</label>
-//                         <input class="form-control" id="new-year" type="number" name="year" value="">
-//                     </div>
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-description">Description</label>
-//                         <input class="form-control" id="new-description" type="text" name="description" value="">
-//                     </div>
-//                 </div>
-//                 <div class="col-md-4">
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-price">Price</label>
-//                         <input class="form-control" id="new-price" type="number" name="price" value="">
-//                     </div>
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-image">Image</label>
-//                         <input class="form-control" id="new-image" type="text" name="img" value="">
-//                     </div>
-//                     <div class="form-group">
-//                         <label class="form-control-label" for="new-material">Material (optional)</label>
-//                         <input class="form-control" id="new-material" type="text" name="material" value="">
-//                     </div>
-//                     <input type="submit" class="btn btn-info" value="Edit" />
-//                 </div>
-//             </div>
-//         </form>
-// `;
+const editItemTemplate = (onEdit) => html`
+    <section id="edit">
+          <div class="form form-auto">
+            <h2>Edit Your Car</h2>
+            <form class="edit-form" @submit=${onEdit}>
+              <input type="text" name="model" id="model" placeholder="Model" />
+              <input
+                type="text"
+                name="imageUrl"
+                id="car-image"
+                placeholder="Your Car Image URL"
+              />
+              <input
+                type="text"
+                name="price"
+                id="price"
+                placeholder="Price in Euro"
+              />
+              <input
+                type="number"
+                name="weight"
+                id="weight"
+                placeholder="Weight in Kg"
+              />
+              <input
+                type="text"
+                name="speed"
+                id="speed"
+                placeholder="Top Speed in Kmh"
+              />
+              <textarea
+                id="about"
+                name="about"
+                placeholder="More About The Car"
+                rows="10"
+                cols="50"
+              ></textarea>
+              <button type="submit">Edit</button>
+            </form>
+          </div>
+        </section>
+`;
 
-// let furnitureId = null;
+let carId = null;
 
-// export async function showEdit(ctx) {
-//     renderContent(editItemTemplate(createSubmitHandler(onEdit)));
+export async function showEdit(ctx) {
+    renderContent(editItemTemplate(createSubmitHandler(onEdit)));
 
-//     const id = ctx.params.furnitureId;
-//     furnitureId = id;
-//     const furniture = await getFurnitureById(furnitureId);
+    const id = ctx.params.id;
+    carId = id;
+    const car = await getCarById(carId);
 
-//     document.getElementById('new-make').value = furniture.make;
-//     document.getElementById('new-model').value = furniture.model;
-//     document.getElementById('new-year').value = furniture.year;
-//     document.getElementById('new-description').value = furniture.description;
-//     document.getElementById('new-price').value = furniture.price;
-//     document.getElementById('new-image').value = furniture.img;
-//     document.getElementById('new-material').value = furniture.material;
-// }
+    document.getElementById('model').value = car.model;
+    document.getElementById('car-image').value = car.imageUrl;
+    document.getElementById('price').value = car.price;
+    document.getElementById('weight').value = car.weight;
+    document.getElementById('speed').value = car.speed;
+    document.getElementById('about').value = car.about;
+}
 
-// async function onEdit({ make, model, year, description, price, img, material }) {
+async function onEdit({ model, imageUrl, price, weight, speed, about }) {
 
-//     let isValid = true;
+    let isValid = true;
 
-//     isValid = validateForm(make, model, year, description, price, img, isValid);
+    isValid = validateForm(model, imageUrl, price, weight, speed, about, isValid);
 
-//     if (isValid == false) {
-//         return;
-//     }
+    if (isValid == false) {
+        return;
+    }
 
-//     const data = { make, model, year, description, price, img, material };
+    const data = { model, imageUrl, price, weight, speed, about };
 
-//     await editFurniture(furnitureId, data);
+    await editCarById(carId, data);
 
-//     page.redirect('/catalog');
+    page.redirect(`/details/${carId}`);
 
-// }
+}

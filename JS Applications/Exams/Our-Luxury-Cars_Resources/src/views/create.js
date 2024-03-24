@@ -49,17 +49,17 @@ export function showCreate() {
     renderContent(createCarTemplate(createSubmitHandler(onCreate)));
 }
 
-async function onCreate({ imageUrl, price, weight, speed, about }) {
+async function onCreate({ model, imageUrl, price, weight, speed, about }) {
     let isValid = true;
 
-    isValid = validateForm(imageUrl, price, weight, speed, about, isValid);
+    isValid = validateForm( model, imageUrl, price, weight, speed, about, isValid);
 
     if (isValid == false) {
         alert("All fields are required!")
         return;
     }
 
-    await createCar({imageUrl, price, weight, speed, about});
+    await createCar({model, imageUrl, price, weight, speed, about});
 
     page.redirect('/dashboard');
 

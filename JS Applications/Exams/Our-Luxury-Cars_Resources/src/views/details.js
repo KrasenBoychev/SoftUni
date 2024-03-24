@@ -17,7 +17,7 @@ const detailsTemplate = (car, isOwner) => html`
               <!--Edit and Delete are only for creator-->
               ${isOwner ? html`
                             <div id="action-buttons">
-                                <a href="" id="edit-btn">Edit</a>
+                                <a href="/edit/${car._id}" id="edit-btn">Edit</a>
                                 <a href="" id="delete-btn">Delete</a>
                              </div> `
                         : ""

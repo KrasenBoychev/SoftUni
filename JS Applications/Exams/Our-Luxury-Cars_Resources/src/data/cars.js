@@ -12,8 +12,12 @@ export function createCar(data) {
     return post('/data/cars', data);
 }
 
-export function validateForm(imageUrl, price, weight, speed, about, isValid) {
-    if (!imageUrl || !price || !weight || !speed || !about) {
+export function editCarById(id, data) {
+    return put('/data/cars/' + id, data);
+}
+
+export function validateForm(model, imageUrl, price, weight, speed, about, isValid) {
+    if (!model || !imageUrl || !price || !weight || !speed || !about) {
         isValid = false;
     }
 
