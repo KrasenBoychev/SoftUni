@@ -3,15 +3,28 @@ import { clearUserData, getUserData } from "../util.js";
 import { logout } from "../data/users.js";
 
 const guestNavTemplate = () => html`
-    <a href="/browse-teams" class="action">Browse Teams</a>
-    <a href="/login" class="action">Login</a>
-    <a href="/register" class="action">Register</a>
+          <div>
+            <a href="/our-cars">Our Cars</a>
+            <a href="/search">Search</a>
+          </div>
+           <!-- Guest users -->
+           <div class="guest">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+          </div>
 `;
 
 const userNavTemplate = () => html`
-    <a href="/browse-teams" class="action">Browse Teams</a>
-    <a href="/my-teams" class="action">My Teams</a>
-    <a href="javascript:void(0)" class="action" @click=${onLogout}>Logout</a>
+        <div>
+            <a href="/our-cars">Our Cars</a>
+            <a href="/search">Search</a>
+          </div>
+
+          <!-- Logged-in users -->
+          <div class="user">
+            <a href="/add-your-car">Add Your Car</a>
+            <a href="javascript:void(0)" @click=${onLogout}>Logout</a>
+        </div>
 `;
 
 export function showNav() {
