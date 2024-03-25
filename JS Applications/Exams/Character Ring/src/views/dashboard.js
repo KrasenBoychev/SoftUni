@@ -14,7 +14,7 @@ const characterTemplate = (character) => html`
         <div class="hero-info">
         <h3 class="category">${character.category}</h3>
         <p class="description">${character.description}</p>
-        <a class="details-btn" href="/details/${character._id}">More Info</a>
+        <a class="details-btn" href="/dashboard/${character._id}">More Info</a>
         </div>
     </div>
 `;
