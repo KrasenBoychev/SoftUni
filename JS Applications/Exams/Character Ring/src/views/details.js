@@ -2,46 +2,45 @@ import { getCharacterById, deleteCharacter } from "../data/characters.js";
 import { html, render, page } from "../lib.js";
 import { getUserData } from "../util.js";
 
-const detailsTemplate = (character, isOwner, onDelete) => html`
+const detailsTemplate = (character, hasUser, isOwner, onDelete) => html`
     <section id="details">
     <div id="details-wrapper">
       <img id="details-img" src=${character.imageUrl} alt="example1" />
       <div>
-      <p id="details-category">${character.category}</p>
-      <div id="info-wrapper">
-        <div id="details-description">
-          <p id="description">
-          ${character.description}
-            </p>
-             <p id ="more-info">
-             ${character.moreInfo}
-                  </p>
+        <p id="details-category">${character.category}</p>
+        <div id="info-wrapper">
+            <div id="details-description">
+            <p id="description">${character.description}</p>
+            <p id ="more-info">${character.moreInfo}</p>
+            </div>
         </div>
-      </div>
         <h3>Is This Useful:<span id="likes">0</span></h3>
 
          <!--Edit and Delete are only for creator-->
-         ${isOwner ? html`
+         ${hasUser ? html`
                 <div id="action-buttons">
+                    ${isOwner ? html`
                     <a href="/edit/${character._id}" id="edit-btn">Edit</a>
                     <a href="javascript:void(0)" id="delete-btn" @click=${onDelete}>Delete</a>` : html`
-                    <a href="javascript:void(0)" id="like-btn">Like</a>`}
-                </div>
+                    <a href="javascript:void(0)" id="like-btn">Like</a>`} 
+                </div> `: null}
       </div>
-  </div>
+    </div>
 </section>
 `;
 
 export async function showDetails(ctx) {
     const id = ctx.params.id;
 
-    const user = getUserData();
-
     const character = await getCharacterById(id);
-    
-    const isOwner = user._id == character._ownerId;
 
-    render(detailsTemplate(character, isOwner, onDelete))
+    const user = getUserData();
+    const hasUser = !!user;
+    const isOwner = hasUser && user._id == character._ownerId;
+
+   
+
+    render(detailsTemplate(character, hasUser, isOwner, onDelete))
 
     async function onDelete() {
         const choice = confirm('Are you sure?');
