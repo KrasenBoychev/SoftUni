@@ -1,8 +1,8 @@
 import { getCarById, deleteCarById } from "../data/cars.js";
-import { html, renderContent } from "../lib.js";
+import { html, renderContent, page } from "../lib.js";
 import { getUserData } from "../util.js";
 
-const detailsTemplate = (car, isOwner) => html`
+const detailsTemplate = (car, isOwner, deleteCar) => html`
     <section id="details">
           <div id="details-wrapper">
             <img id="details-img" src="${car.imageUrl}" alt="example1" />
@@ -19,31 +19,30 @@ const detailsTemplate = (car, isOwner) => html`
                             <div id="action-buttons">
                                 <a href="/edit/${car._id}" id="edit-btn">Edit</a>
                                 <a href="/dashboard" id="delete-btn" @click=${deleteCar}>Delete</a>
-                             </div> `
-                        : ""
-                }
-             
+                             </div> ` : null }
             </div>
           </div>
         </section>
 `;
 
-let carId = null;
-
 export async function showDetails(ctx) {
     const id = ctx.params.id;
-    carId = id;
-    const car = await getCarById(carId);
+    const car = await getCarById(id);
 
     const userData = getUserData();
     const isOwner = car._ownerId == userData?._id;
 
-    renderContent(detailsTemplate(car, isOwner));
+    renderContent(detailsTemplate(car, isOwner, deleteCar));
+
+    async function deleteCar() {
+      const choice = confirm('Are you sure?');
+
+      if (choice) {
+        await deleteCarById(id);
+        page.redirect('/dashboard');
+      }
+  }
 }
 
-async function deleteCar() {
-    alert('Are you sure you want to delete this item?');
 
-    await deleteCarById(carId);
-}
 

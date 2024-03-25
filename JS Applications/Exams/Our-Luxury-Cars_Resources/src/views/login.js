@@ -1,6 +1,7 @@
 import { login } from "../data/users.js";
 import { html, page, renderContent } from "../lib.js";
 import { createSubmitHandler } from "../util.js";
+import { showNav } from "./nav.js";
 
 const loginTemplate = (onLogin) => html`
     <section id="login">
@@ -25,6 +26,7 @@ const loginTemplate = (onLogin) => html`
 
 export function showLogin() {
     renderContent(loginTemplate(createSubmitHandler(onLogin)));
+    showNav();
 }
 
 async function onLogin({email, password}) {
