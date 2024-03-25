@@ -50,7 +50,12 @@ async function onCreate(data) {
         return alert('All fields are required!');
     }
 
-    await createCharacter(data);
+    const category = data['category'];
+    const imageUrl = data['image-url'];
+    const description = data['description'];
+    const moreInfo = data['additional-info'];
+
+    await createCharacter({category, imageUrl, description, moreInfo});
     page.redirect('/dashboard');
 
 }
