@@ -20,7 +20,7 @@ const editTemplate = (character, onEdit) => html`
         name="image-url"
         id="image-url"
         placeholder="Image URL"
-        .value=${character['image-url']}
+        .value=${character.imageUrl}
       />
       <textarea
       id="description"
@@ -36,7 +36,7 @@ const editTemplate = (character, onEdit) => html`
       placeholder="Additional Info"
       rows="2"
       cols="10"
-      .value=${character['additional-info']}
+      .value=${character.moreInfo}
     ></textarea>
         <button type="submit">Edit</button>
       </form>
@@ -56,7 +56,12 @@ export async function showEdit(ctx) {
             return alert('All fields are required!');
         }
 
-        await updateCharacter(id, data);
+        const category = data['category'];
+        const imageUrl = data['image-url'];
+        const description = data['description'];
+        const moreInfo = data['additional-info'];
+
+        await updateCharacter(id, {category, imageUrl, description, moreInfo});
         page.redirect('/dashboard/' + id);
     }
 }
