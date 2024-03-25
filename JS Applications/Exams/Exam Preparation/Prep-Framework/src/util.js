@@ -9,3 +9,16 @@ export function getUserData() {
 export function clearUserData() {
     localStorage.removeItem('user');
 }
+
+
+// TODO Add custom validation if needed 
+export function cerateSubmitHandler(callback) {
+    return function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const data = [...formData.entries()].map(([k, v]) => [k, v.trim()]);
+
+        callback(Object.fromEntries(data), event.target);
+    }
+}
