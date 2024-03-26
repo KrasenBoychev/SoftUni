@@ -41,7 +41,7 @@ async function onRegister(data, form) {
         return alert('All fields are required!');
     }
 
-    if (!data['password'] != !data['re-password']) {
+    if (data['password'] != data['re-password']) {
         return alert('Passwords don\'t match!');
     }
 

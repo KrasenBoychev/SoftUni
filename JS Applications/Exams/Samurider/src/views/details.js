@@ -28,9 +28,9 @@ const detailsTemplate = (motorcycle, isOwner, onDelete) => html`
 export async function showDetails(ctx) {
     const id = ctx.params.id;
     const motorcycle = await getMotorcycleById(id);
-    
+  
     const user = getUserData();
-    const isOwner = user._id == motorcycle._ownerId;
+    const isOwner = user?._id == motorcycle._ownerId;
 
     render(detailsTemplate(motorcycle, isOwner, onDelete));
 
