@@ -3,7 +3,8 @@ import { del, get, post, put } from "./request.js";
 const endpoints = {
     dashboard: '/data/motorcycles?sortBy=_createdOn%20desc',
     motorcycles: '/data/motorcycles',
-    motorcycleById: '/data/motorcycles/'
+    motorcycleById: '/data/motorcycles/',
+    filteredMotorcycles: (query) => `/data/motorcycles?where=model%20LIKE%20%22${query}%22`
 }
 
 export async function getAllMotorcycles() {
@@ -24,4 +25,8 @@ export async function updateMotorcycle(id, data) {
 
 export async function deleteMotorcycle(id) {
     return del(endpoints.motorcycleById + id);
+}
+
+export async function filterMotocycles(query) {
+    return get(endpoints.filteredMotorcycles(query));
 }
