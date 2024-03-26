@@ -5,7 +5,7 @@ import { showHome } from "./views/home.js";
 import { showCatalog } from "./views/catalog.js";
 import { showCreate } from "./views/create.js";
 import { showDetails } from "./views/details.js";
-// import { showEdit } from "./views/edit.js";
+import { showEdit } from "./views/edit.js";
 import { showLogin } from "./views/login.js";
 import { showRegister } from "./views/register.js";
 
@@ -17,7 +17,7 @@ page('/login', showLogin);
 page('/register', showRegister);
 page('/create', showCreate);
 page('/catalog/:id', showDetails);
-// page('/edit/:id', showEdit);
+page('/edit/:id', showEdit);
 
 page.start();
 

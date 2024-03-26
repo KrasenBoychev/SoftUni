@@ -38,7 +38,7 @@ export async function showDetails(ctx) {
       const choice = confirm('Are you sure?');
 
       if (choice) {
-        await deleteEvent(id);
+        await deleteMotorcycle(id);
         page.redirect('/catalog');
       }
     }
