@@ -3,7 +3,7 @@ import { page } from "./lib.js";
 import { updateNav } from "./util.js";
 import { showHome } from "./views/home.js";
 import { showCatalog } from "./views/catalog.js";
-// import { showCreate } from "./views/create.js";
+import { showCreate } from "./views/create.js";
 // import { showDetails } from "./views/details.js";
 // import { showEdit } from "./views/edit.js";
 import { showLogin } from "./views/login.js";
@@ -15,7 +15,7 @@ page('/', showHome);
 page('/catalog', showCatalog);
 page('/login', showLogin);
 page('/register', showRegister);
-// page('/create', showCreate);
+page('/create', showCreate);
 // page('/catalog/:id', showDetails);
 // page('/edit/:id', showEdit);
 

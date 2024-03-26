@@ -2,26 +2,26 @@ import { del, get, post, put } from "./request.js";
 
 const endpoints = {
     dashboard: '/data/motorcycles?sortBy=_createdOn%20desc',
-    events: '/data/events',
-    eventById: '/data/events/'
+    motorcycles: '/data/motorcycles',
+    motorcycleById: '/data/motorcycles/'
 }
 
 export async function getAllMotorcycles() {
     return get(endpoints.dashboard);
 }
 
-// export async function getEventById(id) {
-//     return get(endpoints.eventById + id);
-// }
+export async function getAllMotorcycleById(id) {
+    return get(endpoints.motorcycleById + id);
+}
 
-// export async function createEvent(data) {
-//     return post(endpoints.events, data);
-// }
+export async function createMotorcycle(data) {
+    return post(endpoints.motorcycles, data);
+}
 
-// export async function updateEvent(id, data) {
-//     return put(endpoints.eventById + id, data);
-// }
+export async function updateMotorcycle(id, data) {
+    return put(endpoints.motorcycleById + id, data);
+}
 
-// export async function deleteEvent(id) {
-//     return del(endpoints.eventById + id);
-// }
+export async function deleteMotorcycle(id) {
+    return del(endpoints.motorcycleById + id);
+}
