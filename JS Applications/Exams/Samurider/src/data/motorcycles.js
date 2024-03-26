@@ -10,7 +10,7 @@ export async function getAllMotorcycles() {
     return get(endpoints.dashboard);
 }
 
-export async function getAllMotorcycleById(id) {
+export async function getMotorcycleById(id) {
     return get(endpoints.motorcycleById + id);
 }
 
