@@ -1,74 +1,49 @@
-// import { updateEvent, getEventById } from "../data/events.js";
-// import { html, render, page  } from "../lib.js";
-// import { createSubmitHandler } from "../util.js";
+import { updateGame, getGameById } from '../data/games.js';
+import { html, render, page  } from '../lib.js';
+import { createSubmitHandler } from '../util.js';
 
-// const editTemplate = (event, onEdit) => html`
-//     <section id="edit">
-//     <div class="form">
-//       <h2>Edit Event</h2>
-//       <form class="edit-form" @submit=${onEdit}>
-//         <input
-//           type="text"
-//           name="name"
-//           id="name"
-//           placeholder="Event"
-//           .value =${event.name}
-//         />
-//         <input
-//           type="text"
-//           name="imageUrl"
-//           id="event-image"
-//           placeholder="Event Image"
-//           .value =${event.imageUrl}
-//         />
-//         <input
-//           type="text"
-//           name="category"
-//           id="event-category"
-//           placeholder="Category"
-//           .value =${event.category}
-//         />
+const editTemplate = (game, onEdit) => html`
+    <section id="edit-page" class="auth">
+    <form id="edit" @submit=${onEdit}>
+        <div class="container">
 
+            <h1>Edit Game</h1>
+            <label for="leg-title">Legendary title:</label>
+            <input type="text" id="title" name="title" .value=${game.title}>
 
-//         <textarea
-//           id="event-description"
-//           name="description"
-//           placeholder="Description"
-//           rows="5"
-//           cols="50"
-//           .value =${event.description}
-//         ></textarea>
-        
-//         <label for="date-and-time">Event Time:</label>
-//         <input
-//         type="text"
-//         name="date"
-//         id="date"
-//         placeholder="When?"
-//         .value =${event.date}
-//       />
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" .value=${game.category}>
 
-//         <button type="submit">Edit</button>
-//       </form>
-//     </div>
-//   </section>
-// `;
+            <label for="levels">MaxLevel:</label>
+            <input type="number" id="maxLevel" name="maxLevel" min="1" .value=${game.maxLevel}>
 
-// export async function showEdit(ctx) {
-//   const id = ctx.params.id;
-//   const event = await getEventById(id);
+            <label for="game-img">Image:</label>
+            <input type="text" id="imageUrl" name="imageUrl" .value=${game.imageUrl}>
 
-//   render(editTemplate(event, createSubmitHandler(onEdit)));
+            <label for="summary">Summary:</label>
+            <textarea name="summary" id="summary" .value=${game.summary}></textarea>
+            <input class="btn submit" type="submit" value="Edit Game">
 
-//   async function onEdit({name, imageUrl, category, description, date}, form){
-//     if (!name || !imageUrl || !category || !description || !date) {
-//         return alert('All fields are required!');
-//     }
+        </div>
+    </form>
+    </section>
+`;
 
-//     const data = {name, imageUrl, category, description, date};
-//     await updateEvent(id, data);
-//     page.redirect('/catalog/' + id);
-// }
-// }
+export async function showEdit(ctx) {
+  const id = ctx.params.id;
+  const game = await getGameById(id);
+
+  render(editTemplate(game, createSubmitHandler(onEdit)));
+
+  async function onEdit({title, category, maxLevel, imageUrl, summary}){
+    if (!title || !category || !maxLevel || !imageUrl || !summary) {
+        return alert('All fields are required!');
+    }
+
+    const data = {title, category, maxLevel, imageUrl, summary};
+    await updateGame(id, data);
+    page.redirect('/catalog/' + id);
+}
+}
 
 

@@ -24,9 +24,9 @@ export async function getGameById(id) {
 }
 
 
-// export async function updateEvent(id, data) {
-//     return put(endpoints.eventById + id, data);
-// }
+export async function updateGame(id, data) {
+    return put(endpoints.gameById + id, data);
+}
 
 export async function deleteGame(id) {
     return del(endpoints.gameById + id);
