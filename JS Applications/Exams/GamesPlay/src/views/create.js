@@ -1,63 +1,43 @@
-// import { createEvent } from "../data/events.js";
-// import { html, render, page  } from "../lib.js";
-// import { createSubmitHandler } from "../util.js";
+import { createGame } from '../data/games.js';
+import { html, render, page  } from '../lib.js';
+import { createSubmitHandler } from '../util.js';
 
-// const createTemplate = (onCreate) => html`
-//     <section id="create">
-//     <div class="form">
-//       <h2>Add Event</h2>
-//       <form class="create-form" @submit=${onCreate}>
-//         <input
-//           type="text"
-//           name="name"
-//           id="name"
-//           placeholder="Event"
-//         />
-//         <input
-//           type="text"
-//           name="imageUrl"
-//           id="event-image"
-//           placeholder="Event Image URL"
-//         />
-//         <input
-//           type="text"
-//           name="category"
-//           id="event-category"
-//           placeholder="Category"
-//         />
+const createTemplate = (onCreate) => html`
+    <section id="create-page" class="auth">
+    <form id="create" @submit=${onCreate}>
+        <div class="container">
 
+            <h1>Create Game</h1>
+            <label for="leg-title">Legendary title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter game title...">
 
-//         <textarea
-//           id="event-description"
-//           name="description"
-//           placeholder="Description"
-//           rows="5"
-//           cols="50"
-//         ></textarea>
-        
-//         <input
-//         type="text"
-//         name="date"
-//         id="date"
-//         placeholder="When?"
-//       />
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" placeholder="Enter game category...">
 
-//         <button type="submit">Add</button>
-//       </form>
-//     </div>
-//   </section>
-// `;
+            <label for="levels">MaxLevel:</label>
+            <input type="number" id="maxLevel" name="maxLevel" min="1" placeholder="1">
 
-// export function showCreate(ctx) {
-//     render(createTemplate(createSubmitHandler(onCreate)));
-// }
+            <label for="game-img">Image:</label>
+            <input type="text" id="imageUrl" name="imageUrl" placeholder="Upload a photo...">
 
-// async function onCreate({name, imageUrl, category, description, date}, form){
-//     if (!name || !imageUrl || !category || !description || !date) {
-//         return alert('All fields are required!');
-//     }
+            <label for="summary">Summary:</label>
+            <textarea name="summary" id="summary"></textarea>
+            <input class="btn submit" type="submit" value="Create Game">
+        </div>
+    </form>
+    </section>
+`;
 
-//     const data = {name, imageUrl, category, description, date};
-//     await createEvent(data);
-//     page.redirect('/catalog');
-// }
+export function showCreate(ctx) {
+    render(createTemplate(createSubmitHandler(onCreate)));
+}
+
+async function onCreate({title, category, maxLevel, imageUrl, summary}){
+    if (!title || !category || !maxLevel || !imageUrl || !summary) {
+        return alert('All fields are required!');
+    }
+
+    const data = {title, category, maxLevel, imageUrl, summary};
+    await createGame(data);
+    page.redirect('/catalog');
+}
