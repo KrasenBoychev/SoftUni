@@ -4,8 +4,8 @@ const endpoints = {
     allGames: '/data/games?sortBy=_createdOn%20desc',
     topThreeGames: '/data/games?sortBy=_createdOn%20desc&distinct=category',
     games: '/data/games',
-    eventById: '/data/events/'
-}
+    gameById: '/data/games/'
+};
 
 export async function getAllGames() {
     return get(endpoints.allGames);
@@ -19,15 +19,15 @@ export async function createGame(data) {
     return post(endpoints.games, data);
 }
 
-// export async function getEventById(id) {
-//     return get(endpoints.eventById + id);
-// }
+export async function getGameById(id) {
+    return get(endpoints.gameById + id);
+}
 
 
 // export async function updateEvent(id, data) {
 //     return put(endpoints.eventById + id, data);
 // }
 
-// export async function deleteEvent(id) {
-//     return del(endpoints.eventById + id);
-// }
+export async function deleteGame(id) {
+    return del(endpoints.gameById + id);
+}

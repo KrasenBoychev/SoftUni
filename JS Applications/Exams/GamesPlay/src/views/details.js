@@ -1,71 +1,76 @@
-// import { getEventById, deleteEvent } from "../data/events.js";
-// import { getVisitorsByEventId, isGoing, goToEvent } from "../data/going.js";
-// import { html, render, page } from "../lib.js";
-// import { getUserData } from "../util.js";
+import { deleteGame, getGameById } from '../data/games.js';
+import { html, render, page } from '../lib.js';
+import { getUserData } from '../util.js';
 
-// const detailsTemplate = (data, hasUser, isOwner, visitors, isUserGoing, onDelete, onGoing) => html`
-//     <section id="details">
-//     <div id="details-wrapper">
-//       <img id="details-img" src=${data.imageUrl} alt="example1" />
-//       <p id="details-title">${data.name}</p>
-//       <p id="details-category">
-//         Category: <span id="categories">${data.category}</span>
-//       </p>
-//       <p id="details-date">
-//         Date:<span id="date">${data.date}</span></p>
-//       <div id="info-wrapper">
-//         <div id="details-description">
-//           <span>${data.description}</span>
-//         </div>
+const detailsTemplate = (game, isOwner, onDelete) => html`
+    <section id="game-details">
+    <h1>Game Details</h1>
+    <div class="info-section">
 
-//       </div>
+        <div class="game-header">
+            <img class="game-img" src=${game.imageUrl} />
+            <h1>${game.title}</h1>
+            <span class="levels">MaxLevel: ${game.maxLevel}</span>
+            <p class="type">${game.category}</p>
+        </div>
 
-//       <h3>Going: <span id="go">${visitors}</span> times.</h3>
+        <p class="text">${game.summary}</p>
 
-//       <!--Edit and Delete are only for creator-->
-//       ${hasUser ? html`
-//             <div id="action-buttons">
-//                 ${isOwner ? html`
-//                     <a href="/edit/${data._id}" id="edit-btn">Edit</a>
-//                     <a href="javascript:void(0)" id="delete-btn" @click=${onDelete}>Delete</a>` : (!isUserGoing ? html`
-//                     <a href="javascript:void(0)" id="go-btn" @click=${onGoing}>Going</a>` : null) }
-//             </div>` : null }  
-//     </div>
-//   </section>
-// `;
+        <!-- Bonus ( for Guests and Users ) 
+        <div class="details-comments">
+            <h2>Comments:</h2>
+            <ul> -->
 
-// export async function showDetails(ctx) {
-//     const id = ctx.params.id;
+                <!-- list all comments for current game (If any)
+                <li class="comment">
+                    <p>Content: I rate this one quite highly.</p>
+                </li>
+                <li class="comment">
+                    <p>Content: The best game.</p>
+                </li>
+            </ul>  -->
 
-//     const requests = [
-//         getEventById(id),
-//         getVisitorsByEventId(id)
-//     ];
+            <!-- Display paragraph: If there are no games in the database 
+            <p class="no-comment">No comments.</p>
+        </div> -->
 
-//     const user = getUserData();
-//     if (user) {
-//       requests.push(isGoing(id, user._id));
-//     }
+      <!--Edit and Delete are only for creator-->
+      ${isOwner ? html`
+                    <div class="buttons">
+                        <a href="/edit/${game._id}" class="button">Edit</a>
+                        <a href="javascript:void(0)" class="button" @click=${onDelete}>Delete</a>
+                    </div>` : null }  
+    </div>
 
-//     const [event, visitors, isUserGoing] = await Promise.all(requests);
+    <!-- Bonus -->
+    <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) 
+    <article class="create-comment">
+        <label>Add new comment:</label>
+        <form class="form">
+            <textarea name="comment" placeholder="Comment......"></textarea>
+            <input class="btn submit" type="submit" value="Add Comment">
+        </form>
+    </article> -->
 
-//     const hasUser = !!user;
-//     const isOwner = hasUser && user._id == event._ownerId;
+</section>
+`;
 
-//     render(detailsTemplate(event, hasUser, isOwner, visitors, isUserGoing, onDelete, onGoing));
+export async function showDetails(ctx) {
+    const id = ctx.params.id;
+    const game = await getGameById(id);
 
-//     async function onDelete() {
-//       const choice = confirm('Are you sure?');
+    const user = getUserData();
+    const isOwner = user?._id == game._ownerId;
 
-//       if (choice) {
-//         await deleteEvent(id);
-//         page.redirect('/catalog');
-//       }
-//     }
+    render(detailsTemplate(game, isOwner, onDelete));
 
-//     async function onGoing() {
-//       await goToEvent(id);
-//       page.redirect('/catalog/' + id);
-//     }
-// };
+    async function onDelete() {
+      const choice = confirm('Are you sure?');
+
+      if (choice) {
+        await deleteGame(id);
+        page.redirect('/catalog');
+      }
+    }
+};
 
