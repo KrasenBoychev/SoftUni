@@ -6,6 +6,7 @@ import { showCreate } from "./views/create.js";
 import { showDetails } from "./views/details.js";
 import { showHome } from "./views/home.js";
 import { showLogin } from "./views/login.js";
+import { showQuiz } from "./views/quiz.js";
 import { showRegister } from "./views/register.js";
 
 updateUserNav();
@@ -16,6 +17,7 @@ page('/register', showRegister);
 page('/browse', showCatalog);
 page('/create', showCreate);
 page('/details/:id', showDetails);
+page('/quiz/:id', showQuiz);
 
 page.start();
 

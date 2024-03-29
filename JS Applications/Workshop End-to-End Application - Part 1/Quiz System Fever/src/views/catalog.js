@@ -1,6 +1,6 @@
 import { loading } from "../app.js";
 import { getAllQuizzes, getQuizzesfilteredByTitle, getQuizzesfilteredByTopic, getQuizzesfilteredByTopicAndTitle, getUniqueTopics } from "../data/quzzes.js";
-import { html, render, renderFilteredQuizzes } from "../lib.js";
+import { html, render, renderTemplate } from "../lib.js";
 import { createSubmitHandler } from "../util.js";
 
 const catalogTemplate = (uniqueTopics, onFilter) => html`
@@ -56,7 +56,7 @@ export async function showCatalog(ctx) {
     render(catalogTemplate(uniqueTopics.results, createSubmitHandler(onFilter)));
 
     const rootFilteredQuizzes = document.getElementById('browse').querySelector('div');
-    renderFilteredQuizzes(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+    renderTemplate(filterQuizzes(quizzes.results), rootFilteredQuizzes);
 }
 
 
@@ -68,16 +68,16 @@ async function onFilter(data) {
         showCatalog();
 
     } else if (data.query.length == 0) {
-       // renderFilteredQuizzes(loading(), rootFilteredQuizzes);
+       // renderTemplate(loading(), rootFilteredQuizzes);
         const quizzes = await getQuizzesfilteredByTopic(data.topic);
-        renderFilteredQuizzes(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+        renderTemplate(filterQuizzes(quizzes.results), rootFilteredQuizzes);
 
     } else if (data.topic == 'all') {
         const quizzes = await getQuizzesfilteredByTitle(data.query);
-        renderFilteredQuizzes(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+        renderTemplate(filterQuizzes(quizzes.results), rootFilteredQuizzes);
 
     } else {
         const quizzes = await getQuizzesfilteredByTopicAndTitle(data.query, data.topic);
-        renderFilteredQuizzes(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+        renderTemplate(filterQuizzes(quizzes.results), rootFilteredQuizzes);
     }
 }
