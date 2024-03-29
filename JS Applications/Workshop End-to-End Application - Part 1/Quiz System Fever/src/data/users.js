@@ -25,3 +25,7 @@ export async function logout() {
     await promise;
     clearUserData();
 }
+
+export async function getUserName(id) {
+    return await get(endpoints.register + "/" + id);
+}

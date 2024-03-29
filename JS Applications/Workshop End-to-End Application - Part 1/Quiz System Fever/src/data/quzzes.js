@@ -15,6 +15,10 @@ export async function getAllQuizzes() {
     return await get(endpoints.allQuizes);
 }
 
+export async function getQuizById(id) {
+    return get(endpoints.allQuizes + "/" + id);
+}
+
 export async function getLatestQuiz(quizzesToSkip) {
     return await get(endpoints.latestQuiz(quizzesToSkip));
 }

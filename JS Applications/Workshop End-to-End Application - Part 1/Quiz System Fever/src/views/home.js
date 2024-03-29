@@ -1,7 +1,8 @@
 import { getLatestQuiz, getQuizzesCount } from "../data/quzzes.js";
 import { html, render } from "../lib.js";
+import { getUserData } from "../util.js";
 
-const homeTemplate = (latestQuiz, quizzesCount) => html`
+const homeTemplate = (latestQuiz, quizzesCount, userData) => html`
 <section id="welcome">
 
 <div class="hero layout">
@@ -9,7 +10,9 @@ const homeTemplate = (latestQuiz, quizzesCount) => html`
     <div class="glass welcome">
         <h1>Welcome to Quiz Fever!</h1>
         <p>Home to ${quizzesCount} quizes in ?12? topics. <a href="/browse">Browse all quizes</a>.</p>
-        <a class="action cta" href="/login">Sign in to create a quiz</a>
+
+        ${!userData ? html`<a class="action cta" href="/login">Sign in to create a quiz</a>` : null}
+        
     </div>
 </div>
 
@@ -18,7 +21,7 @@ const homeTemplate = (latestQuiz, quizzesCount) => html`
 
     <article class="preview layout">
         <div class="right-col">
-            <a class="action cta" href="#">View Quiz</a>
+            <a class="action cta" href="/details/${latestQuiz.objectId}">View Quiz</a>
         </div>
         <div class="left-col">
             <h3>${latestQuiz.title}</h3>
@@ -44,5 +47,7 @@ export async function showHome(ctx) {
     const latestQuizRequest = await getLatestQuiz(quizzesCount.count - 1);
     const latestQuiz = latestQuizRequest.results[0];
 
-    render(homeTemplate(latestQuiz, quizzesCount.count));
+    const userData = getUserData();
+
+    render(homeTemplate(latestQuiz, quizzesCount.count, userData));
 }
