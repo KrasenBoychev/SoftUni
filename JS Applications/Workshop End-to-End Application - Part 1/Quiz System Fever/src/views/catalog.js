@@ -1,22 +1,49 @@
-import { html, render } from "../lib.js";
+import { getAllQuizzes, getQuizzesfilteredByTitle, getQuizzesfilteredByTopic, getQuizzesfilteredByTopicAndTitle, getUniqueTopics } from "../data/quzzes.js";
+import { html, render, renderFilteredQuizzes } from "../lib.js";
+import { createSubmitHandler } from "../util.js";
 
-const catalogTemplate= () => html`
+const catalogTemplate = (uniqueTopics, onFilter) => html`
     <section id="browse">
           <header class="pad-large">
-              <form class="browse-filter">
+              <form class="browse-filter" @submit=${onFilter}>
                   <input class="input" type="text" name="query">
                   <select class="input" name="topic">
                       <option value="all">All Categories</option>
-                      <option value="it">Languages</option>
-                      <option value="hardware">Hardware</option>
-                      <option value="software">Tools and Software</option>
+                      ${uniqueTopics.map((topic) => option(topic))}
                   </select>
                   <input class="input submit action" type="submit" value="Filter Quizes">
               </form>
               <h1>All quizes</h1>
           </header>
 
-          <div class="pad-large alt-page async">
+          <div class="pad-large alt-page">
+          </div>
+      </section>
+`;
+
+function filterQuizzes(quizzes) {
+    return quizzes.map((quiz) => quizTemplate(quiz));
+}
+
+const quizTemplate = (quiz) => html`
+    <article class="preview layout">
+          <div class="right-col">
+              <a class="action cta" href="/details/${quiz.objectId}">View Quiz</a>
+          </div>
+          <div class="left-col">
+              <h3><a class="quiz-title-link" href="/details/${quiz.objectId}">${quiz.title}</a></h3>
+              <span class="quiz-topic">Topic: ${quiz.topic}</span>
+              <div class="quiz-meta">
+                  <span>${quiz.questionCount} questions</span>
+                  <span>|</span>
+                  <span>Taken ?189? times</span>
+              </div>
+          </div>
+      </article>
+`;
+
+const loading = () => html`
+    <div class="pad-large alt-page async">
               <div class="sk-cube-grid">
                   <div class="sk-cube sk-cube1"></div>
                   <div class="sk-cube sk-cube2"></div>
@@ -29,32 +56,43 @@ const catalogTemplate= () => html`
                   <div class="sk-cube sk-cube9"></div>
               </div>
           </div>
-
-          <div class="pad-large alt-page">
-               TODO:
-               MAP THE QUIZZES -> QUIZ TEMPLATE
-          </div>
-      </section>
 `;
 
-const quizTemplate = () => html`
-    <article class="preview layout">
-          <div class="right-col">
-              <a class="action cta" href="#">View Quiz</a>
-          </div>
-          <div class="left-col">
-              <h3><a class="quiz-title-link" href="#">Webpack</a></h3>
-              <span class="quiz-topic">Topic: Tools and Software</span>
-              <div class="quiz-meta">
-                  <span>17 questions</span>
-                  <span>|</span>
-                  <span>Taken 189 times</span>
-              </div>
-          </div>
-      </article>
+const option = (topic) => html`
+    <option value="${topic}">${topic}</option>
 `;
 
 export async function showCatalog(ctx) {
-    //TODO
-    render(catalogTemplate());
+    render(loading());
+
+    const quizzes = await getAllQuizzes();
+    const uniqueTopics = await getUniqueTopics();
+
+    render(catalogTemplate(uniqueTopics.results, createSubmitHandler(onFilter)));
+
+    const rootFilteredQuizzes = document.getElementById('browse').querySelector('div');
+    renderFilteredQuizzes(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+}
+
+
+
+async function onFilter(data) {
+    const rootFilteredQuizzes = document.getElementById('browse').querySelector('div');
+
+    if (data.query.length == 0 && data.topic == 'all') {
+        showCatalog();
+
+    } else if (data.query.length == 0) {
+       // renderFilteredQuizzes(loading(), rootFilteredQuizzes);
+        const quizzes = await getQuizzesfilteredByTopic(data.topic);
+        renderFilteredQuizzes(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+
+    } else if (data.topic == 'all') {
+        const quizzes = await getQuizzesfilteredByTitle(data.query);
+        renderFilteredQuizzes(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+
+    } else {
+        const quizzes = await getQuizzesfilteredByTopicAndTitle(data.query, data.topic);
+        renderFilteredQuizzes(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+    }
 }

@@ -1,14 +1,14 @@
 import { getLatestQuiz, getQuizzesCount } from "../data/quzzes.js";
 import { html, render } from "../lib.js";
 
-const homeTemplate = (quizzes, quizzesCount) => html`
+const homeTemplate = (latestQuiz, quizzesCount) => html`
 <section id="welcome">
 
 <div class="hero layout">
     <div class="splash right-col"><i class="fas fa-clipboard-list"></i></div>
     <div class="glass welcome">
         <h1>Welcome to Quiz Fever!</h1>
-        <p>Home to 157 quizes in 12 topics. <a href="/browse">Browse all quizes</a>.</p>
+        <p>Home to ${quizzesCount} quizes in ?12? topics. <a href="/browse">Browse all quizes</a>.</p>
         <a class="action cta" href="/login">Sign in to create a quiz</a>
     </div>
 </div>
@@ -21,12 +21,12 @@ const homeTemplate = (quizzes, quizzesCount) => html`
             <a class="action cta" href="#">View Quiz</a>
         </div>
         <div class="left-col">
-            <h3>Extensible Markup Language</h3>
-            <span class="quiz-topic">Topic: Languages</span>
+            <h3>${latestQuiz.title}</h3>
+            <span class="quiz-topic">Topic: ${latestQuiz.topic}</span>
             <div class="quiz-meta">
-                <span>15 questions</span>
+                <span>${latestQuiz.questionCount} questions</span>
                 <span>|</span>
-                <span>Taken 54 times</span>
+                <span>Taken ?54? times</span>
             </div>
         </div>
     </article>
@@ -40,8 +40,9 @@ const homeTemplate = (quizzes, quizzesCount) => html`
 `;
 
 export async function showHome(ctx) {
-  const quizzes = await getLatestQuiz();
-  const quizzesCount = await getQuizzesCount();
+    const quizzesCount = await getQuizzesCount();
+    const latestQuizRequest = await getLatestQuiz(quizzesCount.count - 1);
+    const latestQuiz = latestQuizRequest.results[0];
 
-  render(homeTemplate(quizzes, quizzesCount));
+    render(homeTemplate(latestQuiz, quizzesCount.count));
 }

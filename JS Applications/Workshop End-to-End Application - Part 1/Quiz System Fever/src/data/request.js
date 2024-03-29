@@ -3,6 +3,7 @@ import { clearUserData, getUserData } from "../util.js";
 const host = 'https://parseapi.back4app.com';
 const appId = 'fiPtFxwDTa9tCIC8AXdnyIa8hOPBFvkyhtDW7Rp4';
 const apiKey = 'J1Nuil1pmS4iHolbjbESMkssW0GrQOtn5s7WjfIh';
+const masterKey = '0QdBlZhFD5Km7PyCerxOCqZxiCV648i3GdoeknV1';
 
 async function request(method, url, data) {
    
@@ -10,7 +11,8 @@ async function request(method, url, data) {
         method,
         headers: {
             'X-Parse-Application-Id': appId,
-            'X-Parse-JavaScript-Key': apiKey
+            'X-Parse-JavaScript-Key': apiKey,
+            'X-Parse-Master-Key': masterKey
         }
     };
 

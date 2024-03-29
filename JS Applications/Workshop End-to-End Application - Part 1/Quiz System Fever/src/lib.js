@@ -10,9 +10,14 @@ function render(templateResult) {
     renderBase(templateResult, root);
 }
 
+function renderFilteredQuizzes(templateResult, rootFilteredQuizzes) {
+    renderBase(templateResult, rootFilteredQuizzes);
+}
+
 export {
     html,
     render,
+    renderFilteredQuizzes,
     classMap,
     styleMap,
     page
