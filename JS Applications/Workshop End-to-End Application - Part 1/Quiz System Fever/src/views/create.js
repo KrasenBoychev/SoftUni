@@ -9,8 +9,6 @@ const questions = {};
 let quizTitle = null;
 let quizTopic = null;
 
-let isFinished = false;
-
 const createTemplate = (onCreate, templateToRender, countQuestions) => html`
           <section id="create">
                 <form class="pad-med centered" @submit=${onCreate}>
