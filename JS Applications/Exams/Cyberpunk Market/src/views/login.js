@@ -27,7 +27,7 @@ export function showLogin(ctx) {
     render(loginTemplate(createSubmitHandler(onLogin)));
 }
 
-async function onLogin({email, password}) {
+async function onLogin({email, password}, form) {
     if (!email || !password) {
         return;
     }
