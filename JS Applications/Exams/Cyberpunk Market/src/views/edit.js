@@ -1,5 +1,6 @@
 import { getSingleRecord, updateRecord } from "../data/records.js";
 import { html, render, page  } from "../lib.js";
+import { notify } from "../notification.js";
 import { createSubmitHandler } from "../util.js";
 
 const editTemplate = (record, onEdit) => html`
@@ -59,7 +60,8 @@ export async function showEdit(ctx) {
 
   async function onEdit({item, imageUrl, price, availability, type, description}){
     if (!item || !imageUrl || !price || !availability || !type || !description) {
-      return alert('All fields are required!');
+      notify('All fields are required');
+      return;
   }
 
     const data = {item, imageUrl, price, availability, type, description};

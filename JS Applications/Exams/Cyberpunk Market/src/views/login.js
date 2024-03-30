@@ -1,5 +1,6 @@
 import { login } from "../data/users.js";
 import { html, render, page  } from "../lib.js";
+import { notify } from "../notification.js";
 import { createSubmitHandler, updateNav } from "../util.js";
 
 const loginTemplate = (onLogin) => html`
@@ -27,9 +28,10 @@ export function showLogin(ctx) {
     render(loginTemplate(createSubmitHandler(onLogin)));
 }
 
-async function onLogin({email, password}, form) {
+async function onLogin({email, password}) {
     if (!email || !password) {
-      return alert('All fields are required!');
+      notify('All fields are required');
+      return;
     }
 
     await login(email, password);

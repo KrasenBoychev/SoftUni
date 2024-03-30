@@ -1,5 +1,6 @@
 import { register } from "../data/users.js";
 import { html, render, page  } from "../lib.js";
+import { notify } from "../notification.js";
 import { createSubmitHandler, updateNav } from "../util.js";
 
 const registerTemplate = (onRegister) => html`
@@ -38,10 +39,12 @@ export function showRegister(ctx) {
 
 async function onRegister(data) {
     if (!data['email'] || !data['password']) {
-        return alert('All fields are required!');
+        notify('All fields are required');
+        return;
     }
 
     if (data['password'] != data['re-password']) {
+        notify('Passwords don\'t match!');
         return alert('Passwords don\'t match!');
     }
 
