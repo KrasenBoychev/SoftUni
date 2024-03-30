@@ -29,7 +29,7 @@ export function showLogin(ctx) {
 
 async function onLogin({email, password}, form) {
     if (!email || !password) {
-        return;
+      return alert('All fields are required!');
     }
 
     await login(email, password);

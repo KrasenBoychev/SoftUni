@@ -11,5 +11,13 @@ export async function getListOfRecords() {
 }
 
 export async function createRecord(data) {
-    return await post(endpoints.records, data);
+    await post(endpoints.records, data);
+}
+
+export async function getSingleRecord(id) {
+    return await get(endpoints.records + "/" + id);
+}
+
+export async function deleteRecord(id) {
+    await del(endpoints.records + "/" + id);
 }
