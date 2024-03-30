@@ -21,3 +21,8 @@ export async function getSingleRecord(id) {
 export async function deleteRecord(id) {
     await del(endpoints.records + "/" + id);
 }
+
+export async function updateRecord(id, data) {
+    await put(endpoints.records + "/" + id, data);
+}
+
