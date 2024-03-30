@@ -1,0 +1,8 @@
+[ ] Create page: when a quiz is created redirect to another page and take the quizId from the ctx properties:
+                 in this way I should be able to link the question to the correct quiz 
+                 (instead of taking the last created quiz which can cause a bug);
+
+[ ] Quiz page: fix the issue with the checked boxex (in all questions) when one of the options is clicked
+
+[ ] Quiz page: create an object to store the answers of the user -> use the page number from the url to 
+               link the answer to the question;

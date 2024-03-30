@@ -22,7 +22,7 @@ const detailstemplate = (quiz, ownerId, ownerName, userData) => html`
                             maxime similique reprehenderit rem, officia vero at.</p>
 
                         <div>
-                            ${userData ? html`<a class="cta action" href="/quiz/${quiz.objectId}">Begin Quiz</a>` : null}
+                            ${userData ? html`<a class="cta action" href="/quiz/${quiz.objectId}/1">Begin Quiz</a>` : null}
                         </div>
 
                     </article>
