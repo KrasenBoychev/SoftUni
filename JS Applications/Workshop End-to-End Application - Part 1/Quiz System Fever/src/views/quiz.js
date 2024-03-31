@@ -1,3 +1,4 @@
+import { loading } from "../app.js";
 import { getQuizQuestions } from "../data/questions.js";
 import { getQuizById } from "../data/quzzes.js";
 import { page, html, render, renderTemplate, } from "../lib.js";
@@ -68,7 +69,6 @@ export const questionTemplate = (question, questionsRemaining) => html`
 `;
 
 export async function openQuiz(ctx) {
-
     clearEndpointsValues();
 
     const quizId = ctx.params.id;

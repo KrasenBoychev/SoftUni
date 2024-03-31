@@ -59,8 +59,6 @@ export async function showCatalog(ctx) {
     renderTemplate(filterQuizzes(quizzes.results), rootFilteredQuizzes);
 }
 
-
-
 async function onFilter(data) {
     const rootFilteredQuizzes = document.getElementById('browse').querySelector('div');
 

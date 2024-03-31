@@ -28,70 +28,15 @@ const quizResultsTemplate = (quizDetails) => html`
         </section>
 `;  
 
-const questionTemplate = () => html`
+const questionTemplate = (question, spanClass, iClass, btnText) => html`
 <article class="preview">
-        <span class="s-correct">
-            Question 1
-            <i class="fas fa-check"></i>
+        <span class=${spanClass}>
+            ${question.text}
+            <i class=${iClass}></i>
         </span>
         <div class="right-col">
-            <button class="action">See question</button>
+            <button class="action">${btnText}</button>
         </div>
-    </article>
-
-    <article class="preview">
-        <span class="s-correct">
-            Question 2
-            <i class="fas fa-check"></i>
-        </span>
-        <div class="right-col">
-            <button class="action">See question</button>
-        </div>
-    </article>
-
-    <article class="preview">
-        <span class="s-incorrect">
-            Question 3
-            <i class="fas fa-times"></i>
-        </span>
-        <div class="right-col">
-            <button class="action">Reveal answer</button>
-        </div>
-    </article>
-
-    <article class="preview">
-        <span class="s-incorrect">
-            Question 4
-            <i class="fas fa-times"></i>
-        </span>
-        <div class="right-col">
-            <button class="action">Close</button>
-        </div>
-
-        <div>
-            <p>
-                This is the first question. Veniam unde beatae est ab quisquam quos officia, eius
-                harum accusamus adipisci?
-            </p>
-            <div class="s-answer">
-                <span class="s-incorrect">
-                    This is answer 1
-                    <i class="fas fa-times"></i>
-                    <strong>Your choice</strong>
-                </span>
-            </div>
-            <div class="s-answer">
-                <span class="s-correct">
-                    This is answer 2
-                    <i class="fas fa-check"></i>
-                    <strong>Correct answer</strong>
-                </span>
-            </div>
-            <div class="s-answer">
-                <span>
-                    This is answer 3
-                </span>
-            </div>
     </article>
 `;
 
@@ -100,8 +45,29 @@ export function showQuizResults(ctx) {
 }
 
 function quizDetails() {
-    //TODO
-
     const root = document.getElementById('quiz-details-questions');
-    renderTemplate(questionTemplate(), root);
+    renderTemplate(renderQuestions(), root);
+}
+
+function renderQuestions() {
+    let countQuestion = 1;
+
+    return endpoints.questions.results.map(question => {
+        let spanClass = null;
+        let iClass = null;
+        let btnText = null;
+
+        if (endpoints.userAnswers[countQuestion].isCorrect == true) {
+            spanClass = "s-correct";
+            iClass = "fas fa-check";
+            btnText = "See question";
+
+        } else {
+            spanClass = "s-incorrect";
+            iClass = "fas fa-times";
+            btnText = "Reveal answer";
+        }
+
+        countQuestion++;
+        return questionTemplate(question, spanClass, iClass, btnText)})
 }
