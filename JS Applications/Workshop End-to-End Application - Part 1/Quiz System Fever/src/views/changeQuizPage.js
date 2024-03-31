@@ -1,12 +1,13 @@
 import { page, html, render, renderTemplate, } from "../lib.js";
 import { quizTemplate, questionTemplate, endpoints } from "./quiz.js";
 
-export let quizInfo = {};
-
 export function showQuizPage(ctx) {
-    //const question = endpoints.questions.results[endpoints.currentQuestion - 1];
-    const question = endpoints.questions.results[endpoints.currentQuestion];
+    if (ctx) {
+        endpoints.currentQuestion = Number(ctx.params.qId);
+    }
 
+    const question = endpoints.questions.results[endpoints.currentQuestion - 1];
+   
     if (endpoints.lastQuestion != null) {
         const previousQuestion = endpoints.questions.results[endpoints.lastQuestion - 1];
         const correctIndex = previousQuestion.correctIndex;
@@ -15,15 +16,15 @@ export function showQuizPage(ctx) {
 
     endpoints.lastQuestion = endpoints.currentQuestion;
     render(quizTemplate(endpoints.quiz));
-    showQuestion(question, endpoints.totalQuestions, endpoints.quizIdGlobal);
+    showQuestion(question, endpoints.totalQuestions);
     tickTheUserAnswer();
 }
 
-function showQuestion(question, questionCount, quizId) {
+function showQuestion(question, questionCount) {
     const root = document.querySelector('article[class="question"]');
-    const questionsRemaining = (questionCount - Object.keys(endpoints.userAnswers).length) - 1;
+    const questionsRemaining = (questionCount - Object.keys(endpoints.userAnswers).length);
 
-    renderTemplate(questionTemplate(question, questionsRemaining, quizId), root);
+    renderTemplate(questionTemplate(question, questionsRemaining), root);
 }
 
 function showQIndex(questionCount, quizId) {
@@ -86,7 +87,6 @@ function tickTheUserAnswer() {
 }
 
 function nextAnswer() {
-    
     if (endpoints.currentQuestion == endpoints.totalQuestions) {
         return;
     }
@@ -101,21 +101,17 @@ function previousAnswer() {
 }
 
 function startOver() {
-    endpoints.currentQuestion = null;
     endpoints.lastQuestion = null;
-    endpoints.totalQuestions = null;
+    endpoints.currentQuestion = 1;
     endpoints.correctAnswers = 0;
-    endpoints.userAnswers = {}
+    endpoints.userAnswers = {};
 
     page.redirect(`/quiz/${endpoints.quizIdGlobal}/1`);
 }
 
 
 async function submitAnswers() {
-    const questions = await getQuizQuestions(endpoints.quizIdGlobal);
-    const question = questions.results[endpoints.currentQuestion - 1];
-    const correctIndex = question.correctIndex;
-
+    const correctIndex = endpoints.questions.results[endpoints.currentQuestion - 1].correctIndex;
     checkAnswer(correctIndex);
 
     if (Object.keys(endpoints.userAnswers).length < endpoints.totalQuestions) {
@@ -123,16 +119,9 @@ async function submitAnswers() {
     }
 
     let percentageCorrectAnswers = (endpoints.correctAnswers / endpoints.totalQuestions) * 100;
-    quizInfo['correctAnswers'] = percentageCorrectAnswers;
+    endpoints.percentageCorrectAnswers = percentageCorrectAnswers;
 
     page.redirect(`/results/${endpoints.quizIdGlobal}`);
-
-    endpoints.correctAnswers = 0;
-    endpoints.currentQuestion = null;
-    endpoints.lastQuestion = null;
-    endpoints.totalQuestions = null;
-    endpoints.quizIdGlobal = null;
-    endpoints.userAnswers = {};
 }
 
 export {

@@ -6,11 +6,12 @@ import { showQIndex, nextAnswer, previousAnswer, startOver, submitAnswers, showQ
 export const endpoints = {
     quiz: null,
     questions: null,
-    correctAnswers: 0,
-    currentQuestion: 1,
+    quizIdGlobal: null,
     lastQuestion: null,
     totalQuestions: null,
-    quizIdGlobal: null,
+    percentageCorrectAnswers: null,
+    correctAnswers: 0,
+    currentQuestion: 1,
     userAnswers: {}
 }
 
@@ -67,6 +68,9 @@ export const questionTemplate = (question, questionsRemaining) => html`
 `;
 
 export async function openQuiz(ctx) {
+
+    clearEndpointsValues();
+
     const quizId = ctx.params.id;
     const currentQuiz = await getQuizById(quizId);
     const questionCount = currentQuiz.questionCount;
@@ -78,4 +82,16 @@ export async function openQuiz(ctx) {
     endpoints.questions = allQuestions;
 
     showQuizPage();    
+}
+
+export function clearEndpointsValues() {
+    endpoints.quiz = null;
+    endpoints.questions = null;
+    endpoints.quizIdGlobal = null;
+    endpoints.lastQuestion = null;
+    endpoints.totalQuestions = null;
+    endpoints.percentageCorrectAnswers = null;
+    endpoints.correctAnswers = 0;
+    endpoints.currentQuestion = 1;
+    endpoints.userAnswers = {};
 }

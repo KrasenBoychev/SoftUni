@@ -1,22 +1,23 @@
 import { page, html, render, renderTemplate, } from "../lib.js";
-//import { quizInfo } from "./quiz.js";
+import { endpoints } from "./quiz.js";
+
 
 const quizResultsTemplate = () => html`
     <section id="summary">
         <div class="hero layout">
             <article class="details glass">
                 <h1>Quiz Results</h1>
-                <h2>Extensible Markup Language</h2>
+                <h2>${endpoints.quiz.title}</h2>
 
                 <div class="summary summary-top">
-                    ${quizInfo.correctAnswers}%
+                    ${endpoints.percentageCorrectAnswers}%
                 </div>
 
                 <div class="summary">
-                    12/15 correct answers
+                    ${endpoints.correctAnswers}/${endpoints.totalQuestions} correct answers
                 </div>
 
-                <a class="action cta" href="#"><i class="fas fa-sync-alt"></i> Retake Quiz</a>
+                <a class="action cta" href="/quiz/${endpoints.quizIdGlobal}"><i class="fas fa-sync-alt"></i> Retake Quiz</a>
                 <a class="action cta" href="#"><i class="fas fa-clipboard-list"></i> See Details</a>
 
             </article>
