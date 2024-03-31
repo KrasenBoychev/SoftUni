@@ -7,7 +7,7 @@ export function showQuizPage(ctx) {
     }
 
     const question = endpoints.questions.results[endpoints.currentQuestion - 1];
-   
+
     if (endpoints.lastQuestion != null) {
         const previousQuestion = endpoints.questions.results[endpoints.lastQuestion - 1];
         const correctIndex = previousQuestion.correctIndex;
@@ -31,7 +31,7 @@ function showQIndex(questionCount, quizId) {
     let result = [];
 
     for (let i = 1; i <= questionCount; i++) {
-        
+
         if (i == endpoints.currentQuestion) {
             result.push(html`<a class="q-index q-current" href="/quiz/${quizId}/${i}"></a>`);
 
@@ -50,6 +50,7 @@ function checkAnswer(correctIndex) {
     const inputs = document.getElementById('options-answers').querySelectorAll('input');
 
     let userOption = null;
+    let isCorrect = false;
 
     for (let i = 0; i <= 2; i++) {
         if (inputs[i].checked == true) {
@@ -57,12 +58,19 @@ function checkAnswer(correctIndex) {
 
             if (correctIndex == (userOption + 1)) {
                 endpoints.correctAnswers++;
+                isCorrect = true;
+            }
+
+            if (endpoints.lastQuestion in endpoints.userAnswers) {
+                if (endpoints.userAnswers[endpoints.lastQuestion].isCorrect == true) {
+                    endpoints.correctAnswers--;
+                }
             }
         }
     }
 
     if (userOption != null) {
-        endpoints.userAnswers[endpoints.lastQuestion] = userOption;
+        endpoints.userAnswers[endpoints.lastQuestion] = { userOption, isCorrect };
     }
 }
 
@@ -76,7 +84,7 @@ function tickTheUserAnswer() {
 
     } else {
         for (let i = 0; i <= 2; i++) {
-            if (i == endpoints.userAnswers[endpoints.currentQuestion]) {
+            if (i == endpoints.userAnswers[endpoints.currentQuestion].userOption) {
                 inputs[i].checked = true;
 
             } else {
@@ -126,8 +134,8 @@ async function submitAnswers() {
 
 export {
     showQIndex,
-    nextAnswer, 
+    nextAnswer,
     previousAnswer,
-    startOver, 
+    startOver,
     submitAnswers
 }

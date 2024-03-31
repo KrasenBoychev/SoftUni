@@ -23,6 +23,7 @@ page('/quiz/:id', openQuiz);
 page('/quiz/:id/:qId', showQuizPage);
 page('/results/:id', showQuizResults);
 
+
 page.start();
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
