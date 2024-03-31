@@ -1,15 +1,15 @@
-import { getLatestQuiz, getQuizzesCount } from "../data/quzzes.js";
+import { getLatestQuiz, getQuizzesCount, getUniqueTopics } from "../data/quzzes.js";
 import { html, render } from "../lib.js";
 import { getUserData } from "../util.js";
 
-const homeTemplate = (latestQuiz, quizzesCount, userData) => html`
+const homeTemplate = (latestQuiz, quizzesCount, countTopics, userData) => html`
 <section id="welcome">
 
 <div class="hero layout">
     <div class="splash right-col"><i class="fas fa-clipboard-list"></i></div>
     <div class="glass welcome">
         <h1>Welcome to Quiz Fever!</h1>
-        <p>Home to ${quizzesCount} quizes in ?12? topics. <a href="/browse">Browse all quizes</a>.</p>
+        <p>Home to ${quizzesCount} quizes in ${countTopics} topics. <a href="/browse">Browse all quizes</a>.</p>
 
         ${!userData ? html`<a class="action cta" href="/login">Sign in to create a quiz</a>` : null}
         
@@ -46,8 +46,10 @@ export async function showHome(ctx) {
     const quizzesCount = await getQuizzesCount();
     const latestQuizRequest = await getLatestQuiz(quizzesCount.count - 1);
     const latestQuiz = latestQuizRequest.results[0];
+    const uniqueTopics = await getUniqueTopics();
+    const countTopics = uniqueTopics.results.length;
 
     const userData = getUserData();
 
-    render(homeTemplate(latestQuiz, quizzesCount.count, userData));
+    render(homeTemplate(latestQuiz, quizzesCount.count, countTopics, userData));
 }

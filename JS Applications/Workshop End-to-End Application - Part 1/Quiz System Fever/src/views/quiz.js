@@ -1,16 +1,23 @@
 import { getQuizQuestions } from "../data/questions.js";
 import { getQuizById } from "../data/quzzes.js";
 import { page, html, render, renderTemplate, } from "../lib.js";
+import { showQIndex, nextAnswer, previousAnswer, startOver, submitAnswers, showQuizPage } from "./changeQuizPage.js";
 
-let currentQuestion = null;
-let totalQuestions = null;
-let quizIdGlobal = null;
-let correctAnswers = 0;
+export const endpoints = {
+    quiz: null,
+    questions: null,
+    correctAnswers: 0,
+    currentQuestion: 1,
+    lastQuestion: null,
+    totalQuestions: null,
+    quizIdGlobal: null,
+    userAnswers: {}
+}
 
-const quizTemplate = (quiz) => html`
+export const quizTemplate = (quiz) => html`
         <section id="quiz">
                 <header class="pad-large">
-                    <h1>${quiz.title}: Question ${currentQuestion} / ${quiz.questionCount}</h1>
+                    <h1>${quiz.title}: Question ${endpoints.currentQuestion} / ${quiz.questionCount}</h1>
                     <nav class="layout q-control">
                         <span class="block">Question index</span>
                         ${showQIndex(quiz.questionCount, quiz.objectId)}
@@ -25,7 +32,7 @@ const quizTemplate = (quiz) => html`
             </section>
 `;
 
-const questionTemplate = (question, questionCount) => html`
+export const questionTemplate = (question, questionsRemaining) => html`
         <p class="q-text">
             ${question.text}
         </p>
@@ -49,7 +56,7 @@ const questionTemplate = (question, questionCount) => html`
         </div>
 
         <nav class="q-control">
-            <span class="block">${questionCount - currentQuestion} questions remaining</span>
+            <span class="block">${questionsRemaining} questions remaining</span>
             <a class="action" href="javascript:void(0)" @click=${previousAnswer}><i class="fas fa-arrow-left"></i> Previous</a>
             <a class="action" href="javascript:void(0)" @click=${startOver}><i class="fas fa-sync-alt"></i> Start over</a>
             <div class="right-col">
@@ -59,101 +66,16 @@ const questionTemplate = (question, questionCount) => html`
         </nav>
 `;
 
-export async function showQuiz(ctx) {
+export async function openQuiz(ctx) {
     const quizId = ctx.params.id;
-    currentQuestion = Number(ctx.params.qId);
+    const currentQuiz = await getQuizById(quizId);
+    const questionCount = currentQuiz.questionCount;
+    const allQuestions = await getQuizQuestions(quizId);
 
-    const quiz = await getQuizById(quizId);
+    endpoints.totalQuestions = questionCount;
+    endpoints.quizIdGlobal = quizId;
+    endpoints.quiz = currentQuiz;
+    endpoints.questions = allQuestions;
 
-    const questions = await getQuizQuestions(quizId);
-    const question = questions.results[currentQuestion - 1];
-    const questionCount = quiz.questionCount;
-
-    totalQuestions = questionCount;
-    quizIdGlobal = quizId;
-
-    render(quizTemplate(quiz));
-    showQuestion(question, questionCount, quizId);
-
-    //Test -> delete later
-    const inputs = document.getElementById('options-answers').querySelectorAll('input');
-
-    for (const input of inputs) {
-        input.checked = false;
-    }
+    showQuizPage();    
 }
-
-function showQuestion(question, questionCount) {
-    const root = document.querySelector('article[class="question"]');
-    renderTemplate(questionTemplate(question, questionCount), root);
-
-
-}
-
-function showQIndex(questionCount, quizId) {
-    let result = [];
-
-    for (let i = 1; i <= questionCount; i++) {
-        if (i < currentQuestion) {
-            result.push(html`<a class="q-index q-answered" href="/quiz/${quizId}/${i}"></a>`);
-
-        } else if (i == currentQuestion) {
-            result.push(html`<a class="q-index q-current" href="/quiz/${quizId}/${i}"></a>`);
-
-        } else {
-            result.push(html`<a class="q-index" href="/quiz/${quizId}/${i}"></a>`);
-        }
-    }
-    return result;
-}
-
-function submitAnswers() {
-
-}
-
-function startOver() {
-    currentQuestion = null;
-    totalQuestions = null;
-    correctAnswers = 0;
-
-    page.redirect(`/quiz/${quizIdGlobal}/1`);
-}
-
-function nextAnswer() {
-    if (currentQuestion == totalQuestions) {
-        return;
-    }
-
-    //checkAnswer();
-
-    page.redirect(`/quiz/${quizIdGlobal}/${currentQuestion + 1}`);
-}
-
-function previousAnswer() {
-    if (currentQuestion == 1) {
-        return;
-    }
-    page.redirect(`/quiz/${quizIdGlobal}/${currentQuestion - 1}`);
-}
-
-// function checkAnswer() {
-//     const inputs = document.getElementById('options-answers').querySelectorAll('input');
-//     let hasAnswer = false;
-
-//     for (let i = 0; i <= 2; i++) {
-//         if (inputs[i].checked == true) {
-//             hasAnswer = true;
-//         }
-//     }
-
-//     if (hasAnswer == false) {
-//         return;
-//     }
-// }
-
-
-
-
-
-
-

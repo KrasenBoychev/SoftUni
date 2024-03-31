@@ -2,12 +2,13 @@ import { logout } from "./data/users.js";
 import { page, html } from "./lib.js";
 import { updateUserNav } from "./util.js";
 import { showCatalog } from "./views/catalog.js";
+import { showQuizPage } from "./views/changeQuizPage.js";
 import { showCreate } from "./views/create.js";
 import { showDetails } from "./views/details.js";
 import { showHome } from "./views/home.js";
 import { showLogin } from "./views/login.js";
-//import { loadQuiz } from "./views/quiz-middleware.js";
-import { showQuiz } from "./views/quiz.js";
+import { showQuizResults } from "./views/quiz-results.js";
+import { openQuiz } from "./views/quiz.js";
 import { showRegister } from "./views/register.js";
 
 updateUserNav();
@@ -18,8 +19,9 @@ page('/register', showRegister);
 page('/browse', showCatalog);
 page('/create', showCreate);
 page('/details/:id', showDetails);
-//page('/quiz/:id', showQuiz);
-page('/quiz/:id/:qId', showQuiz);
+page('/quiz/:id', openQuiz);
+page('/quiz/:id/:qId', showQuizPage);
+page('/results/:id', showQuizResults);
 
 page.start();
 

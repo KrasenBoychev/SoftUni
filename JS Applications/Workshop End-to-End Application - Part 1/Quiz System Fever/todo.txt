@@ -2,7 +2,21 @@
                  in this way I should be able to link the question to the correct quiz 
                  (instead of taking the last created quiz which can cause a bug);
 
-[ ] Quiz page: fix the issue with the checked boxex (in all questions) when one of the options is clicked
+[ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation -> 
+               have to reset the endpoints
 
-[ ] Quiz page: create an object to store the answers of the user -> use the page number from the url to 
+[x] Quiz page: TODO: count correct answers
+
+[x] Quiz page: TODO: function "submitAnswers"
+
+[x] Home page: show the correct number of topics
+
+[x] Quiz page: fix "questions remaining"
+
+[x] Quiz page: rework 'showQIndex' function -> changing links don't show correctly the answersed questions
+
+
+[x] Quiz page: fix the issue with the checked boxex (in all questions) when one of the options is clicked
+
+[x] Quiz page: create an object to store the answers of the user -> use the page number from the url to 
                link the answer to the question;
