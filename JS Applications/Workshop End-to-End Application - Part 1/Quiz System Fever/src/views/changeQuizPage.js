@@ -6,10 +6,10 @@ export function showQuizPage(ctx) {
         endpoints.currentQuestion = Number(ctx.params.qId);
     }
 
-    const question = endpoints.questions.results[endpoints.currentQuestion - 1];
+    const question = endpoints.questions[endpoints.currentQuestion - 1];
 
     if (endpoints.lastQuestion != null) {
-        const previousQuestion = endpoints.questions.results[endpoints.lastQuestion - 1];
+        const previousQuestion = endpoints.questions[endpoints.lastQuestion - 1];
         const correctIndex = previousQuestion.correctIndex;
         checkAnswer(correctIndex);
     }
@@ -119,7 +119,7 @@ function startOver() {
 
 
 async function submitAnswers() {
-    const correctIndex = endpoints.questions.results[endpoints.currentQuestion - 1].correctIndex;
+    const correctIndex = endpoints.questions[endpoints.currentQuestion - 1].correctIndex;
     checkAnswer(correctIndex);
 
     if (Object.keys(endpoints.userAnswers).length < endpoints.totalQuestions) {

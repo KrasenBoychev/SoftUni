@@ -28,14 +28,22 @@ const quizResultsTemplate = (quizDetails) => html`
         </section>
 `;  
 
-const questionTemplate = (question, spanClass, iClass, btnText) => html`
-<article class="preview">
+const questionTemplate = (question, spanClass, iClass, btnText, questionIndex) => html`
+    <article class="preview">
         <span class=${spanClass}>
-            ${question.text}
+            Question ${questionIndex + 1}
             <i class=${iClass}></i>
         </span>
         <div class="right-col">
-            <button class="action">${btnText}</button>
+            <button class="action" @click=${seeQuestion} data-id="${questionIndex}">${btnText}</button>
+        </div>
+
+        <div id="see-answers-${questionIndex}" class="hidden">
+            <p>${question.text}</p>
+
+            <div id="answers-section">
+                ${renderAnswers()}
+            </div>
         </div>
     </article>
 `;
@@ -52,7 +60,8 @@ function quizDetails() {
 function renderQuestions() {
     let countQuestion = 1;
 
-    return endpoints.questions.results.map(question => {
+    return endpoints.questions.map(question => {
+        let questionIndex = countQuestion - 1;
         let spanClass = null;
         let iClass = null;
         let btnText = null;
@@ -69,5 +78,52 @@ function renderQuestions() {
         }
 
         countQuestion++;
-        return questionTemplate(question, spanClass, iClass, btnText)})
+        return questionTemplate(question, spanClass, iClass, btnText, questionIndex)})
+}
+
+function seeQuestion(e) {
+    const questionIndex = e.target.dataset.id;
+
+    if (e.target.textContent == 'Close') {
+        document.getElementById(`see-answers-${questionIndex}`).classList.add('hidden');
+        e.target.textContent = ""; //TODO
+
+    } else {
+        document.getElementById(`see-answers-${questionIndex}`).classList.remove('hidden');
+        e.target.textContent = "Close";
+    }
+}
+
+function renderAnswers(question) {
+   // const root = 
+   let result = [];
+    for (let i = 0; i <= 2; i++) {
+        result.push(html`heeeey`);
+    }
+
+    //TODO
+
+   return result;
+
+//     <div class="s-answer">
+//     <span class="s-incorrect">
+//         ${question.answers[0]}
+//         <i class="fas fa-times"></i>
+//         <strong>Your choice</strong>
+//     </span>
+// </div>
+
+// <div class="s-answer">
+//     <span class="s-correct">
+//     ${question.answers[1]}
+//         <i class="fas fa-check"></i>
+//         <strong>Correct answer</strong>
+//     </span>
+// </div>
+
+// <div class="s-answer">
+//     <span>
+//     ${question.answers[2]}
+//     </span>
+// </div>
 }

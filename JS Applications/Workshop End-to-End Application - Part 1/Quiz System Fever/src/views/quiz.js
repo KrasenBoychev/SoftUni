@@ -79,7 +79,7 @@ export async function openQuiz(ctx) {
     endpoints.totalQuestions = questionCount;
     endpoints.quizIdGlobal = quizId;
     endpoints.quiz = currentQuiz;
-    endpoints.questions = allQuestions;
+    endpoints.questions = allQuestions.results;
 
     showQuizPage();    
 }
