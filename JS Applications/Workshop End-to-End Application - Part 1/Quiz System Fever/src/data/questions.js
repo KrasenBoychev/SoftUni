@@ -16,3 +16,7 @@ export async function getQuizQuestions(quizId) {
 export async function deleteQuestion(id) {
     await del(endpoints.questions + "/" + id);
 }
+
+export async function getQuestionById(id) {
+    return await get(endpoints.questions + "/" + id);
+}
