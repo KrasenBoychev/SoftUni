@@ -20,3 +20,7 @@ export async function deleteQuestion(id) {
 export async function getQuestionById(id) {
     return await get(endpoints.questions + "/" + id);
 }
+
+export async function updateQuestion(id, data) {
+    await put(endpoints.questions + "/" + id, data)
+}

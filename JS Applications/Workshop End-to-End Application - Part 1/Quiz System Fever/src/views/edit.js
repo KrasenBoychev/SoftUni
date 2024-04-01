@@ -1,4 +1,4 @@
-import { deleteQuestion, getQuestionById, getQuizQuestions } from "../data/questions.js";
+import { deleteQuestion, getQuestionById, getQuizQuestions, updateQuestion } from "../data/questions.js";
 import { getQuizById, getUniqueTopics, updateQuiz } from "../data/quzzes.js";
 import { html, render, page, renderTemplate } from "../lib.js";
 import { createSubmitHandler, getUserData } from "../util.js";
@@ -92,7 +92,7 @@ const editDeleteTemplate = (question, questionNum) => html`
 const saveCancelTemplate = (question, questionNum) => html`
                 <div class="layout">
                     <div class="question-control" data-id="${question.objectId}">
-                        <button class="input submit action" @click=${onSaveQuestion}><i class="fas fa-check-double"></i>
+                        <button class="input submit action" @click=${onSaveQuestion} data-id="${questionNum}"><i class="fas fa-check-double"></i>
                             Save</button>
                         <button class="input submit action" @click=${onCancelChanges} data-id="${questionNum}"><i class="fas fa-times"></i> Cancel</button>
                     </div>
@@ -272,9 +272,43 @@ async function onDeleteQuestion(e) {
 
 async function onSaveQuestion(e) {
     if (e.target.tagName == 'BUTTON') {
+        const article = e.target.parentElement.parentElement.parentElement;
+        const form = article.querySelector('form');
 
+        const textarea = form.querySelector('textarea').value;
+        if (!textarea) {
+            return alert('All fields are required!');
+        }
 
+        let answersArray = [];
 
+        const inputs = form.querySelectorAll('input[type="text"]');
+        for (const input of inputs) {
+            if (!input.value) {
+                answersArray = [];
+                return alert('All fields are required!');
+            } else {
+                answersArray.push(input.value);
+            }
+        }
+
+        const questionId = e.target.parentElement.dataset.id;
+        const question = await getQuestionById(questionId);
+
+        const pointer = { __type: "Pointer", className: "Quizzes", objectId: quizId };
+        const data = {
+            text: textarea,
+            answers: answersArray,
+            correctIndex: question.correctIndex,
+            quiz: pointer
+        }
+
+        await updateQuestion(questionId, data);
+
+        const questionNum = e.target.dataset.id;
+        const questionUpdated = await getQuestionById(questionId);
+
+        renderTemplate(editDeleteTemplate(questionUpdated, questionNum), article);
     }
 }
 
