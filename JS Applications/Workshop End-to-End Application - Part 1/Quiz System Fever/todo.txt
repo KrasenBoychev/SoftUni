@@ -2,8 +2,9 @@
                  in this way I should be able to link the question to the correct quiz 
                  (instead of taking the last created quiz which can cause a bug);
 
-[ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation -> 
-               have to reset the endpoints
+[ ] Create page: make it similar to the edit page   
+
+[ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
 
 [x] Quiz page: TODO: count correct answers
 

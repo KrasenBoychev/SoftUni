@@ -54,3 +54,7 @@ export async function getQuizzesByOwnerId(ownerId) {
 export async function deleteQuiz(id) {
     await del(endpoints.allQuizes + "/" + id);
 }
+
+export async function updateQuiz(id, data) {
+    await put(endpoints.allQuizes + "/" + id, data);
+}

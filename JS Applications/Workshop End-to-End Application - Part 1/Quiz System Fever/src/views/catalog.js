@@ -43,7 +43,7 @@ const quizTemplate = (quiz) => html`
       </article>
 `;
 
-const option = (topic) => html`
+export const option = (topic) => html`
     <option value="${topic}">${topic}</option>
 `;
 
