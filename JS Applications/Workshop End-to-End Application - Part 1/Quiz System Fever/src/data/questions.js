@@ -12,3 +12,7 @@ export async function createQuestions(data) {
 export async function getQuizQuestions(quizId) {
     return await get(endpoints.quizQuestions(quizId));
 }
+
+export async function deleteQuestion(id) {
+    await del(endpoints.questions + "/" + id);
+}

@@ -1,9 +1,10 @@
+import { deleteQuestion, getQuizQuestions } from "../data/questions.js";
 import { getQuizById, getUniqueTopics, updateQuiz } from "../data/quzzes.js";
 import { html, render, page, renderTemplate } from "../lib.js";
 import { createSubmitHandler, getUserData } from "../util.js";
 import { option } from "./catalog.js";
 
-const editTemplate = (quiz, uniqueTopics, onSaveTitleTopic) => html`
+const editTemplate = (quiz, uniqueTopics, questions, onSaveTitleTopic) => html`
 <section id="editor">
 
         <header class="pad-large">
@@ -32,6 +33,7 @@ const editTemplate = (quiz, uniqueTopics, onSaveTitleTopic) => html`
 
         <div class="pad-large alt-page">
 
+            ${questions.map(question => editDeleteTemplate(question))}
 
             <article class="editor-question">
                 <div class="editor-input">
@@ -47,41 +49,43 @@ const editTemplate = (quiz, uniqueTopics, onSaveTitleTopic) => html`
 </section>
 `;
 
-const editDeleteTemplate = () => html`
+const editDeleteTemplate = (question) => {
+    countQuestions++;
+    return html`
     <article class="editor-question">
                 <div class="layout">
-                    <div class="question-control">
-                        <button class="input submit action"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="input submit action"><i class="fas fa-trash-alt"></i> Delete</button>
+                    <div class="question-control" data-id="${question.objectId}">
+                        <button class="input submit action" @click=${onEditQuestion}><i class="fas fa-edit"></i> Edit</button>
+                        <button class="input submit action" @click=${onDeleteQuestion}><i class="fas fa-trash-alt"></i> Delete</button>
                     </div>
-                    <h3>Question 2</h3>
+                    <h3>Question ${countQuestions}</h3>
                 </div>
                 <form>
-                    <p class="editor-input">This is the second question.</p>
+                    <p class="editor-input">${question.text}</p>
                     <div class="editor-input">
                         <label class="radio">
-                            <input class="input" type="radio" name="question-2" value="0" disabled />
+                            <input class="input" type="radio" name="question" value="0" disabled />
                             <i class="fas fa-check-circle"></i>
                         </label>
-                        <span>Answer 0</span>
+                        <span>${question.answers[0]}</span>
                     </div>
                     <div class="editor-input">
                         <label class="radio">
-                            <input class="input" type="radio" name="question-2" value="1" disabled />
+                            <input class="input" type="radio" name="question" value="1" disabled />
                             <i class="fas fa-check-circle"></i>
                         </label>
-                        <span>Answer 1</span>
+                        <span>${question.answers[1]}</span>
                     </div>
                     <div class="editor-input">
                         <label class="radio">
-                            <input class="input" type="radio" name="question-2" value="2" disabled />
+                            <input class="input" type="radio" name="question" value="2" disabled />
                             <i class="fas fa-check-circle"></i>
                         </label>
-                        <span>Answer 2</span>
+                        <span>${question.answers[2]}</span>
                     </div>
                 </form>
-            </article>
-`;
+            </article> `;
+}
 
 const saveCancelTemplate = () => html`
     <article class="editor-question">
@@ -192,14 +196,18 @@ const cannotEditTemplate = () => html`
 `;
 
 let quizId = null;
+let countQuestions = null;
 
 export async function showEdit(ctx) {
+    countQuestions = 0;
+
     const currentQuizId = ctx.params.id;
     quizId = currentQuizId;
     const quiz = await getQuizById(quizId);
     const uniqueTopics = await getUniqueTopics();
+    const questions = await getQuizQuestions(quizId);
 
-    render(editTemplate(quiz, uniqueTopics.results, createSubmitHandler(onSaveTitleTopic)));
+    render(editTemplate(quiz, uniqueTopics.results, questions.results, createSubmitHandler(onSaveTitleTopic)));
 }
 
 async function onSaveTitleTopic({ title, topic }, form) {
@@ -209,7 +217,7 @@ async function onSaveTitleTopic({ title, topic }, form) {
 
     const quiz = await getQuizById(quizId);
     const userData = getUserData();
-    const pointer = { __type: "Pointer", className: "_User", objectId: userData.objectId};;
+    const pointer = { __type: "Pointer", className: "_User", objectId: userData.objectId };;
 
     const data = {
         title: title,
@@ -219,8 +227,29 @@ async function onSaveTitleTopic({ title, topic }, form) {
     }
 
     await updateQuiz(quizId, data);
-    
+
     const h1 = document.getElementById('heading-title');
     h1.textContent = title;
     form.reset();
 }
+
+async function onEditQuestion() {
+
+}
+
+async function onDeleteQuestion(e) {
+    const choice = confirm('Are you sure?');
+
+    if (choice) {
+        const questionId = e.target.parentElement.dataset.id;
+        await deleteQuestion(questionId);
+
+        const article = e.target.parentElement.parentElement.parentElement;
+        const divOverlay = document.createElement('div');
+        divOverlay.classList.add('loading-overlay', 'working');
+        article.appendChild(divOverlay);
+    }
+
+
+}
+
