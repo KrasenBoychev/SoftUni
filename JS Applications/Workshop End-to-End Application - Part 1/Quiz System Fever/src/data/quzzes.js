@@ -5,8 +5,8 @@ const endpoints = {
     latestQuiz: (quizzesToSkip) => `/classes/Quizzes?order=createdAt&&skip=${quizzesToSkip}`,
     quizzesCount: '/classes/Quizzes?count=1',
     uniqueTopics: '/aggregate/Quizzes?distinct=topic',
+    quizzesByOwnerId: (ownerId) => `/classes/Quizzes?where={"ownerId":{"__type":"Pointer","className":"_User","objectId":"${ownerId}"}}`,
     filterByTopicAndTitle: (title, topic) => `/classes/Quizzes?where={"title": "${title}", "topic": "${topic}"}`,
-   // filterByTopicOrTitle: (title, topic) => `/classes/Quizzes?where={"$or":[{"title": "${title}"},{"topic":"${topic}"}]}`,
     filterByTopic: (topic) => `/classes/Quizzes?where={"topic": "${topic}"}`,
     filterByTitle: (title) => `/classes/Quizzes?where={"title": "${title}"}`
 }
@@ -16,7 +16,7 @@ export async function getAllQuizzes() {
 }
 
 export async function getQuizById(id) {
-    return get(endpoints.allQuizes + "/" + id);
+    return await get(endpoints.allQuizes + "/" + id);
 }
 
 export async function getLatestQuiz(quizzesToSkip) {
@@ -45,4 +45,8 @@ export async function getQuizzesfilteredByTitle(title) {
 
 export async function getQuizzesfilteredByTopicAndTitle(title, topic) {
     return await get(endpoints.filterByTopicAndTitle(title, topic));
+}
+
+export async function getQuizzesByOwnerId(ownerId) {
+    return await get(endpoints.quizzesByOwnerId(ownerId));
 }

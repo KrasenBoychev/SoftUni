@@ -7,6 +7,7 @@ import { showCreate } from "./views/create.js";
 import { showDetails } from "./views/details.js";
 import { showHome } from "./views/home.js";
 import { showLogin } from "./views/login.js";
+import { showProfile } from "./views/profile.js";
 import { showQuizResults } from "./views/quiz-results.js";
 import { openQuiz } from "./views/quiz.js";
 import { showRegister } from "./views/register.js";
@@ -14,6 +15,7 @@ import { showRegister } from "./views/register.js";
 updateUserNav();
 
 page('/', showHome);
+page('/profile', showProfile)
 page('/login', showLogin);
 page('/register', showRegister);
 page('/browse', showCatalog);
@@ -22,7 +24,7 @@ page('/details/:id', showDetails);
 page('/quiz/:id', openQuiz);
 page('/quiz/:id/:qId', showQuizPage);
 page('/results/:id', showQuizResults);
-
+page('/edit/:id')
 
 page.start();
 

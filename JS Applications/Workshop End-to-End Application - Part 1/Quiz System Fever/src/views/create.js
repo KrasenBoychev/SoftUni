@@ -101,7 +101,7 @@ async function recordQuiz() {
 
   const pointer = { __type: "Pointer", className: "_User", objectId: userData.objectId };
 
-  createQuiz({ title: quizTitle, topic: quizTopic, questionCount: countQuestions - 1, ownerId: pointer });
+  await createQuiz({ title: quizTitle, topic: quizTopic, questionCount: countQuestions - 1, ownerId: pointer });
 }
 
 
@@ -113,6 +113,6 @@ async function recordQuestions() {
   const pointer = { __type: "Pointer", className: "Quizzes", objectId: latestQuizId };
 
   for (const [question, options] of Object.entries(questions)) {
-    createQuestions({ text: question, answers: options.answers, correctIndex: Number(options.correctAnswer), quiz: pointer });
+    await createQuestions({ text: question, answers: options.answers, correctIndex: Number(options.correctAnswer), quiz: pointer });
   }
 }

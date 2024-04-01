@@ -1,4 +1,6 @@
+import { createSolution } from "../data/solutions.js";
 import { page, html, render, renderTemplate, } from "../lib.js";
+import { getUserData } from "../util.js";
 import { quizTemplate, questionTemplate, endpoints } from "./quiz.js";
 
 export function showQuizPage(ctx) {
@@ -118,7 +120,7 @@ function startOver() {
 }
 
 
-async function submitAnswers() {
+function submitAnswers() {
     const correctIndex = endpoints.questions[endpoints.currentQuestion - 1].correctIndex;
     checkAnswer(correctIndex);
 
@@ -129,7 +131,17 @@ async function submitAnswers() {
     let percentageCorrectAnswers = (endpoints.correctAnswers / endpoints.totalQuestions) * 100;
     endpoints.percentageCorrectAnswers = percentageCorrectAnswers;
 
+    sendSolutionRequest();
+
     page.redirect(`/results/${endpoints.quizIdGlobal}`);
+}
+
+async function sendSolutionRequest() {
+    const userData = getUserData();
+    const userPointer = { __type: "Pointer", className: "_User", objectId: userData.objectId };
+    const quizPointer = { __type: "Pointer", className: "Quizzes", objectId: endpoints.quizIdGlobal};
+    
+    await createSolution({quiz: quizPointer, correct: endpoints.correctAnswers, userId: userPointer});
 }
 
 export {
