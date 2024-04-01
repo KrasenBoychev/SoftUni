@@ -1,9 +1,9 @@
-import { getQuizById, getQuizzesByOwnerId } from "../data/quzzes.js";
+import { deleteQuiz, getQuizById, getQuizzesByOwnerId } from "../data/quzzes.js";
 import { getSolutionsByUserId } from "../data/solutions.js";
 import { html, render, page, renderTemplate } from "../lib.js";
 import { getUserData } from "../util.js";
 
-const profileTemplate = (userData, quizzes, solutions, deleteQuiz) => html`
+const profileTemplate = (userData, quizzes, solutions, onDeleteQuiz) => html`
      <section id="profile">
                 <header class="pad-large">
                     <h1>Profile Page</h1>
@@ -34,14 +34,14 @@ const profileTemplate = (userData, quizzes, solutions, deleteQuiz) => html`
                 </header>
 
                 <div class="pad-large alt-page">
-                    ${quizzes.map(quiz => quizTemplate(quiz, solutions, deleteQuiz))}
+                    ${quizzes.map(quiz => quizTemplate(quiz, solutions, onDeleteQuiz))}
                 </div>
 
             </section>
 `;
 
 const resolvedQuizTemplate = (quiz, solution, formatDate, percentage, questionCount) => {
-       return html`
+    return html`
             <tr class="results-row">
                 <td class="cell-1">${formatDate}</td>
                 <td class="cell-2"><a href="/details/${quiz.objectId}">${quiz.title}</a></td>
@@ -50,16 +50,16 @@ const resolvedQuizTemplate = (quiz, solution, formatDate, percentage, questionCo
             </tr>
     `};
 
-const quizTemplate =(quiz, solutions, deleteQuiz) => {
+const quizTemplate = (quiz, solutions, onDeleteQuiz) => {
     const filteredQuizzes = solutions.filter(solution => solution.quiz.objectId === quiz.objectId);
     const timesTakenQuiz = filteredQuizzes.length;
 
-    return  html`
+    return html`
     <article class="preview layout">
         <div class="right-col">
             <a class="action cta" href="/details/${quiz.objectId}">View Quiz</a>
             <a class="action cta" href="/edit/${quiz.objectId}"><i class="fas fa-edit"></i></a>
-            <a class="action cta" href="javascript:void(0)" @click=${deleteQuiz}><i class="fas fa-trash-alt"></i></a>
+            <a class="action cta" href="javascript:void(0)" @click=${onDeleteQuiz} data-id="${quiz.objectId}"><i class="fas fa-trash-alt"></i></a>
         </div>
         <div class="left-col">
             <h3><a class="quiz-title-link" href="/details/${quiz.objectId}">${quiz.title}</a></h3>
@@ -71,7 +71,8 @@ const quizTemplate =(quiz, solutions, deleteQuiz) => {
             </div>
         </div>
     </article>
-`; }
+`;
+}
 
 export async function showProfile(ctx) {
     const userData = getUserData();
@@ -82,11 +83,11 @@ export async function showProfile(ctx) {
     const ownerQuizzesResulsts = await getQuizzesByOwnerId(userData.objectId);
     const ownerQuizzes = ownerQuizzesResulsts.results;
 
-    render(profileTemplate(userData, ownerQuizzes, solutions, deleteQuiz));
+    render(profileTemplate(userData, ownerQuizzes, solutions, onDeleteQuiz));
     renderResolvedQuizzes(solutions);
 }
 
-   
+
 const months = {
     1: "January",
     2: "February",
@@ -112,13 +113,20 @@ async function renderResolvedQuizzes(solutions) {
 
         const date = new Date(solution.createdAt);
         const formatDate = `${date.getDay()}.${months[date.getMonth() + 1]} ${date.getFullYear()}`;
-        
+
         results.push(resolvedQuizTemplate(quiz, solution, formatDate, percentage, quiz.questionCount));
     }
 
     renderTemplate(results, root);
 }
 
-function deleteQuiz() {
-    
+
+async function onDeleteQuiz(e) {
+    const choice = confirm('Are you sure?');
+    const quizId = e.target.dataset.id;
+
+    if (choice) {
+        await deleteQuiz(quizId);
+        page.redirect('/profile');
+    }
 }

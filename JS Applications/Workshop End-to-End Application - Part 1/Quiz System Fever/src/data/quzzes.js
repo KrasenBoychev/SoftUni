@@ -50,3 +50,7 @@ export async function getQuizzesfilteredByTopicAndTitle(title, topic) {
 export async function getQuizzesByOwnerId(ownerId) {
     return await get(endpoints.quizzesByOwnerId(ownerId));
 }
+
+export async function deleteQuiz(id) {
+    await del(endpoints.allQuizes + "/" + id);
+}

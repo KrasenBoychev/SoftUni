@@ -5,6 +5,7 @@ import { showCatalog } from "./views/catalog.js";
 import { showQuizPage } from "./views/changeQuizPage.js";
 import { showCreate } from "./views/create.js";
 import { showDetails } from "./views/details.js";
+import { showEdit } from "./views/edit.js";
 import { showHome } from "./views/home.js";
 import { showLogin } from "./views/login.js";
 import { showProfile } from "./views/profile.js";
@@ -24,7 +25,7 @@ page('/details/:id', showDetails);
 page('/quiz/:id', openQuiz);
 page('/quiz/:id/:qId', showQuizPage);
 page('/results/:id', showQuizResults);
-page('/edit/:id')
+page('/edit/:id', showEdit);
 
 page.start();
 
