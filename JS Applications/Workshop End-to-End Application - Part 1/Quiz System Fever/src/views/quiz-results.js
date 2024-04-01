@@ -26,7 +26,7 @@ const quizResultsTemplate = (quizDetails) => html`
         <div id="quiz-details-questions" class="pad-large alt-page">
         </div>
         </section>
-`;  
+`;
 
 const questionTemplate = (question, spanClass, iClass, btnText, questionIndex) => html`
     <article class="preview">
@@ -42,7 +42,7 @@ const questionTemplate = (question, spanClass, iClass, btnText, questionIndex) =
             <p>${question.text}</p>
 
             <div id="answers-section">
-                ${renderAnswers()}
+                ${renderAnswers(question, questionIndex)}
             </div>
         </div>
     </article>
@@ -78,7 +78,8 @@ function renderQuestions() {
         }
 
         countQuestion++;
-        return questionTemplate(question, spanClass, iClass, btnText, questionIndex)})
+        return questionTemplate(question, spanClass, iClass, btnText, questionIndex)
+    })
 }
 
 function seeQuestion(e) {
@@ -86,7 +87,11 @@ function seeQuestion(e) {
 
     if (e.target.textContent == 'Close') {
         document.getElementById(`see-answers-${questionIndex}`).classList.add('hidden');
-        e.target.textContent = ""; //TODO
+        if (e.target.parentElement.parentElement.querySelector('span').className == 's-correct') {
+            e.target.textContent = "See question";
+        } else {
+            e.target.textContent = "Reveal answer";
+        }
 
     } else {
         document.getElementById(`see-answers-${questionIndex}`).classList.remove('hidden');
@@ -94,36 +99,45 @@ function seeQuestion(e) {
     }
 }
 
-function renderAnswers(question) {
-   // const root = 
-   let result = [];
+function renderAnswers(question, questionIndex) {
+    const userOption = endpoints.userAnswers[questionIndex + 1].userOption;
+    const correctIndex = question.correctIndex - 1;
+    let result = [];
+
     for (let i = 0; i <= 2; i++) {
-        result.push(html`heeeey`);
+
+        if (i == userOption && i == correctIndex) {
+            result.push(html` <div class="s-answer">
+                                <span class="s-correct">
+                                    ${question.answers[i]}
+                                    <i class="fas fa-check"></i>
+                                    <strong>Your choice</strong>
+                                </span>
+                               </div>`);
+        } else if (i == userOption && i != correctIndex) {
+            result.push(html` <div class="s-answer">
+                                <span class="s-incorrect">
+                                    ${question.answers[i]}
+                                    <i class="fas fa-times"></i>
+                                    <strong>Your choice</strong>
+                                </span>
+                               </div>`);
+        } else if (i != userOption && i == correctIndex) {
+            result.push(html` <div class="s-answer">
+                                    <span class="s-correct">
+                                    ${question.answers[i]}
+                                        <i class="fas fa-check"></i>
+                                    <strong>Correct answer</strong>
+                                    </span>
+                                </div>`);
+        } else {
+            result.push(html` <div class="s-answer">
+                                  <span>
+                                  ${question.answers[i]}
+                                  </span>
+                              </div>`);
+        }
     }
 
-    //TODO
-
-   return result;
-
-//     <div class="s-answer">
-//     <span class="s-incorrect">
-//         ${question.answers[0]}
-//         <i class="fas fa-times"></i>
-//         <strong>Your choice</strong>
-//     </span>
-// </div>
-
-// <div class="s-answer">
-//     <span class="s-correct">
-//     ${question.answers[1]}
-//         <i class="fas fa-check"></i>
-//         <strong>Correct answer</strong>
-//     </span>
-// </div>
-
-// <div class="s-answer">
-//     <span>
-//     ${question.answers[2]}
-//     </span>
-// </div>
+    return result;
 }
