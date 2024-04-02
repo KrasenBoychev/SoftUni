@@ -11,5 +11,5 @@ function dayOfWeek(day) {
         default: return 'error';
     }
 }
-console.log(dayOfWeek('Wednesday'));
+console.log(dayOfWeek('Monday'));
 //# sourceMappingURL=dayOfWeek.js.map
