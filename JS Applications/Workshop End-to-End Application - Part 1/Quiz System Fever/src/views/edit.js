@@ -98,9 +98,9 @@ const saveCancelTemplate = (question, questionNum) => html`
                     </div>
                     <h3>Question ${questionNum}</h3>
                 </div>
-                <form>
+                <form data-id="${question.objectId}">
                     <textarea class="input editor-input editor-text" name="text"
-                        placeholder="Enter question" .value=${question.text}></textarea>
+                        placeholder="Enter question" .value=${question.text} data-id="${questionNum}"></textarea>
                     <div class="editor-input">
 
                         <label class="radio">
@@ -109,7 +109,7 @@ const saveCancelTemplate = (question, questionNum) => html`
                         </label>
 
                         <input class="input" type="text" name="answer-0" .value="${question.answers[0]}" />
-                        <button class="input submit action"><i class="fas fa-trash-alt"></i></button>
+                        <button class="input submit action" @click=${onDeleteAnswer} data-id="0"><i class="fas fa-trash-alt"></i></button>
                     </div>
                     <div class="editor-input">
 
@@ -119,7 +119,7 @@ const saveCancelTemplate = (question, questionNum) => html`
                         </label>
 
                         <input class="input" type="text" name="answer-1" .value="${question.answers[1]}" />
-                        <button class="input submit action"><i class="fas fa-trash-alt"></i></button>
+                        <button class="input submit action" @click=${onDeleteAnswer} data-id="1"><i class="fas fa-trash-alt"></i></button>
                     </div>
                     <div class="editor-input">
 
@@ -129,7 +129,7 @@ const saveCancelTemplate = (question, questionNum) => html`
                         </label>
 
                         <input class="input" type="text" name="answer-2" .value="${question.answers[2]}" />
-                        <button class="input submit action"><i class="fas fa-trash-alt"></i></button>
+                        <button class="input submit action" @click=${onDeleteAnswer} data-id="2"><i class="fas fa-trash-alt"></i></button>
                     </div>
                     <div class="editor-input">
                         <button class="input submit action">
@@ -320,6 +320,36 @@ async function onCancelChanges(e) {
 
         const root = e.target.parentElement.parentElement.parentElement;
         renderTemplate(editDeleteTemplate(question, questionNum), root);
+    }
+}
+
+async function onDeleteAnswer(e) {
+    e.preventDefault();
+    if (e.target.tagName == 'BUTTON') {
+        const form = e.target.parentElement.parentElement;
+        const questionId = form.dataset.id;
+        const question = await getQuestionById(questionId);
+        const answers = question.answers;
+
+        const questionIndex = Number(e.target.dataset.id);
+        answers.splice(questionIndex, 1);
+
+        const pointer = { __type: "Pointer", className: "Quizzes", objectId: quizId };
+        const data = {
+            text: question.text,
+            answers: answers,
+            correctIndex: question.correctIndex,
+            quiz: pointer
+        }
+
+        await updateQuestion(questionId, data);
+
+        debugger
+        const questionNum = form.querySelector('textarea').dataset.id;
+        const questionUpdated = await getQuestionById(questionId);
+        const article = form.parentElement;
+
+        renderTemplate(saveCancelTemplate(questionUpdated, questionNum), article);
     }
 }
 
