@@ -1,11 +1,16 @@
-function calorieObject(fruits: Array<string>): void {
-    let fruitObj: any = {};
+type fruitObj = {
+    [key: string]: number
+}
 
-    for (let i: number = 0; i < fruits.length; i += 2) {
-       fruitObj[fruits[i]] = Number(fruits[i + 1]);
+const fruits: fruitObj = {};
+
+function calorieObject(input: Array<string>): fruitObj {
+
+    for (let i: number = 0; i < input.length; i += 2) {
+       fruits[input[i]] = Number(input[i + 1]);
     }
 
-    return fruitObj;
+    return fruits;
 }
 
 console.log(calorieObject(['Potato', '93', 'Skyr', '63',

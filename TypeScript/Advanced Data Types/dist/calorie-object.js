@@ -1,10 +1,10 @@
 "use strict";
-function calorieObject(fruits) {
-    let fruitObj = {};
-    for (let i = 0; i < fruits.length; i += 2) {
-        fruitObj[fruits[i]] = Number(fruits[i + 1]);
+const fruits = {};
+function calorieObject(input) {
+    for (let i = 0; i < input.length; i += 2) {
+        fruits[input[i]] = Number(input[i + 1]);
     }
-    return fruitObj;
+    return fruits;
 }
 console.log(calorieObject(['Potato', '93', 'Skyr', '63',
     'Cucumber', '18', 'Milk', '42']));

@@ -1,6 +1,10 @@
-function townPopulation(townsInfo: Array<string>) {
-    const towns: any = {};
+type TownsTemp = {
+    [key: string]: number
+}
 
+function townPopulation(townsInfo: Array<string>) {
+    const towns: TownsTemp = {};
+    
     townsInfo.forEach(town => {
         const [name, population] = town.split(` <-> `);
         
