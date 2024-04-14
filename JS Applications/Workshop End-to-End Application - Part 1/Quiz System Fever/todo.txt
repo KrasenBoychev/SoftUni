@@ -6,6 +6,8 @@
 
 [ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
 
+[ ] Edit page: try to render the content in "Add answer/question" rather than using "inner html"
+
 [x] Quiz page: TODO: count correct answers
 
 [x] Quiz page: TODO: function "submitAnswers"
