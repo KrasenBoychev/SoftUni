@@ -16,9 +16,6 @@ class BankAccount {
         const sum = this.balance * BankAccount.interest * years;
         return sum;
     }
-    // get interestRate(): number {
-    //     return this.interest;
-    // }
     set interestRate(rate) {
         BankAccount.interest = rate;
     }
