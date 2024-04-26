@@ -8,26 +8,24 @@ import { getQuizById, getUniqueTopics, updateQuiz } from "../../data/quzzes.js";
 import { render, renderTemplate } from "../../lib.js";
 import { createSubmitHandler, getUserData } from "../../util.js";
 import * as templates from "./templates.js";
-
-let quizId = null;
+import * as createFunctions from "../create.js";
 
 // Works perfectly
 export async function showEdit(ctx) {
   const currentQuizId = ctx.params.id;
-  quizId = currentQuizId;
-  const quiz = await getQuizById(quizId);
+  const quiz = await getQuizById(currentQuizId);
   const uniqueTopics = await getUniqueTopics();
-  const questionsResults = await getQuizQuestions(quizId);
+  const questionsResults = await getQuizQuestions(currentQuizId);
   const questions = questionsResults.results;
 
-  render(
-    templates.editTemplate(
-      quiz,
-      uniqueTopics.results,
-      createSubmitHandler(onSaveTitleTopic)
-    )
-  );
+  render(templates.editTemplate(uniqueTopics.results, createSubmitHandler(onSaveTitleTopic), quiz));
+  renderHeading(quiz.title, quiz.topic);
   renderArticles(questions);
+}
+
+function renderHeading(title, topic) {
+  const header = document.getElementById('edit-heading');
+  renderTemplate(templates.headingTemplate(title, topic), header);
 }
 
 // Works perfectly
@@ -58,25 +56,28 @@ function renderArticles(questions) {
 
 // Works perfectly
 async function onSaveTitleTopic({ title, topic }, form) {
-  if (!title || !topic) {
+  if (!title || topic == "all") {
     return alert("Title and Topic fields are required!");
   }
 
-  if (topic == "all") {
-    topic = quiz.topic;
+  const quizId = form.dataset.id;
+
+  if (quizId == "") {
+    createFunctions.recordQuiz(title, topic);
+
+  } else {
+    const quiz = await getQuizById(quizId);
+
+    const data = {
+      title: title,
+      topic: topic,
+      questionCount: quiz.questionCount,
+    };
+
+    sendUpdateQuizRequest(data);
   }
-
-  const quiz = await getQuizById(quizId);
-  const data = {
-    title: title,
-    topic: topic,
-    questionCount: quiz.questionCount,
-  };
-
-  sendUpdateQuizRequest(data);
-
-  const h1 = document.getElementById("heading-title");
-  h1.textContent = title;
+ 
+  renderHeading(title, topic);
   form.reset();
 }
 
@@ -313,4 +314,8 @@ async function sendUpdateQuizRequest(data) {
 
   data.ownerId = pointer;
   await updateQuiz(quizId, data);
+}
+
+export {
+  onSaveTitleTopic
 }

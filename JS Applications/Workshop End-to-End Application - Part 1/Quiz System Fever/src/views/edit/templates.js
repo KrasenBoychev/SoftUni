@@ -2,13 +2,12 @@ import { html} from "../../lib.js";
 import { option } from "../catalog.js";
 
 // Works perfectly
-const editTemplate = (quiz, uniqueTopics, onSaveTitleTopic) => html`
-<section id="editor">
-        <header class="pad-large">
-            <h1 id="heading-title">${quiz.title}</h1>
+const editTemplate = (uniqueTopics, onSaveTitleTopic, quiz) => html`
+    <section id="editor">
+        <header id="edit-heading" class="pad-large">
         </header>
         <div class="pad-large alt-page">
-            <form @submit=${onSaveTitleTopic}>
+            <form @submit=${onSaveTitleTopic} data-id="${quiz? quiz.objectId : ""}">
                 <label class="editor-label layout">
                     <span class="label-col">Title:</span>
                     <input class="input i-med" type="text" name="title"></label>
@@ -28,7 +27,12 @@ const editTemplate = (quiz, uniqueTopics, onSaveTitleTopic) => html`
         </header>
         <div id="print-questions" class="pad-large alt-page">        
         </div>
-</section>
+    </section>
+`;
+
+const headingTemplate = (title, topic) => html`
+    <h1 id="heading-title">Title: ${title}</h1>
+    <h4>Topic: ${topic}</h4>
 `;
 
 // Works perfectly
@@ -164,6 +168,7 @@ const testCorrectIndex = () => html`
 
 export {
     editTemplate,
+    headingTemplate,
     renderQuestions,
     editDeleteTemplate,
     articleTemplate,
