@@ -1,8 +1,8 @@
-[ ] Create page: when a quiz is created redirect to another page and take the quizId from the ctx properties:
+[x] Create page: when a quiz is created redirect to another page and take the quizId from the ctx properties:
                  in this way I should be able to link the question to the correct quiz 
                  (instead of taking the last created quiz which can cause a bug);
 
-[ ] Create page: make it similar to the edit page   
+[ ] Create page: add an option to "create new topic";
 
 [ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
 

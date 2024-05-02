@@ -4,7 +4,7 @@ import {
   getQuizQuestions,
   updateQuestion,
 } from "../../data/questions.js";
-import { getQuizById, getUniqueTopics, updateQuiz } from "../../data/quzzes.js";
+import { getQuizById, getQuizzesByOwnerIdOrdered, getUniqueTopics, updateQuiz } from "../../data/quzzes.js";
 import { render, renderTemplate } from "../../lib.js";
 import { createSubmitHandler, getUserData } from "../../util.js";
 import * as templates from "./templates.js";
@@ -18,13 +18,19 @@ export async function showEdit(ctx) {
   const questionsResults = await getQuizQuestions(currentQuizId);
   const questions = questionsResults.results;
 
-  render(templates.editTemplate(uniqueTopics.results, createSubmitHandler(onSaveTitleTopic), quiz));
+  render(
+    templates.editTemplate(
+      uniqueTopics.results,
+      createSubmitHandler(onSaveTitleTopic),
+      quiz
+    )
+  );
   renderHeading(quiz.title, quiz.topic);
   renderArticles(questions);
 }
 
 function renderHeading(title, topic) {
-  const header = document.getElementById('edit-heading');
+  const header = document.getElementById("edit-heading");
   renderTemplate(templates.headingTemplate(title, topic), header);
 }
 
@@ -63,7 +69,8 @@ async function onSaveTitleTopic({ title, topic }, form) {
   const quizId = form.dataset.id;
 
   if (quizId == "") {
-    createFunctions.recordQuiz(title, topic);
+    const lastQuizId = await createFunctions.recordQuiz(title, topic);
+    form.dataset.id = lastQuizId;
 
   } else {
     const quiz = await getQuizById(quizId);
@@ -74,9 +81,9 @@ async function onSaveTitleTopic({ title, topic }, form) {
       questionCount: quiz.questionCount,
     };
 
-    sendUpdateQuizRequest(data);
+    sendUpdateQuizRequest(data, quizId);
   }
- 
+
   renderHeading(title, topic);
   form.reset();
 }
@@ -131,7 +138,8 @@ async function onDeleteQuestion(e) {
 async function onAddQuestion(e) {
   if (e.target.tagName == "BUTTON") {
     const divQuestions = document.getElementById("questions-box");
-    const lastIndex = divQuestions.lastElementChild.querySelector("button").dataset.id;
+    const lastIndex =
+      divQuestions.lastElementChild.querySelector("button").dataset.id;
     const index = Number(lastIndex) + 1;
 
     const article = document.createElement("article");
@@ -304,7 +312,7 @@ function getDatasetIndex(e) {
   return index;
 }
 
-async function sendUpdateQuizRequest(data) {
+async function sendUpdateQuizRequest(data, quizId) {
   const userData = getUserData();
   const pointer = {
     __type: "Pointer",
@@ -316,6 +324,4 @@ async function sendUpdateQuizRequest(data) {
   await updateQuiz(quizId, data);
 }
 
-export {
-  onSaveTitleTopic
-}
+export { onSaveTitleTopic };

@@ -4,7 +4,7 @@ import {
   getQuizQuestions,
   updateQuestion,
 } from "../data/questions.js";
-import { getQuizById, getUniqueTopics, updateQuiz } from "../data/quzzes.js";
+import { getQuizById, getUniqueTopics, updateQuiz, getQuizzesByOwnerIdOrdered } from "../data/quzzes.js";
 import { render, renderTemplate } from "../lib.js";
 import { createSubmitHandler, getUserData } from "../util.js";
 import * as templates from "./edit/templates.js";
@@ -41,6 +41,12 @@ async function recordQuiz(quizTitle, quizTopic) {
     questionCount: 0,
     ownerId: pointer,
   });
+
+  const quizzes = await getQuizzesByOwnerIdOrdered(userData.objectId);
+  const quizzesByUserId = quizzes.results;
+  const lastQuiz = quizzesByUserId[quizzesByUserId.length - 1];
+
+  return lastQuiz.objectId;
 }
 
 export { recordQuiz };

@@ -2,7 +2,8 @@ import { get, post, put, del } from "./request.js";
 
 const endpoints = {
     allQuizes: '/classes/Quizzes',
-    latestQuiz: (quizzesToSkip) => `/classes/Quizzes?order=createdAt&&skip=${quizzesToSkip}`,
+    latestQuiz: () => `/classes/Quizzes?order=createdAt`, //&&skip=${quizzesToSkip},
+    quizzesByOwnerIdOrdered: (userId) => `/classes/Quizzes?where={"ownerId":{ "__type": "Pointer", "className": "_User", "objectId": "${userId}" }}&&order=createdAt`,
     quizzesCount: '/classes/Quizzes?count=1',
     uniqueTopics: '/aggregate/Quizzes?distinct=topic',
     quizzesByOwnerId: (ownerId) => `/classes/Quizzes?where={"ownerId":{"__type":"Pointer","className":"_User","objectId":"${ownerId}"}}`,
@@ -57,4 +58,8 @@ export async function deleteQuiz(id) {
 
 export async function updateQuiz(id, data) {
     await put(endpoints.allQuizes + "/" + id, data);
+}
+
+export async function getQuizzesByOwnerIdOrdered(userId) {
+    return await get(endpoints.quizzesByOwnerIdOrdered(userId));
 }
