@@ -1,6 +1,6 @@
 import { loading } from "../app.js";
 import { getQuizQuestions } from "../data/questions.js";
-import { getQuizById } from "../data/quzzes.js";
+import { getQuizById } from "../data/quizzes.js";
 import { page, html, render, renderTemplate, } from "../lib.js";
 import { showQIndex, nextAnswer, previousAnswer, startOver, submitAnswers, showQuizPage } from "./changeQuizPage.js";
 

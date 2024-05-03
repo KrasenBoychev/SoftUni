@@ -1,4 +1,4 @@
-import { getLatestQuiz, getQuizzesCount, getUniqueTopics } from "../data/quzzes.js";
+import { getLatestQuiz, getQuizzesCount, getUniqueTopics } from "../data/quizzes.js";
 import { html, render } from "../lib.js";
 import { getUserData } from "../util.js";
 

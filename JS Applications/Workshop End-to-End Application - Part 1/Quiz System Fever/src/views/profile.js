@@ -3,7 +3,7 @@ import {
   deleteQuiz,
   getQuizById,
   getQuizzesByOwnerId,
-} from "../data/quzzes.js";
+} from "../data/quizzes.js";
 import { getSolutionsByUserId } from "../data/solutions.js";
 import { html, render, renderTemplate } from "../lib.js";
 import { getUserData } from "../util.js";

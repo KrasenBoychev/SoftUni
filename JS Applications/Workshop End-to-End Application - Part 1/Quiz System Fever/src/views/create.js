@@ -4,23 +4,31 @@ import {
   getQuizQuestions,
   updateQuestion,
 } from "../data/questions.js";
-import { getQuizById, getUniqueTopics, updateQuiz, getQuizzesByOwnerIdOrdered } from "../data/quzzes.js";
+import {
+  getQuizById,
+  getUniqueTopics,
+  updateQuiz,
+  getQuizzesByOwnerIdOrdered,
+} from "../data/quizzes.js";
 import { render, renderTemplate } from "../lib.js";
 import { createSubmitHandler, getUserData } from "../util.js";
 import * as templates from "./edit/templates.js";
 import * as editFunctions from "./edit/edit.js";
 
 import { createQuestions } from "../data/questions.js";
-import { createQuiz, getLatestQuiz, getQuizzesCount } from "../data/quzzes.js";
+import { createQuiz, getLatestQuiz, getQuizzesCount } from "../data/quizzes.js";
 
 export async function showCreate(ctx) {
   const uniqueTopics = await getUniqueTopics();
   render(
     templates.editTemplate(
       uniqueTopics.results,
-      createSubmitHandler(editFunctions.onSaveTitleTopic)
+      createSubmitHandler(editFunctions.onSaveTitleTopic),
+      editFunctions.createNewTopic
     )
   );
+
+  renderAddQuestion();
 }
 
 async function recordQuiz(quizTitle, quizTopic) {
@@ -42,11 +50,23 @@ async function recordQuiz(quizTitle, quizTopic) {
     ownerId: pointer,
   });
 
+  editFunctions.addQuestionBtn(false);
+  
   const quizzes = await getQuizzesByOwnerIdOrdered(userData.objectId);
   const quizzesByUserId = quizzes.results;
   const lastQuiz = quizzesByUserId[quizzesByUserId.length - 1];
 
   return lastQuiz.objectId;
+}
+
+function renderAddQuestion() {
+  const divQuestion = document.getElementById("print-questions");
+  renderTemplate(
+    templates.renderQuestions(editFunctions.onAddQuestion),
+    divQuestion
+  );
+
+  editFunctions.addQuestionBtn(true);
 }
 
 export { recordQuiz };

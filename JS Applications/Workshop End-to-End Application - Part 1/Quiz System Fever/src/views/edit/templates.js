@@ -2,23 +2,28 @@ import { html} from "../../lib.js";
 import { option } from "../catalog.js";
 
 // Works perfectly
-const editTemplate = (uniqueTopics, onSaveTitleTopic, quiz) => html`
+const editTemplate = (uniqueTopics, onSaveTitleTopic, createNewTopic, quiz) => html`
     <section id="editor">
         <header id="edit-heading" class="pad-large">
         </header>
         <div class="pad-large alt-page">
             <form @submit=${onSaveTitleTopic} data-id="${quiz? quiz.objectId : ""}">
-                <label class="editor-label layout">
-                    <span class="label-col">Title:</span>
-                    <input class="input i-med" type="text" name="title"></label>
-                <label class="editor-label layout">
-                    <span class="label-col">Topic:</span>
-                    <select class="input i-med" name="topic">
-                        <option value="all">All Categories</option>
-                        ${uniqueTopics.map((topic) => option(topic))}
-                    </select>
-                </label>
-                <input class="input submit action" type="submit" value="Save">
+                    <label class="editor-label layout">
+                        <span class="label-col">Title:</span>
+                        <input class="input i-med" type="text" name="title"></label>
+                    <label class="editor-label layout">
+                        <span class="label-col">Topic:</span>
+                        <select id="categories" class="input i-med" name="topic" @change=${createNewTopic}>
+                            <option value="all">All Categories</option>
+                            <option value="new-topic">--- Create new topic ---</option>
+                            ${uniqueTopics.map((topic) => option(topic))}
+                        </select>
+                    </label>
+                    <label class="editor-label layout" id="newTopic">
+                        <span class="label-col">New Topic:</span>
+                        <input class="input i-med" type="text" name="new-topic">
+                    </label>
+                    <input class="input submit action" type="submit" value="Save">
             </form>
         </div>
 
@@ -30,19 +35,20 @@ const editTemplate = (uniqueTopics, onSaveTitleTopic, quiz) => html`
     </section>
 `;
 
+// Works perfectly
 const headingTemplate = (title, topic) => html`
     <h1 id="heading-title">Title: ${title}</h1>
     <h4>Topic: ${topic}</h4>
 `;
 
 // Works perfectly
-const renderQuestions = (questions, template, onAddQuestion) => html`
+const renderQuestions = (onAddQuestion, questions, template) => html`
     <div id="questions-box">
-        ${questions.map(template)}
+        ${questions? questions.map(template) : ""}
     </div>
     <article class="editor-question">
         <div class="editor-input">
-            <button class="input submit action" @click=${onAddQuestion}>
+            <button id="add-question-btn" class="input submit action" @click=${onAddQuestion}>
                 <i class="fas fa-plus-circle"></i>
                 Add question
             </button>
@@ -85,8 +91,8 @@ const divEditAnswers = (answer, index) => {
 };
 
 // Works perfectly
-const saveCancelTemplate = (question, index, onSaveQuestion, onCancelChanges, onDeleteAnswer, onAddAnswer) => html`
-                <div class="layout" data-id="${question.objectId}">
+const saveCancelTemplate = (index, onSaveQuestion, onCancelChanges, onDeleteAnswer, onAddAnswer, question) => html`
+                <div class="layout" data-id="${question? question.objectId : ""}">
                     <div class="question-control" data-id="${index}">
                         <button class="input submit action" @click=${onSaveQuestion}><i class="fas fa-check-double"></i>
                             Save</button>
@@ -96,16 +102,18 @@ const saveCancelTemplate = (question, index, onSaveQuestion, onCancelChanges, on
                 </div>
                 <form>
                     <textarea class="input editor-input editor-text" name="text"
-                        placeholder="Enter question" .value=${question.text}></textarea>
+                        placeholder="Enter question" .value=${question? question.text : ""}></textarea>
                     <div id="answers-box">
-                        ${question.answers.map(answer => divSaveAnswers(answer, question.answers.indexOf(answer), onDeleteAnswer))}
+                        ${question? question.answers.map(answer => divSaveAnswers(question.answers.indexOf(answer), onDeleteAnswer, answer)) : 
+                            divSaveAnswers(index, onDeleteAnswer)
+                        }
                     </div>    
                     ${addAnswerTemplate(onAddAnswer)}
                 </form>
 `;
 
 // Works perfectly
-const divSaveAnswers = (answer, index, onDeleteAnswer) => html`
+const divSaveAnswers = (index, onDeleteAnswer, answer = "") => html`
     <div class="editor-input" data-id="${index}">
         <label class="radio">
             <input class="input" type="radio" name="question-${index}" value="${index}" />
@@ -126,43 +134,33 @@ const addAnswerTemplate = (onAddAnswer) => html`
     </div>
 `;
 
-const testTemplate = (index) => html`
-                <div class="layout">
-                    <div class="question-control">
-                        <button class="input submit action" @click=${onSaveQuestion} data-id="${index}"><i class="fas fa-check-double"></i>
-                            Save</button>
-                        <button class="input submit action" @click=${onCancelChanges} data-id="${index}"><i class="fas fa-times"></i> Cancel</button>
-                    </div>
-                    <h3>Question ${index}</h3>
-                </div>
-                <form>
-                    <textarea class="input editor-input editor-text" name="text"
-                        placeholder="Enter question" data-id="${index}"></textarea>
-                    <div id="answers-box">
-                        ${testAnswers(0, "")}
-                    </div>   
-                    ${testCorrectIndex()} 
-                    ${addAnswerTemplate()}
-                </form>
-`;
+// const testTemplate = (index, onSaveQuestion, onCancelChanges, onDeleteAnswer) => html`
+//                 <div class="layout">
+//                     <div class="question-control">
+//                         <button class="input submit action" @click=${onSaveQuestion} data-id="${index}"><i class="fas fa-check-double"></i>
+//                             Save</button>
+//                         <button class="input submit action" @click=${onCancelChanges} data-id="${index}"><i class="fas fa-times"></i>Cancel</button>
+//                     </div>
+//                     <h3>Question ${index}</h3>
+//                 </div>
+//                 <form>
+//                     <textarea class="input editor-input editor-text" name="text"
+//                         placeholder="Enter question" data-id="${index}"></textarea>
+//                     <div id="answers-box">
+//                         ${testAnswers(0, "", onDeleteAnswer)}
+//                     </div>   
+//                     ${addAnswerTemplate()}
+//                 </form>
+// `;
 
-const testAnswers = (index, answer) => html`
+const newAnswerTemplate = (index, onDeleteAnswer) => html`
     <div class="editor-input" data-id="${index}">
         <label class="radio">
-            <input class="input" type="radio" name="question-${index}" value="${index}" />
+            <input class="input" type="radio" name="question-${index}" />
             <i class="fas fa-check-circle"></i>
         </label>
-        <input class="input" type="text" name="answer-${index}" .value="${answer}" />
-        <button class="input submit action" @click=${onDeleteAnswer} data-id="${index}"><i class="fas fa-trash-alt"></i></button>
-    </div>
-`;
-
-const testCorrectIndex = () => html`
-    <div>
-        <label>
-            Correct Answer:
-            <input class="input" type="number" name="correct-answer" />
-        </label>
+        <input class="input" type="text" name="answer-${index}" />
+        <button class="input submit action" @click=${onDeleteAnswer}><i class="fas fa-trash-alt"></i></button>
     </div>
 `;
 
@@ -176,7 +174,6 @@ export {
     saveCancelTemplate,
     divSaveAnswers,
     addAnswerTemplate,
-    testTemplate,
-    testAnswers,
-    testCorrectIndex
+    //testTemplate,
+    newAnswerTemplate
 }

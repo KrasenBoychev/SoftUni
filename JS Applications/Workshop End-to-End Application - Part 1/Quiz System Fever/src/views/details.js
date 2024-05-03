@@ -1,5 +1,5 @@
 import { loading } from "../app.js";
-import { getQuizById } from "../data/quzzes.js";
+import { getQuizById } from "../data/quizzes.js";
 import { getUserName } from "../data/users.js";
 import { html, render } from "../lib.js";
 import { getUserData } from "../util.js";

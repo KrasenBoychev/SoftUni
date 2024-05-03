@@ -2,7 +2,7 @@
                  in this way I should be able to link the question to the correct quiz 
                  (instead of taking the last created quiz which can cause a bug);
 
-[ ] Create page: add an option to "create new topic";
+[x] Create page: add an option to "create new topic";
 
 [ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
 

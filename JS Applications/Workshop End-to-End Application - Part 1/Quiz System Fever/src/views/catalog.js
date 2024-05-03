@@ -1,5 +1,5 @@
 import { loading } from "../app.js";
-import { getAllQuizzes, getQuizzesfilteredByTitle, getQuizzesfilteredByTopic, getQuizzesfilteredByTopicAndTitle, getUniqueTopics } from "../data/quzzes.js";
+import { getAllQuizzes, getQuizzesfilteredByTitle, getQuizzesfilteredByTopic, getQuizzesfilteredByTopicAndTitle, getUniqueTopics } from "../data/quizzes.js";
 import { html, render, renderTemplate } from "../lib.js";
 import { createSubmitHandler } from "../util.js";
 

@@ -4,7 +4,7 @@ import {
   getQuizQuestions,
   updateQuestion,
 } from "../../data/questions.js";
-import { getQuizById, getQuizzesByOwnerIdOrdered, getUniqueTopics, updateQuiz } from "../../data/quzzes.js";
+import { getQuizById, getUniqueTopics, updateQuiz } from "../../data/quizzes.js";
 import { render, renderTemplate } from "../../lib.js";
 import { createSubmitHandler, getUserData } from "../../util.js";
 import * as templates from "./templates.js";
@@ -22,6 +22,7 @@ export async function showEdit(ctx) {
     templates.editTemplate(
       uniqueTopics.results,
       createSubmitHandler(onSaveTitleTopic),
+      createNewTopic,
       quiz
     )
   );
@@ -29,6 +30,7 @@ export async function showEdit(ctx) {
   renderArticles(questions);
 }
 
+// Works perfectly
 function renderHeading(title, topic) {
   const header = document.getElementById("edit-heading");
   renderTemplate(templates.headingTemplate(title, topic), header);
@@ -39,9 +41,9 @@ function renderArticles(questions) {
   const divQuestion = document.getElementById("print-questions");
   renderTemplate(
     templates.renderQuestions(
+      onAddQuestion,
       questions,
-      templates.editDeleteTemplate,
-      onAddQuestion
+      templates.editDeleteTemplate
     ),
     divQuestion
   );
@@ -61,31 +63,56 @@ function renderArticles(questions) {
 }
 
 // Works perfectly
-async function onSaveTitleTopic({ title, topic }, form) {
-  if (!title || topic == "all") {
-    return alert("Title and Topic fields are required!");
+async function onSaveTitleTopic(data, form) {
+  if (!data.title) {
+    return alert("Title is required!");
+  }
+
+  if (data.topic == 'all') {
+    return alert("Topic is required!");
+  }
+
+  if (data.topic == 'new-topic' && !data['new-topic']) {
+    return alert("New topic is required!");
+  }
+
+  let topic = null;
+  if (data['new-topic'] && data.topic == 'new-topic') {
+    topic = data['new-topic'];
+  } else {
+    topic = data.topic;
   }
 
   const quizId = form.dataset.id;
-
+  
   if (quizId == "") {
-    const lastQuizId = await createFunctions.recordQuiz(title, topic);
+    const lastQuizId = await createFunctions.recordQuiz(data.title, topic);
     form.dataset.id = lastQuizId;
 
   } else {
     const quiz = await getQuizById(quizId);
 
-    const data = {
-      title: title,
+    const dataObj = {
+      title: data.title,
       topic: topic,
       questionCount: quiz.questionCount,
     };
 
-    sendUpdateQuizRequest(data, quizId);
+    sendUpdateQuizRequest(dataObj, quizId);
   }
 
-  renderHeading(title, topic);
+  renderHeading(data.title, topic);
+  document.getElementById('newTopic').style.display = 'none';
   form.reset();
+}
+
+// Works perfectly
+function createNewTopic() {
+  if (document.getElementById('categories').value == 'new-topic') {
+    document.getElementById('newTopic').style.display = 'block';
+  } else {
+    document.getElementById('newTopic').style.display = 'none';
+  }
 }
 
 // Works perfectly
@@ -135,19 +162,24 @@ async function onDeleteQuestion(e) {
   }
 }
 
-async function onAddQuestion(e) {
-  if (e.target.tagName == "BUTTON") {
+async function onAddQuestion() {
     const divQuestions = document.getElementById("questions-box");
-    const lastIndex =
-      divQuestions.lastElementChild.querySelector("button").dataset.id;
+
+    let lastIndex = null;
+    if (divQuestions.childElementCount > 0) {
+      lastIndex = divQuestions.lastElementChild.querySelector("button").dataset.id;
+    } else {
+      lastIndex = 0;
+    }
+     
     const index = Number(lastIndex) + 1;
 
     const article = document.createElement("article");
     article.className = "editor-question";
-
     divQuestions.appendChild(article);
-    renderTemplate(testTemplate(index), article);
-  }
+    renderTemplate(templates.saveCancelTemplate(index, onSaveQuestion, onCancelChanges, onDeleteAnswer), article);
+
+    addQuestionBtn(true);
 }
 
 async function onSaveQuestion(e) {
@@ -324,4 +356,9 @@ async function sendUpdateQuizRequest(data, quizId) {
   await updateQuiz(quizId, data);
 }
 
-export { onSaveTitleTopic };
+function addQuestionBtn(boolean) {
+  const divQuestion = document.getElementById("add-question-btn");
+  divQuestion.disabled = boolean;
+}
+
+export { onSaveTitleTopic, createNewTopic, onAddQuestion, addQuestionBtn };
