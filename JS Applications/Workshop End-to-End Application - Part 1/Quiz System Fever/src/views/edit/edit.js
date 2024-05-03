@@ -4,7 +4,11 @@ import {
   getQuizQuestions,
   updateQuestion,
 } from "../../data/questions.js";
-import { getQuizById, getUniqueTopics, updateQuiz } from "../../data/quizzes.js";
+import {
+  getQuizById,
+  getUniqueTopics,
+  updateQuiz,
+} from "../../data/quizzes.js";
 import { render, renderTemplate } from "../../lib.js";
 import { createSubmitHandler, getUserData } from "../../util.js";
 import * as templates from "./templates.js";
@@ -68,27 +72,26 @@ async function onSaveTitleTopic(data, form) {
     return alert("Title is required!");
   }
 
-  if (data.topic == 'all') {
+  if (data.topic == "all") {
     return alert("Topic is required!");
   }
 
-  if (data.topic == 'new-topic' && !data['new-topic']) {
+  if (data.topic == "new-topic" && !data["new-topic"]) {
     return alert("New topic is required!");
   }
 
   let topic = null;
-  if (data['new-topic'] && data.topic == 'new-topic') {
-    topic = data['new-topic'];
+  if (data["new-topic"] && data.topic == "new-topic") {
+    topic = data["new-topic"];
   } else {
     topic = data.topic;
   }
 
   const quizId = form.dataset.id;
-  
+
   if (quizId == "") {
     const lastQuizId = await createFunctions.recordQuiz(data.title, topic);
     form.dataset.id = lastQuizId;
-
   } else {
     const quiz = await getQuizById(quizId);
 
@@ -102,20 +105,69 @@ async function onSaveTitleTopic(data, form) {
   }
 
   renderHeading(data.title, topic);
-  document.getElementById('newTopic').style.display = 'none';
+  document.getElementById("newTopic").style.display = "none";
   form.reset();
 }
 
 // Works perfectly
 function createNewTopic() {
-  if (document.getElementById('categories').value == 'new-topic') {
-    document.getElementById('newTopic').style.display = 'block';
+  if (document.getElementById("categories").value == "new-topic") {
+    document.getElementById("newTopic").style.display = "block";
   } else {
-    document.getElementById('newTopic').style.display = 'none';
+    document.getElementById("newTopic").style.display = "none";
   }
 }
 
 // Works perfectly
+async function onAddQuestion() {
+  const divQuestions = document.getElementById("questions-box");
+
+  let lastIndex = null;
+  if (divQuestions.childElementCount > 0) {
+    lastIndex =
+      divQuestions.lastElementChild.firstElementChild.firstElementChild.dataset
+        .id;
+  } else {
+    lastIndex = 0;
+  }
+
+  const index = Number(lastIndex) + 1;
+
+  const article = document.createElement("article");
+  article.className = "editor-question";
+  divQuestions.appendChild(article);
+  renderTemplate(
+    templates.saveCancelTemplate(
+      index,
+      onSaveQuestion,
+      onCancelChanges,
+      onDeleteAnswer,
+      onAddAnswer
+    ),
+    article
+  );
+}
+
+// Works perfectly
+async function onAddAnswer(e) {
+  e.preventDefault();
+  const divAnswers = document.getElementById("answers-box");
+
+  let index = null;
+  if (divAnswers.childElementCount > 0) {
+    index = Number(divAnswers.lastElementChild.dataset.id) + 1;
+  } else {
+    index = 0;
+  }
+
+  const divEditor = document.createElement("div");
+  divEditor.className = "editor-input";
+  divEditor.dataset.id = index;
+
+  divAnswers.appendChild(divEditor);
+  renderTemplate(templates.answerContentTemplate(index, onDeleteAnswer), divEditor);
+}
+
 async function onEditQuestion(e) {
   const questionId = getDatasetQuestionId(e);
   const index = getDatasetIndex(e);
@@ -124,18 +176,17 @@ async function onEditQuestion(e) {
   const root = e.target.parentElement.parentElement.parentElement;
   renderTemplate(
     templates.saveCancelTemplate(
-      question,
       index,
       onSaveQuestion,
       onCancelChanges,
       onDeleteAnswer,
-      onAddAnswer
+      onAddAnswer,
+      question
     ),
     root
   );
 }
 
-// Works perfectly
 async function onDeleteQuestion(e) {
   const choice = confirm("Are you sure?");
 
@@ -160,26 +211,6 @@ async function onDeleteQuestion(e) {
 
     sendUpdateQuizRequest(data);
   }
-}
-
-async function onAddQuestion() {
-    const divQuestions = document.getElementById("questions-box");
-
-    let lastIndex = null;
-    if (divQuestions.childElementCount > 0) {
-      lastIndex = divQuestions.lastElementChild.querySelector("button").dataset.id;
-    } else {
-      lastIndex = 0;
-    }
-     
-    const index = Number(lastIndex) + 1;
-
-    const article = document.createElement("article");
-    article.className = "editor-question";
-    divQuestions.appendChild(article);
-    renderTemplate(templates.saveCancelTemplate(index, onSaveQuestion, onCancelChanges, onDeleteAnswer), article);
-
-    addQuestionBtn(true);
 }
 
 async function onSaveQuestion(e) {
@@ -292,35 +323,6 @@ async function onDeleteAnswer(e) {
     const article = form.parentElement;
 
     renderTemplate(saveCancelTemplate(questionUpdated, index), article);
-  }
-}
-
-async function onAddAnswer(e) {
-  e.preventDefault();
-  if (e.target.tagName == "BUTTON") {
-    const divAnswers = document.getElementById("answers-box");
-
-    if (!divAnswers.lastElementChild.dataset.id) {
-      return;
-    }
-
-    let index = Number(divAnswers.lastElementChild.dataset.id) + 1;
-
-    const divEditor = document.createElement("div");
-    divEditor.className = "editor-input";
-    divEditor.innerHTML = `
-            <label class="radio">
-                <input class="input" type="radio" name="question-${index}" value="${index}" />
-                <i class="fas fa-check-circle"></i>
-            </label>
-            <input class="input" type="text" name="answer-${index}" />
-            <button class="input submit action" data-id="${index}"><i class="fas fa-trash-alt"></i></button>
-        `;
-
-    divAnswers.appendChild(divEditor);
-    divAnswers.lastElementChild
-      .querySelector("button")
-      .addEventListener("click", onDeleteAnswer);
   }
 }
 
