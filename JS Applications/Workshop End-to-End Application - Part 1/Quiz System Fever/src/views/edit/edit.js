@@ -1,6 +1,8 @@
 import {
+  createQuestion,
   deleteQuestion,
   getQuestionById,
+  getQuestionsByQuizIdOrdered,
   getQuizQuestions,
   updateQuestion,
 } from "../../data/questions.js";
@@ -14,7 +16,6 @@ import { createSubmitHandler, getUserData } from "../../util.js";
 import * as templates from "./templates.js";
 import * as createFunctions from "../create.js";
 
-// Works perfectly
 export async function showEdit(ctx) {
   const currentQuizId = ctx.params.id;
   const quiz = await getQuizById(currentQuizId);
@@ -27,20 +28,18 @@ export async function showEdit(ctx) {
       uniqueTopics.results,
       createSubmitHandler(onSaveTitleTopic),
       createNewTopic,
-      quiz
+      quiz.objectId
     )
   );
   renderHeading(quiz.title, quiz.topic);
   renderArticles(questions);
 }
 
-// Works perfectly
 function renderHeading(title, topic) {
   const header = document.getElementById("edit-heading");
   renderTemplate(templates.headingTemplate(title, topic), header);
 }
 
-// Works perfectly
 function renderArticles(questions) {
   const divQuestion = document.getElementById("print-questions");
   renderTemplate(
@@ -66,7 +65,6 @@ function renderArticles(questions) {
   }
 }
 
-// Works perfectly
 async function onSaveTitleTopic(data, form) {
   if (!data.title) {
     return alert("Title is required!");
@@ -92,9 +90,9 @@ async function onSaveTitleTopic(data, form) {
   if (quizId == "") {
     const lastQuizId = await createFunctions.recordQuiz(data.title, topic);
     form.dataset.id = lastQuizId;
+    document.getElementById("print-questions").dataset.id = lastQuizId;
   } else {
     const quiz = await getQuizById(quizId);
-
     const dataObj = {
       title: data.title,
       topic: topic,
@@ -109,7 +107,6 @@ async function onSaveTitleTopic(data, form) {
   form.reset();
 }
 
-// Works perfectly
 function createNewTopic() {
   if (document.getElementById("categories").value == "new-topic") {
     document.getElementById("newTopic").style.display = "block";
@@ -118,15 +115,19 @@ function createNewTopic() {
   }
 }
 
-// Works perfectly
 async function onAddQuestion() {
   const divQuestions = document.getElementById("questions-box");
 
   let lastIndex = null;
   if (divQuestions.childElementCount > 0) {
-    lastIndex =
-      divQuestions.lastElementChild.firstElementChild.firstElementChild.dataset
-        .id;
+    const article = divQuestions.lastElementChild;
+    const questionId = article.firstElementChild.dataset.id;
+
+    if (!questionId) {
+      return alert("Last question hasn't been finished yet!");
+    }
+
+    lastIndex = article.firstElementChild.firstElementChild.dataset.id;
   } else {
     lastIndex = 0;
   }
@@ -136,6 +137,7 @@ async function onAddQuestion() {
   const article = document.createElement("article");
   article.className = "editor-question";
   divQuestions.appendChild(article);
+
   renderTemplate(
     templates.saveCancelTemplate(
       index,
@@ -148,10 +150,11 @@ async function onAddQuestion() {
   );
 }
 
-// Works perfectly
 async function onAddAnswer(e) {
   e.preventDefault();
-  const divAnswers = document.getElementById("answers-box");
+
+  let formElement = getFormElement(e);
+  let divAnswers = formElement.children[1];
 
   let index = null;
   if (divAnswers.childElementCount > 0) {
@@ -165,15 +168,100 @@ async function onAddAnswer(e) {
   divEditor.dataset.id = index;
 
   divAnswers.appendChild(divEditor);
-  renderTemplate(templates.answerContentTemplate(index, onDeleteAnswer), divEditor);
+  renderTemplate(
+    templates.answerContentTemplate(index, onDeleteAnswer),
+    divEditor
+  );
+}
+
+async function onSaveQuestion(e) {
+  e.preventDefault();
+  const form = getFormElement(e);
+
+  const textarea = form.querySelector("textarea").value;
+  if (!textarea) {
+    return alert("All fields are required!");
+  }
+
+  let answersArray = [];
+  const inputsText = form.querySelectorAll('input[type="text"]');
+  for (const input of inputsText) {
+    if (!input.value) {
+      answersArray = [];
+      return alert("All fields are required!");
+    } else {
+      answersArray.push(input.value);
+    }
+  }
+
+  let correctAnswers = [];
+  const inputsCheckbox = form.querySelectorAll('input[type="checkbox"]');
+  for (let i = 0; i < inputsCheckbox.length; i++) {
+    if (inputsCheckbox[i].checked) {
+      correctAnswers.push(i);
+    }
+  }
+
+  if (correctAnswers.length == 0) {
+    return alert("Tick the correct answer(s)!");
+  }
+
+  const quizId = form.parentElement.parentElement.parentElement.dataset.id;
+
+  const pointer = {
+    __type: "Pointer",
+    className: "Quizzes",
+    objectId: quizId,
+  };
+  const data = {
+    text: textarea,
+    answers: answersArray,
+    correctIndex: correctAnswers,
+    quiz: pointer,
+  };
+
+  let questionId = null;
+  if (form.parentElement.firstElementChild.dataset.id) {
+    questionId = form.parentElement.firstElementChild.dataset.id;
+    await updateQuestion(questionId, data);
+  } else {
+    await createQuestion(data);
+    const questionsByQuizId = await getQuestionsByQuizIdOrdered(quizId);
+    questionId =
+      questionsByQuizId.results[questionsByQuizId.results.length - 1].objectId;
+
+    const quiz = await getQuizById(quizId);
+    const questionsNum = quiz.questionCount + 1;
+
+    const dataQuiz = {
+      title: quiz.title,
+      topic: quiz.topic,
+      questionCount: questionsNum,
+    };
+
+    sendUpdateQuizRequest(dataQuiz, quizId);
+  }
+
+  const index =
+    form.parentElement.firstElementChild.firstElementChild.dataset.id;
+  const questionUpdated = await getQuestionById(questionId);
+  const article = form.parentElement;
+
+  renderTemplate(
+    templates.articleTemplate(
+      questionUpdated,
+      index,
+      onEditQuestion,
+      onDeleteQuestion
+    ),
+    article
+  );
 }
 
 async function onEditQuestion(e) {
-  const questionId = getDatasetQuestionId(e);
-  const index = getDatasetIndex(e);
-
+  const { questionId, index, root } = getQuestionDetails(e);
   const question = await getQuestionById(questionId);
-  const root = e.target.parentElement.parentElement.parentElement;
+
   renderTemplate(
     templates.saveCancelTemplate(
       index,
@@ -191,159 +279,88 @@ async function onDeleteQuestion(e) {
   const choice = confirm("Are you sure?");
 
   if (choice) {
-    const questionId = getDatasetQuestionId(e);
+    const form = getFormElement(e);
+    const article = form.parentElement;
+    const questionId = article.firstElementChild.dataset.id;
 
-    const article = e.target.parentElement.parentElement.parentElement;
     const divOverlay = document.createElement("div");
     divOverlay.classList.add("loading-overlay", "working");
     article.appendChild(divOverlay);
 
     await deleteQuestion(questionId);
 
+    const quizId = form.parentElement.parentElement.parentElement.dataset.id;
     const quiz = await getQuizById(quizId);
-    quiz.questionCount -= 1;
+    const questionsNum = quiz.questionCount - 1;
 
     const data = {
       title: quiz.title,
       topic: quiz.topic,
-      questionCount: quiz.questionCount,
+      questionCount: questionsNum,
     };
 
-    sendUpdateQuizRequest(data);
-  }
-}
-
-async function onSaveQuestion(e) {
-  if (e.target.tagName == "BUTTON") {
-    const article = e.target.parentElement.parentElement.parentElement;
-    const form = article.querySelector("form");
-
-    const textarea = form.querySelector("textarea").value;
-    if (!textarea) {
-      return alert("All fields are required!");
-    }
-
-    let answersArray = [];
-
-    const inputs = form.querySelectorAll('input[type="text"]');
-    for (const input of inputs) {
-      if (!input.value) {
-        answersArray = [];
-        return alert("All fields are required!");
-      } else {
-        answersArray.push(input.value);
-      }
-    }
-
-    if (e.target.parentElement.dataset.id) {
-      const questionId = e.target.parentElement.dataset.id;
-      const question = await getQuestionById(questionId);
-
-      const pointer = {
-        __type: "Pointer",
-        className: "Quizzes",
-        objectId: quizId,
-      };
-      const data = {
-        text: textarea,
-        answers: answersArray,
-        correctIndex: question.correctIndex,
-        quiz: pointer,
-      };
-
-      await updateQuestion(questionId, data);
-
-      const index = e.target.dataset.id;
-      const questionUpdated = await getQuestionById(questionId);
-
-      renderTemplate(articleTemplate(questionUpdated, index), article);
-    } else {
-      const pointer = {
-        __type: "Pointer",
-        className: "Quizzes",
-        objectId: quizId,
-      };
-      const data = {
-        text: textarea,
-        answers: answersArray,
-        correctIndex: "", //TODO
-        quiz: pointer,
-      };
-
-      //TODO
-    }
+    sendUpdateQuizRequest(data, quizId);
   }
 }
 
 async function onCancelChanges(e) {
-  if (e.target.tagName == "BUTTON") {
-    const questionId = e.target.parentElement.dataset.id;
-    const question = await getQuestionById(questionId);
-    const index = e.target.dataset.id;
+  const { questionId, index, root } = getQuestionDetails(e);
 
-    const root = e.target.parentElement.parentElement.parentElement;
-    renderTemplate(articleTemplate(question, index), root);
+  if (questionId) {
+    const question = await getQuestionById(questionId);
+    renderTemplate(templates.articleTemplate(question, index), root);
+  } else {
+    const divQuestions = root.parentElement;
+    divQuestions.removeChild(root);
   }
 }
 
 async function onDeleteAnswer(e) {
   e.preventDefault();
-  if (e.target.tagName == "BUTTON") {
-    const divEditor = e.target.parentElement;
 
-    if (!divEditor.dataset.id) {
-      const divAnswers = e.target.parentElement.parentElement;
-      divAnswers.removeChild(divEditor);
-      return;
-    }
-    const form = e.target.parentElement.parentElement.parentElement;
-    const questionId = form.dataset.id;
-    const question = await getQuestionById(questionId);
-    const answers = question.answers;
-
-    const questionIndex = Number(e.target.dataset.id);
-    answers.splice(questionIndex, 1);
-
-    const pointer = {
-      __type: "Pointer",
-      className: "Quizzes",
-      objectId: quizId,
-    };
-    const data = {
-      text: question.text,
-      answers: answers,
-      correctIndex: question.correctIndex,
-      quiz: pointer,
-    };
-
-    await updateQuestion(questionId, data);
-
-    const index = form.querySelector("textarea").dataset.id;
-    const questionUpdated = await getQuestionById(questionId);
-    const article = form.parentElement;
-
-    renderTemplate(saveCancelTemplate(questionUpdated, index), article);
+  let divEditorInput = null;
+  if (e.target.tagName == 'BUTTON') {
+    divEditorInput = e.target.parentElement;
+  } else {
+    divEditorInput = e.target.parentElement.parentElement;
   }
+  
+  const divAnswers = divEditorInput.parentElement;
+  divAnswers.removeChild(divEditorInput);
 }
 
-function getDatasetQuestionId(e) {
+function getQuestionDetails(e) {
   let questionId = null;
+  let index = null;
+  let root = null;
+
   if (e.target.tagName == "BUTTON") {
     questionId = e.target.parentElement.parentElement.dataset.id;
+    index = e.target.parentElement.dataset.id;
+    root = e.target.parentElement.parentElement.parentElement;
   } else {
     questionId = e.target.parentElement.parentElement.parentElement.dataset.id;
+    index = e.target.parentElement.parentElement.dataset.id;
+    root = e.target.parentElement.parentElement.parentElement.parentElement;
   }
-  return questionId;
+
+  return { questionId, index, root };
 }
 
-function getDatasetIndex(e) {
-  let index = null;
+function getFormElement(e) {
+  let formElement = null;
+
   if (e.target.tagName == "BUTTON") {
-    index = e.target.parentElement.dataset.id;
+    formElement =
+      e.target.parentElement.parentElement.parentElement.querySelector("form");
   } else {
-    index = e.target.parentElement.parentElement.dataset.id;
+    formElement =
+      e.target.parentElement.parentElement.parentElement.parentElement.querySelector(
+        "form"
+      );
   }
-  return index;
+
+  return formElement;
 }
 
 async function sendUpdateQuizRequest(data, quizId) {
@@ -358,9 +375,4 @@ async function sendUpdateQuizRequest(data, quizId) {
   await updateQuiz(quizId, data);
 }
 
-function addQuestionBtn(boolean) {
-  const divQuestion = document.getElementById("add-question-btn");
-  divQuestion.disabled = boolean;
-}
-
-export { onSaveTitleTopic, createNewTopic, onAddQuestion, addQuestionBtn };
+export { onSaveTitleTopic, createNewTopic, onAddQuestion };

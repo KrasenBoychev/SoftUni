@@ -1,12 +1,20 @@
+[ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
+
+[ ] Quiz page: rework the quiz when an user tick the right answers - should work with more than one correct answer
+
+[ ] Main page: fix the most recent quiz - it doesn't show the right one
+
+[ ] Data Files: check if all exported functions have been used - if not, delete them
+
+[x] Edit page: increase "question count" when a new question created and decrease when deleted
+
 [x] Create page: when a quiz is created redirect to another page and take the quizId from the ctx properties:
                  in this way I should be able to link the question to the correct quiz 
                  (instead of taking the last created quiz which can cause a bug);
 
 [x] Create page: add an option to "create new topic";
 
-[ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
-
-[ ] Edit page: try to render the content in "Add answer/question" rather than using "inner html"
+[x] Edit page: try to render the content in "Add answer/question" rather than using "inner html"
 
 [x] Quiz page: TODO: count correct answers
 

@@ -2,7 +2,7 @@ import { get, post, put, del } from "./request.js";
 
 const endpoints = {
     allQuizes: '/classes/Quizzes',
-    latestQuiz: () => `/classes/Quizzes?order=createdAt`, //&&skip=${quizzesToSkip},
+    latestQuiz: () => `/classes/Quizzes?order=createdAt`,
     quizzesByOwnerIdOrdered: (userId) => `/classes/Quizzes?where={"ownerId":{ "__type": "Pointer", "className": "_User", "objectId": "${userId}" }}&&order=createdAt`,
     quizzesCount: '/classes/Quizzes?count=1',
     uniqueTopics: '/aggregate/Quizzes?distinct=topic',
