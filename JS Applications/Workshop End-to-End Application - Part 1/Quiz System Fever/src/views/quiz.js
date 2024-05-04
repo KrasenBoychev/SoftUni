@@ -26,10 +26,8 @@ export const quizTemplate = (quiz) => html`
                     </nav>
                 </header>
                 <div class="pad-large alt-page">
-
                     <article class="question">
                     </article>
-
                 </div>
             </section>
 `;
@@ -38,25 +36,9 @@ export const questionTemplate = (question, questionsRemaining) => html`
         <p class="q-text">
             ${question.text}
         </p>
-
         <div id="options-answers">
-            <label class="q-answer radio">
-                <input class="input" type="radio" name="question-1" value="0" />
-                <i class="fas fa-check-circle">${question.answers[0]}</i>
-            </label>
-
-            <label class="q-answer radio">
-                <input class="input" type="radio" name="question-1" value="0" />
-                <i class="fas fa-check-circle">${question.answers[1]}</i>
-            </label>
-
-            <label class="q-answer radio">
-                <input class="input" type="radio" name="question-1" value="0" />
-                <i class="fas fa-check-circle">${question.answers[2]}</i>
-            </label>
-
+            ${question.answers.map((answer, counter) => answerTemplate(answer, counter))}
         </div>
-
         <nav class="q-control">
             <span class="block">${questionsRemaining} questions remaining</span>
             <a class="action" href="javascript:void(0)" @click=${previousAnswer}><i class="fas fa-arrow-left"></i> Previous</a>
@@ -66,6 +48,13 @@ export const questionTemplate = (question, questionsRemaining) => html`
                 <a class="action" href="javascript:void(0)" @click=${submitAnswers}>Submit answers</a>
             </div>
         </nav>
+`;
+
+const answerTemplate = (answer, counter) => html`
+    <label class="q-answer">
+        <input type="checkbox" name="question-${counter}" value="${counter++}" />
+        ${answer}
+    </label>
 `;
 
 export async function openQuiz(ctx) {

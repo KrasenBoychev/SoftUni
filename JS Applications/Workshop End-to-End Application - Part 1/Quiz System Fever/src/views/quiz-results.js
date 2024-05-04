@@ -100,13 +100,14 @@ function seeQuestion(e) {
 }
 
 function renderAnswers(question, questionIndex) {
-    const userOption = endpoints.userAnswers[questionIndex + 1].userOption;
-    const correctIndex = question.correctIndex - 1;
+    debugger
+    const userOptions = endpoints.userAnswers[questionIndex + 1].userOptions;
+    const correctIndexes = question.correctIndex;
     let result = [];
 
-    for (let i = 0; i <= 2; i++) {
+    for (let i = 0; i < question.answers.length; i++) {
 
-        if (i == userOption && i == correctIndex) {
+        if (userOptions.includes(i) && correctIndexes.includes(i)) {
             result.push(html` <div class="s-answer">
                                 <span class="s-correct">
                                     ${question.answers[i]}
@@ -114,7 +115,7 @@ function renderAnswers(question, questionIndex) {
                                     <strong>Your choice</strong>
                                 </span>
                                </div>`);
-        } else if (i == userOption && i != correctIndex) {
+        } else if (userOptions.includes(i) && !correctIndexes.includes(i)) {
             result.push(html` <div class="s-answer">
                                 <span class="s-incorrect">
                                     ${question.answers[i]}
@@ -122,7 +123,7 @@ function renderAnswers(question, questionIndex) {
                                     <strong>Your choice</strong>
                                 </span>
                                </div>`);
-        } else if (i != userOption && i == correctIndex) {
+        } else if (!userOptions.includes(i) && correctIndexes.includes(i)) {
             result.push(html` <div class="s-answer">
                                     <span class="s-correct">
                                     ${question.answers[i]}

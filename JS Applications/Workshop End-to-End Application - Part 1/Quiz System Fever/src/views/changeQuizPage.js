@@ -12,8 +12,8 @@ export function showQuizPage(ctx) {
 
     if (endpoints.lastQuestion != null) {
         const previousQuestion = endpoints.questions[endpoints.lastQuestion - 1];
-        const correctIndex = previousQuestion.correctIndex;
-        checkAnswer(correctIndex);
+        const correctIndexes = previousQuestion.correctIndex;
+        checkAnswer(correctIndexes);
     }
 
     endpoints.lastQuestion = endpoints.currentQuestion;
@@ -48,31 +48,31 @@ function showQIndex(questionCount, quizId) {
     return result;
 }
 
-function checkAnswer(correctIndex) {
+function checkAnswer(correctIndexes) {
     const inputs = document.getElementById('options-answers').querySelectorAll('input');
 
-    let userOption = null;
+    let userOptions = [];
     let isCorrect = false;
 
-    for (let i = 0; i <= 2; i++) {
+    for (let i = 0; i < inputs.length; i++) {
         if (inputs[i].checked == true) {
-            userOption = i;
-
-            if (correctIndex == (userOption + 1)) {
-                endpoints.correctAnswers++;
-                isCorrect = true;
-            }
-
-            if (endpoints.lastQuestion in endpoints.userAnswers) {
-                if (endpoints.userAnswers[endpoints.lastQuestion].isCorrect == true) {
-                    endpoints.correctAnswers--;
-                }
-            }
+            userOptions.push(i);
         }
     }
 
-    if (userOption != null) {
-        endpoints.userAnswers[endpoints.lastQuestion] = { userOption, isCorrect };
+    if (JSON.stringify(correctIndexes) == JSON.stringify(userOptions)) {
+        endpoints.correctAnswers++;
+        isCorrect = true;
+    }
+
+    if (endpoints.lastQuestion in endpoints.userAnswers) {
+        if (endpoints.userAnswers[endpoints.lastQuestion].isCorrect == true) {
+            endpoints.correctAnswers--;
+        }
+    }
+
+    if (userOptions.length > 0) {
+        endpoints.userAnswers[endpoints.lastQuestion] = { userOptions, isCorrect };
     }
 }
 
@@ -85,8 +85,8 @@ function tickTheUserAnswer() {
         }
 
     } else {
-        for (let i = 0; i <= 2; i++) {
-            if (i == endpoints.userAnswers[endpoints.currentQuestion].userOption) {
+        for (let i = 0; i < inputs.length; i++) {
+            if (endpoints.userAnswers[endpoints.currentQuestion].userOptions.includes(i)) {
                 inputs[i].checked = true;
 
             } else {
@@ -121,8 +121,8 @@ function startOver() {
 
 
 function submitAnswers() {
-    const correctIndex = endpoints.questions[endpoints.currentQuestion - 1].correctIndex;
-    checkAnswer(correctIndex);
+    const correctIndexex = endpoints.questions[endpoints.currentQuestion - 1].correctIndex;
+    checkAnswer(correctIndexex);
 
     if (Object.keys(endpoints.userAnswers).length < endpoints.totalQuestions) {
         return alert('All questions must be answered!')
