@@ -3,7 +3,7 @@ import { get, post, put, del } from "./request.js";
 const endpoints = {
     allQuizes: '/classes/Quizzes',
     latestQuiz: () => `/classes/Quizzes?order=createdAt`,
-    //quizzesByOwnerIdOrdered: (userId) => `/classes/Quizzes?where={"ownerId":{ "__type": "Pointer", "className": "_User", "objectId": "${userId}" }}&&order=createdAt`,
+    quizzesByOwnerIdOrdered: (userId) => `/classes/Quizzes?where={"ownerId":{ "__type": "Pointer", "className": "_User", "objectId": "${userId}" }}&&order=createdAt`,
     quizzesCount: '/classes/Quizzes?count=1',
     uniqueTopics: '/aggregate/Quizzes?distinct=topic',
     quizzesByOwnerId: (ownerId) => `/classes/Quizzes?where={"ownerId":{"__type":"Pointer","className":"_User","objectId":"${ownerId}"}}`,
@@ -62,6 +62,6 @@ export async function updateQuiz(id, data) {
     await put(endpoints.allQuizes + "/" + id, data);
 }
 
-// export async function getQuizzesByOwnerIdOrdered(userId) {
-//     return await get(endpoints.quizzesByOwnerIdOrdered(userId));
-// }
+export async function getQuizzesByOwnerIdOrdered(userId) {
+    return await get(endpoints.quizzesByOwnerIdOrdered(userId));
+}

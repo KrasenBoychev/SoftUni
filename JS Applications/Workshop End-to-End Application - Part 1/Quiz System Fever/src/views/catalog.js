@@ -22,10 +22,6 @@ const catalogTemplate = (uniqueTopics, onFilter) => html`
       </section>
 `;
 
-function filterQuizzes(quizzes) {
-    return quizzes.map((quiz) => quizTemplate(quiz));
-}
-
 const quizTemplate = (quiz) => html`
     <article class="preview layout">
           <div class="right-col">
@@ -47,6 +43,10 @@ export const option = (topic) => html`
     <option value="${topic}">${topic}</option>
 `;
 
+const noQuizzesTemplate = () => html`
+    <p>No quizzes found!</p>
+`;
+
 export async function showCatalog(ctx) {
     render(loadingTemplate());
 
@@ -66,16 +66,27 @@ async function onFilter(data) {
         showCatalog();
 
     } else if (data.query.length == 0) {
-       // renderTemplate(loading(), rootFilteredQuizzes);
         const quizzes = await getQuizzesfilteredByTopic(data.topic);
-        renderTemplate(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+        renderContent(quizzes.results, rootFilteredQuizzes)
 
     } else if (data.topic == 'all') {
         const quizzes = await getQuizzesfilteredByTitle(data.query);
-        renderTemplate(filterQuizzes(quizzes.results), rootFilteredQuizzes);
-
+        renderContent(quizzes.results, rootFilteredQuizzes)
+        
     } else {
         const quizzes = await getQuizzesfilteredByTopicAndTitle(data.query, data.topic);
-        renderTemplate(filterQuizzes(quizzes.results), rootFilteredQuizzes);
+        renderContent(quizzes.results, rootFilteredQuizzes)
+    }
+}
+
+function filterQuizzes(quizzes) {
+    return quizzes.map((quiz) => quizTemplate(quiz));
+}
+
+function renderContent(quizzes, root) {
+    if (quizzes.length == 0) {
+        renderTemplate(noQuizzesTemplate(), root);
+    } else {
+        renderTemplate(filterQuizzes(quizzes), root);
     }
 }
