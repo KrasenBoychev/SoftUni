@@ -20,10 +20,14 @@ function showMessage(e) {
 
         page.redirect(`${anchor.pathname}`);
 
-        const navLinks = document.querySelector('nav').querySelectorAll('a');
-        for (const link of navLinks) {
-            link.removeEventListener('click', showMessage);
-        }
+       removeNavEventListener();
+    }
+}
+
+export function removeNavEventListener() {
+    const navLinks = document.querySelector('nav').querySelectorAll('a');
+    for (const link of navLinks) {
+        link.removeEventListener('click', showMessage);
     }
 }
 

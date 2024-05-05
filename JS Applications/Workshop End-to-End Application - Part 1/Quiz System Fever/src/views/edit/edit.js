@@ -273,6 +273,15 @@ async function onEditQuestion(e) {
     ),
     root
   );
+
+  const inputsCheckbox = root.querySelectorAll('input[type="checkbox"]');
+  const correctIndexes = question.correctIndex;
+
+  for (let i = 0; i < inputsCheckbox.length; i++) {
+    if (correctIndexes.includes(i)) {
+      inputsCheckbox[i].checked = true;
+    }
+  }
 }
 
 async function onDeleteQuestion(e) {

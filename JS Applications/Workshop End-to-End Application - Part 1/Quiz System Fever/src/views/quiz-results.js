@@ -1,3 +1,4 @@
+import { removeNavEventListener } from "../data/notifications.js";
 import { html, render, renderTemplate, } from "../lib.js";
 import { endpoints } from "./quiz.js";
 
@@ -49,6 +50,7 @@ const questionTemplate = (question, spanClass, iClass, btnText, questionIndex) =
 `;
 
 export function showQuizResults(ctx) {
+    removeNavEventListener();
     render(quizResultsTemplate(quizDetails));
 }
 

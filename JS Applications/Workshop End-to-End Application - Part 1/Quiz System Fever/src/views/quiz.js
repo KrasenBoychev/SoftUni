@@ -8,7 +8,7 @@ import {
   startOver,
   submitAnswers,
   showQuizPage,
-} from "./changeQuizPage.js";
+} from "./quiz-page-change.js";
 
 export const endpoints = {
   quiz: null,

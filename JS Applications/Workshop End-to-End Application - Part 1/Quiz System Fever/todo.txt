@@ -1,6 +1,6 @@
-[ ] Create middlewares - wait for all requests and then load the page
+[x] Edit page: tick the correct answer(s) when the edit button is clicked for every question
 
-
+[x] Create middlewares - wait for all requests and then load the page
 
 [x] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
 

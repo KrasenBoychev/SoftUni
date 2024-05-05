@@ -6,7 +6,7 @@ import { renderer } from "./middlewares/render.js";
 import { session } from "./middlewares/session.js";
 import { updateUserNav } from "./util.js";
 import { showCatalog } from "./views/catalog.js";
-import { showQuizPage } from "./views/changeQuizPage.js";
+import { showQuizPage } from "./views/quiz-page-change.js";
 import { showCreate } from "./views/create.js";
 import { showDetails } from "./views/details.js";
 import { showEdit } from "./views/edit/edit.js";
