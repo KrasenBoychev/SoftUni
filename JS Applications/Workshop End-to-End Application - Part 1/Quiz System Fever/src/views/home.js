@@ -1,8 +1,9 @@
 import { getLatestQuiz, getQuizzesCount, getUniqueTopics } from "../data/quizzes.js";
 import { html, render } from "../lib.js";
 import { getUserData } from "../util.js";
+import { getSolutionsByQuizId } from "../data/solutions.js";
 
-const homeTemplate = (latestQuiz, quizzesCount, countTopics, userData) => html`
+const homeTemplate = (latestQuiz, timesTakenQuiz, quizzesCount, countTopics, userData) => html`
 <section id="welcome">
 
 <div class="hero layout">
@@ -29,7 +30,7 @@ const homeTemplate = (latestQuiz, quizzesCount, countTopics, userData) => html`
             <div class="quiz-meta">
                 <span>${latestQuiz.questionCount} questions</span>
                 <span>|</span>
-                <span>Taken ?54? times</span>
+                <span>Taken ${timesTakenQuiz} times</span>
             </div>
         </div>
     </article>
@@ -44,12 +45,17 @@ const homeTemplate = (latestQuiz, quizzesCount, countTopics, userData) => html`
 
 export async function showHome(ctx) {
     const quizzesCount = await getQuizzesCount();
-    const latestQuizRequest = await getLatestQuiz(quizzesCount.count - 1);
-    const latestQuiz = latestQuizRequest.results[0];
+    const quizzesOrderedByDate = await getLatestQuiz();
+    const quizzesResults = quizzesOrderedByDate.results;
+    const latestQuiz = quizzesResults[quizzesResults.length - 1];
     const uniqueTopics = await getUniqueTopics();
     const countTopics = uniqueTopics.results.length;
 
     const userData = getUserData();
 
-    render(homeTemplate(latestQuiz, quizzesCount.count, countTopics, userData));
+    const solutionsResults = await getSolutionsByQuizId(latestQuiz.objectId);
+    const timesTakenQuiz = solutionsResults.results.length;    
+
+    render(homeTemplate(latestQuiz, timesTakenQuiz, quizzesCount.count, countTopics, userData));
 }
+

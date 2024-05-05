@@ -1,10 +1,9 @@
 [ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
 
-[ ] Main page: fix the most recent quiz - it doesn't show the right one
-
 [ ] Data Files: check if all exported functions have been used - if not, delete them
 
 
+[x] Main page: fix the most recent quiz - it doesn't show the right one
 
 [x] Quiz page: rework the quiz when an user tick the right answers - should work with more than one correct answer
 

@@ -1,5 +1,5 @@
 import { logout } from "./data/users.js";
-import { page, html } from "./lib.js";
+import { page, html} from "./lib.js";
 import { updateUserNav } from "./util.js";
 import { showCatalog } from "./views/catalog.js";
 import { showQuizPage } from "./views/changeQuizPage.js";
@@ -35,8 +35,8 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
     page.redirect('/')
 });
 
-export const loading = () => html`
-<div class="pad-large alt-page async">
+export const loadingTemplate = () => html`
+    <div class="pad-large alt-page async">
           <div class="sk-cube-grid">
               <div class="sk-cube sk-cube1"></div>
               <div class="sk-cube sk-cube2"></div>
@@ -48,5 +48,5 @@ export const loading = () => html`
               <div class="sk-cube sk-cube8"></div>
               <div class="sk-cube sk-cube9"></div>
           </div>
-      </div>
+    </div>
 `;

@@ -1,4 +1,4 @@
-import { page, html, render, renderTemplate, } from "../lib.js";
+import { html, render, renderTemplate, } from "../lib.js";
 import { endpoints } from "./quiz.js";
 
 
@@ -100,7 +100,6 @@ function seeQuestion(e) {
 }
 
 function renderAnswers(question, questionIndex) {
-    debugger
     const userOptions = endpoints.userAnswers[questionIndex + 1].userOptions;
     const correctIndexes = question.correctIndex;
     let result = [];

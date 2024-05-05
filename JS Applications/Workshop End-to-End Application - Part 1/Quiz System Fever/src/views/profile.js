@@ -138,9 +138,7 @@ async function renderResolvedQuizzes(solutions) {
     const percentage = (solution.correct / quiz.questionCount) * 100;
 
     const date = new Date(solution.createdAt);
-    const formatDate = `${date.getDay()}.${
-      months[date.getMonth() + 1]
-    } ${date.getFullYear()}`;
+    const formatDate = `${date.getDate()}.${months[date.getMonth() + 1]} ${date.getFullYear()}`;
 
     results.push(
       resolvedQuizTemplate(

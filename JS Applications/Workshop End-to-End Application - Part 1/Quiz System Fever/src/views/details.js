@@ -1,4 +1,4 @@
-import { loading } from "../app.js";
+import { loadingTemplate } from "../app.js";
 import { getQuizById } from "../data/quizzes.js";
 import { getUserName } from "../data/users.js";
 import { html, render } from "../lib.js";
@@ -31,7 +31,7 @@ const detailstemplate = (quiz, ownerId, ownerName, userData) => html`
 `;
 
 export async function showDetails(ctx) {
-    render(loading());
+    render(loadingTemplate());
 
     const quizId = ctx.params.id;
     const quiz = await getQuizById(quizId);
