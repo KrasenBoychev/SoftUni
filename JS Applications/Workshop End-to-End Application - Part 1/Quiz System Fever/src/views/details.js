@@ -1,20 +1,21 @@
 import { loadingTemplate } from "../app.js";
 import { getQuizById } from "../data/quizzes.js";
+import { getSolutionsByQuizId } from "../data/solutions.js";
 import { getUserName } from "../data/users.js";
 import { html, render } from "../lib.js";
 import { getUserData } from "../util.js";
 
 
-const detailstemplate = (quiz, ownerId, ownerName, userData) => html`
+const detailstemplate = (quiz, quizTimesTaken, ownerName, userData) => html`
             <section id="details">
                 <div class="pad-large alt-page">
                     <article class="details">
                         <h1>${quiz.title}</h1>
-                        <span class="quiz-topic">A quiz by <a href="/profile/${ownerId}">${ownerName}</a> on the topic of ${quiz.topic}</span>
+                        <span class="quiz-topic">A quiz by <a href="/profile">${ownerName}</a> on the topic of ${quiz.topic}</span>
                         <div class="quiz-meta">
                             <span>${quiz.questionCount} Questions</span>
                             <span>|</span>
-                            <span>Taken ?189? times</span>
+                            <span>Taken ${quizTimesTaken} times</span>
                         </div>
                         <p class="quiz-desc">Test your knowledge of XML by completing this medium-difficulty quiz.
                             Lorem ipsum dolor
@@ -40,7 +41,10 @@ export async function showDetails(ctx) {
     const owner = await getUserName(ownerId);
     const ownerName = owner.username;
     
+    const solutions = await getSolutionsByQuizId(quizId);
+    const quizTimesTaken = solutions.results.length;
+
     const userData = await getUserData();
 
-    render(detailstemplate(quiz, ownerId, ownerName, userData));
+    render(detailstemplate(quiz, quizTimesTaken, ownerName, userData));
 }
