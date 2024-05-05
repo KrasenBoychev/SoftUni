@@ -10,6 +10,10 @@ export async function createSolution(data) {
     await post(endpoints.solutions, data);
 }
 
+export async function getAllSolutions() {
+    return await get(endpoints.solutions);
+}
+
 export async function getSolutionsByUserId(userId) {
     return await get(endpoints.solutionsByUserId(userId));
 }
