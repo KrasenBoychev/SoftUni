@@ -1,5 +1,6 @@
 import { logout } from "./data/users.js";
-import { page, html} from "./lib.js";
+import { page, html, render} from "./lib.js";
+import { session } from "./middlewares/session.js";
 import { updateUserNav } from "./util.js";
 import { showCatalog } from "./views/catalog.js";
 import { showQuizPage } from "./views/changeQuizPage.js";
@@ -13,8 +14,9 @@ import { showQuizResults } from "./views/quiz-results.js";
 import { openQuiz } from "./views/quiz.js";
 import { showRegister } from "./views/register.js";
 
-updateUserNav();
 
+
+page(session());
 page('/', showHome);
 page('/profile', showProfile)
 page('/login', showLogin);
@@ -28,12 +30,17 @@ page('/results/:id', showQuizResults);
 page('/edit/:id', showEdit);
 
 page.start();
+updateUserNav();
 
-document.getElementById('logoutBtn').addEventListener('click', async () => {
-    logout();
-    updateUserNav();
-    page.redirect('/')
-});
+// document.getElementById('logoutBtn').addEventListener('click', async () => {
+//     logout();
+//     updateUserNav();
+//     page.redirect('/')
+// });
+
+function loading() {
+    render(loadingTemplate());
+}
 
 export const loadingTemplate = () => html`
     <div class="pad-large alt-page async">

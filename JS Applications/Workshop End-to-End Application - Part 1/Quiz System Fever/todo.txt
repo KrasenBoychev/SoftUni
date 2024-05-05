@@ -1,5 +1,3 @@
-[ ] Create notifications instead of alert messages
-
 [ ] Create middlewares - wait for all requests and then load the page
 
 

@@ -11,7 +11,7 @@ const detailstemplate = (quiz, quizTimesTaken, ownerName, userData) => html`
                 <div class="pad-large alt-page">
                     <article class="details">
                         <h1>${quiz.title}</h1>
-                        <span class="quiz-topic">A quiz by <a href="/profile">${ownerName}</a> on the topic of ${quiz.topic}</span>
+                        <span class="quiz-topic">A quiz by ${userData? html`<a href="/profile">${ownerName}</a>` : html`${ownerName}`} on the topic of ${quiz.topic}</span>
                         <div class="quiz-meta">
                             <span>${quiz.questionCount} Questions</span>
                             <span>|</span>

@@ -27,14 +27,4 @@ function showMessage(e) {
     }
 }
 
-export function notify(message) {
-    const divEl = document.getElementById('errorBox');
-    const spanEl = divEl.querySelector('span');
-    spanEl.textContent = message;
-
-    divEl.style.display = 'block';
-
-    setTimeout(() => divEl.remove(), 3000);
-}
-
 export { leavePage };

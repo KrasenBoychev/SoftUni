@@ -1,4 +1,4 @@
-import { leavePage, notify } from "../data/notifications.js";
+import { leavePage } from "../data/notifications.js";
 import { createSolution } from "../data/solutions.js";
 import { page, html, render, renderTemplate, } from "../lib.js";
 import { getUserData } from "../util.js";
@@ -128,9 +128,7 @@ function submitAnswers() {
     checkAnswer(correctIndexex);
 
     if (Object.keys(endpoints.userAnswers).length < endpoints.totalQuestions) {
-        notify('All questions must be answered!');
-        //alert('All questions must be answered!')
-        return;
+        return alert('All questions must be answered!');
     }
 
     let percentageCorrectAnswers = (endpoints.correctAnswers / endpoints.totalQuestions) * 100;
