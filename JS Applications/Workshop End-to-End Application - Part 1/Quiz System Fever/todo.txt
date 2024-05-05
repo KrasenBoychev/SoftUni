@@ -1,7 +1,12 @@
-[ ] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
+[ ] Create notifications instead of alert messages
 
-[ ] Data Files: check if all exported functions have been used - if not, delete them
+[ ] Create middlewares - wait for all requests and then load the page
 
+
+
+[x] Quiz page: create an alert msg if the user does a quiz and tries to use the top navigation;
+
+[x] Data Files: check if all exported functions have been used - if not, delete them
 
 [x] Main page: fix the most recent quiz - it doesn't show the right one
 

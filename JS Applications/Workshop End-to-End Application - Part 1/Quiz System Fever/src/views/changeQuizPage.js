@@ -1,9 +1,12 @@
+import { leavePage, notify } from "../data/notifications.js";
 import { createSolution } from "../data/solutions.js";
 import { page, html, render, renderTemplate, } from "../lib.js";
 import { getUserData } from "../util.js";
 import { quizTemplate, questionTemplate, endpoints } from "./quiz.js";
 
 export function showQuizPage(ctx) {
+    leavePage();
+
     if (ctx) {
         endpoints.currentQuestion = Number(ctx.params.qId);
     }
@@ -125,7 +128,9 @@ function submitAnswers() {
     checkAnswer(correctIndexex);
 
     if (Object.keys(endpoints.userAnswers).length < endpoints.totalQuestions) {
-        return alert('All questions must be answered!')
+        notify('All questions must be answered!');
+        //alert('All questions must be answered!')
+        return;
     }
 
     let percentageCorrectAnswers = (endpoints.correctAnswers / endpoints.totalQuestions) * 100;
