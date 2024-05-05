@@ -3,7 +3,7 @@ import { getSolutionsByUserId } from "../data/solutions.js";
 import { getUserData } from "../util.js";
 import { html } from "../lib.js";
 
-export function preload() {
+export function preloadProfile() {
     return async function (ctx, next) {
         ctx.userData = getUserData();
         ctx.solutions = await getSolutionsByUserId(ctx.userData.objectId);

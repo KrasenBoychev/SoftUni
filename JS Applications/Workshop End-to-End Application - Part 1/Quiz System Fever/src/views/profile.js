@@ -1,6 +1,6 @@
 import { deleteQuestion, getQuizQuestions } from "../data/questions.js";
 import { deleteQuiz } from "../data/quizzes.js";
-import { html, render, renderTemplate } from "../lib.js";
+import { html, renderTemplate } from "../lib.js";
 
 const profileTemplate = (userData, quizzes, solutions, onDeleteQuiz) => html`
   <section id="profile">
@@ -79,7 +79,7 @@ export async function showProfile(ctx) {
   const solutions = ctx.solutions.results;
   const ownerQuizzes = ctx.quizzes.results;
 
-  render(profileTemplate(userData, ownerQuizzes, solutions, onDeleteQuiz));
+  ctx.render(profileTemplate(userData, ownerQuizzes, solutions, onDeleteQuiz));
   renderResolvedQuizzes(ctx.results);
 }
 

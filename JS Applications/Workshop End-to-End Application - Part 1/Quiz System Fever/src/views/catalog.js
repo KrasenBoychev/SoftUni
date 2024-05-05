@@ -1,9 +1,9 @@
 import {
   getAllQuizzes,
+  getUniqueTopics,
   getQuizzesfilteredByTitle,
   getQuizzesfilteredByTopic,
   getQuizzesfilteredByTopicAndTitle,
-  getUniqueTopics,
 } from "../data/quizzes.js";
 import { html, render, renderTemplate } from "../lib.js";
 import { createSubmitHandler } from "../util.js";
@@ -66,46 +66,41 @@ const noQuizzesTemplate = () => html` <p>No quizzes found!</p> `;
 export async function showCatalog(ctx) {
   const quizzes = await getAllQuizzes();
   const uniqueTopics = await getUniqueTopics();
-
-  render(catalogTemplate(uniqueTopics.results, createSubmitHandler(onFilter)));
-
   const solutionsResults = await getAllSolutions();
   const solutions = solutionsResults.results;
 
-  const rootFilteredQuizzes = document
-    .getElementById("browse")
-    .querySelector("div");
-
-  renderTemplate(
-    filterQuizzes(quizzes.results, solutions),
-    rootFilteredQuizzes
-  );
+  render(catalogTemplate(uniqueTopics.results, createSubmitHandler(onFilter)));
+  renderTemplate(filterQuizzes(quizzes.results, solutions), getRoot());
 }
 
 async function onFilter(data) {
-  const rootFilteredQuizzes = document
-    .getElementById("browse")
-    .querySelector("div");
-
   if (data.query.length == 0 && data.topic == "all") {
     showCatalog();
   } else if (data.query.length == 0) {
     const quizzes = await getQuizzesfilteredByTopic(data.topic);
-    renderContent(quizzes.results, rootFilteredQuizzes);
+    renderContent(quizzes.results, getRoot());
   } else if (data.topic == "all") {
     const quizzes = await getQuizzesfilteredByTitle(data.query);
-    renderContent(quizzes.results, rootFilteredQuizzes);
+    renderContent(quizzes.results, getRoot());
   } else {
     const quizzes = await getQuizzesfilteredByTopicAndTitle(
       data.query,
       data.topic
     );
-    renderContent(quizzes.results, rootFilteredQuizzes);
+    renderContent(quizzes.results, getRoot());
   }
 }
 
 function filterQuizzes(quizzes, solutions) {
   return quizzes.map((quiz) => quizTemplate(quiz, solutions));
+}
+
+function getRoot() {
+  const rootFilteredQuizzes = document
+    .getElementById("browse")
+    .querySelector("div");
+
+  return rootFilteredQuizzes;
 }
 
 async function renderContent(quizzes, root) {

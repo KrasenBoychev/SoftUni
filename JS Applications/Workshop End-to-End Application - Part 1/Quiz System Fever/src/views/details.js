@@ -31,17 +31,22 @@ const detailstemplate = (quiz, quizTimesTaken, ownerName, userData) => html`
 `;
 
 export async function showDetails(ctx) {
-    const quizId = ctx.params.id;
-    const quiz = await getQuizById(quizId);
+    // const quizId = ctx.params.id;
+    // const quiz = await getQuizById(quizId);
 
-    const ownerId = quiz.ownerId.objectId;
-    const owner = await getUserName(ownerId);
-    const ownerName = owner.username;
+    // const ownerId = quiz.ownerId.objectId;
+    // const owner = await getUserName(ownerId);
+    // const ownerName = owner.username;
     
-    const solutions = await getSolutionsByQuizId(quizId);
-    const quizTimesTaken = solutions.results.length;
+    // const solutions = await getSolutionsByQuizId(quizId);
+    // const quizTimesTaken = solutions.results.length;
 
-    const userData = await getUserData();
+    // const userData = await getUserData();
+
+    const quiz = ctx.quiz;
+    const ownerName = ctx.owner.username
+    const quizTimesTaken = ctx.solutions.results.length;
+    const userData = ctx.userData;
 
     render(detailstemplate(quiz, quizTimesTaken, ownerName, userData));
 }

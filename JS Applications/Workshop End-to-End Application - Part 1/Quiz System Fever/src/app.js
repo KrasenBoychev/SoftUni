@@ -1,6 +1,7 @@
 import { page } from "./lib.js";
 import { loading } from "./middlewares/loading.js";
-import { preload } from "./middlewares/preloadProfile.js";
+import { preloadProfile } from "./middlewares/preloadProfile.js";
+import { preloadDetails } from "./middlewares/preloadDetails.js";
 import { renderer } from "./middlewares/render.js";
 import { session } from "./middlewares/session.js";
 import { updateUserNav } from "./util.js";
@@ -19,12 +20,12 @@ import { showRegister } from "./views/register.js";
 page(session());
 page(renderer(document.querySelector('main')));
 page('/', loading(), showHome);
-page('/profile', loading(), preload(), showProfile)
+page('/profile', loading(), preloadProfile(), showProfile)
 page('/login', showLogin);
 page('/register', showRegister);
-page('/browse', showCatalog);
+page('/browse', loading(), showCatalog);
 page('/create', showCreate);
-page('/details/:id', showDetails);
+page('/details/:id', loading(), preloadDetails(), showDetails);
 page('/quiz/:id', openQuiz);
 page('/quiz/:id/:qId', showQuizPage);
 page('/results/:id', showQuizResults);
