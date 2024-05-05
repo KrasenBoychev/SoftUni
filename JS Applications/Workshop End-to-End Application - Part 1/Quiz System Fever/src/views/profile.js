@@ -1,12 +1,6 @@
 import { deleteQuestion, getQuizQuestions } from "../data/questions.js";
-import {
-  deleteQuiz,
-  getQuizById,
-  getQuizzesByOwnerId,
-} from "../data/quizzes.js";
-import { getSolutionsByUserId } from "../data/solutions.js";
+import { deleteQuiz } from "../data/quizzes.js";
 import { html, render, renderTemplate } from "../lib.js";
-import { getUserData } from "../util.js";
 
 const profileTemplate = (userData, quizzes, solutions, onDeleteQuiz) => html`
   <section id="profile">
@@ -41,27 +35,6 @@ const profileTemplate = (userData, quizzes, solutions, onDeleteQuiz) => html`
     </div>
   </section>
 `;
-
-const resolvedQuizTemplate = (
-  quiz,
-  solution,
-  formatDate,
-  percentage,
-  questionCount
-) => {
-  return html`
-    <tr class="results-row">
-      <td class="cell-1">${formatDate}</td>
-      <td class="cell-2">
-        <a href="/details/${quiz.objectId}">${quiz.title}</a>
-      </td>
-      <td class="cell-3 s-correct">${percentage}%</td>
-      <td class="cell-4 s-correct">
-        ${solution.correct}/${questionCount} correct answers
-      </td>
-    </tr>
-  `;
-};
 
 const quizTemplate = (quiz, solutions, onDeleteQuiz) => {
   const filteredQuizzes = solutions.filter(
@@ -102,55 +75,16 @@ const quizTemplate = (quiz, solutions, onDeleteQuiz) => {
 };
 
 export async function showProfile(ctx) {
-  const userData = getUserData();
-
-  const solutionsResults = await getSolutionsByUserId(userData.objectId);
-  const solutions = solutionsResults.results;
-
-  const ownerQuizzesResulsts = await getQuizzesByOwnerId(userData.objectId);
-  const ownerQuizzes = ownerQuizzesResulsts.results;
+  const userData = ctx.userData;
+  const solutions = ctx.solutions.results;
+  const ownerQuizzes = ctx.quizzes.results;
 
   render(profileTemplate(userData, ownerQuizzes, solutions, onDeleteQuiz));
-  renderResolvedQuizzes(solutions);
+  renderResolvedQuizzes(ctx.results);
 }
 
-const months = {
-  1: "January",
-  2: "February",
-  3: "March",
-  4: "April",
-  5: "May",
-  6: "June",
-  7: "July",
-  8: "August",
-  9: "September",
-  10: "October",
-  11: "November",
-  12: "December",
-};
-
-async function renderResolvedQuizzes(solutions) {
+async function renderResolvedQuizzes(results) {
   const root = document.querySelector("tbody");
-  const results = [];
-
-  for (const solution of solutions) {
-    const quiz = await getQuizById(solution.quiz.objectId);
-    const percentage = (solution.correct / quiz.questionCount) * 100;
-
-    const date = new Date(solution.createdAt);
-    const formatDate = `${date.getDate()}.${months[date.getMonth() + 1]} ${date.getFullYear()}`;
-
-    results.push(
-      resolvedQuizTemplate(
-        quiz,
-        solution,
-        formatDate,
-        percentage,
-        quiz.questionCount
-      )
-    );
-  }
-
   renderTemplate(results, root);
 }
 
