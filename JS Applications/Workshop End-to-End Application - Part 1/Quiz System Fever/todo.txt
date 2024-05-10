@@ -1,9 +1,10 @@
-[ ] Disable buttons when creating or saving questions
-
-[ ] If more than one correct answer, show a message: multiple choice
 
 [ ] Check the best practices for login/register validation and for server errors handling
 
+
+[x] Disable buttons when creating or saving questions
+
+[x] If more than one correct answer, show a message: multiple choice
 
 [x] Edit page: tick the correct answer(s) when the edit button is clicked for every question
 

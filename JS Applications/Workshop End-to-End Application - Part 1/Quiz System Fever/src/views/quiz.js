@@ -43,7 +43,7 @@ export const quizTemplate = (quiz) => html`
 export const questionTemplate = (question, questionsRemaining, correctAnswers) => html`
   <p class="q-text">
     ${question.text}
-    <p class="correct-answers ${correctAnswers}">There is more than one correct answer!</p>
+    <p class="red-text ${correctAnswers}">There is more than one correct answer!</p>
   </p>
   
   <div id="options-answers">

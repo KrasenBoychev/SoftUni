@@ -1,3 +1,4 @@
+import { loadingPage } from "../middlewares/loading.js";
 import { clearUserData, getUserData } from "../util.js";
 
 const host = 'https://parseapi.back4app.com';
@@ -6,7 +7,9 @@ const apiKey = 'J1Nuil1pmS4iHolbjbESMkssW0GrQOtn5s7WjfIh';
 const masterKey = '0QdBlZhFD5Km7PyCerxOCqZxiCV648i3GdoeknV1';
 
 async function request(method, url, data) {
-   
+   //loadingPage('attach'); 
+   // prevention from sending the same request more than one time (unfortunately after a double click on "edit", when correcting a question, it bugs)
+
     const options = {
         method,
         headers: {
@@ -36,18 +39,24 @@ async function request(method, url, data) {
             // }
 
             const err = await response.json();
+
+           // loadingPage('remove');
             throw new Error(err.message);
         }
 
         if (response.status == 204) {
+          //  loadingPage('remove');
             return response;
         } else {
+          //  loadingPage('remove');
             return response.json();
         }
 
     } catch(err) {
         // TODO Add custom error handling and visualization based on exam requirements
         alert(err.message);
+
+       // loadingPage('remove');
         throw err;
     }
 }

@@ -1,10 +1,25 @@
-import { html } from "../lib.js";
+import { html, renderTemplate } from "../lib.js";
 
 export function loading() {
     return function (ctx, next) {
         ctx.render(loadingTemplate());
         next();
     }
+}
+
+export function loadingPage(command) {
+    const root = document.getElementById('loading-page');
+
+    if (command == 'attach') {
+       // renderTemplate(loadingTemplate(), root);
+        root.style.display = 'block';
+    }
+
+    if (command == 'remove') {
+      //  root.textContent = "";
+        root.style.display = 'none';
+    }
+   
 }
 
 export const loadingTemplate = () => html`
