@@ -1,3 +1,10 @@
+[ ] Disable buttons when creating or saving questions
+
+[ ] If more than one correct answer, show a message: multiple choice
+
+[ ] Check the best practices for login/register validation and for server errors handling
+
+
 [x] Edit page: tick the correct answer(s) when the edit button is clicked for every question
 
 [x] Create middlewares - wait for all requests and then load the page
@@ -29,7 +36,6 @@
 [x] Quiz page: fix "questions remaining"
 
 [x] Quiz page: rework 'showQIndex' function -> changing links don't show correctly the answersed questions
-
 
 [x] Quiz page: fix the issue with the checked boxex (in all questions) when one of the options is clicked
 

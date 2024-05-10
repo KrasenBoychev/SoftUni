@@ -28,8 +28,9 @@ export function showQuizPage(ctx) {
 function showQuestion(question, questionCount) {
     const root = document.querySelector('article[class="question"]');
     const questionsRemaining = (questionCount - Object.keys(endpoints.userAnswers).length);
+    const correctAnswers = question.correctIndex.length == 1? "hidden" : "";
 
-    renderTemplate(questionTemplate(question, questionsRemaining), root);
+    renderTemplate(questionTemplate(question, questionsRemaining, correctAnswers), root);
 }
 
 function showQIndex(questionCount, quizId) {

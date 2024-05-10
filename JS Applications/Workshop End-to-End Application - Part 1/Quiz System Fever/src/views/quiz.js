@@ -40,8 +40,12 @@ export const quizTemplate = (quiz) => html`
   </section>
 `;
 
-export const questionTemplate = (question, questionsRemaining) => html`
-  <p class="q-text">${question.text}</p>
+export const questionTemplate = (question, questionsRemaining, correctAnswers) => html`
+  <p class="q-text">
+    ${question.text}
+    <p class="correct-answers ${correctAnswers}">There is more than one correct answer!</p>
+  </p>
+  
   <div id="options-answers">
     ${question.answers.map((answer, counter) =>
       answerTemplate(answer, counter)
