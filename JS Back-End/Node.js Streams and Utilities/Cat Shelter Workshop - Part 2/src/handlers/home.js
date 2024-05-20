@@ -1,4 +1,4 @@
-const { readFile } = require('../util');
+const { readTemplate } = require('../util');
 const cats = require('../../data/cats.json');
 
 function catTemplate(cat) {
@@ -15,8 +15,8 @@ function catTemplate(cat) {
     </li>`;
 }
 
-function homeHandler(req, res) {
-  const template = readFile('./views/home/index.html');
+async function homeHandler(req, res) {
+  const template = await readTemplate('home/index');
   res.writeHead(200, ['Content-Type', 'text/html']);
 
   const html = template.replace('%%catContent%%', cats.map(catTemplate).join('\n'));
