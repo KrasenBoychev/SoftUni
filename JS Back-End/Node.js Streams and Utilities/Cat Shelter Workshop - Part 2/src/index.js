@@ -8,7 +8,7 @@ const { addCatHandler } = require('./handlers/addCat');
 const routes = {
     'GET': {
     '/': homeHandler,
-    'index.html': homeHandler,
+    '/index.html': homeHandler,
     '/cats/add-breed': addBreedHandler,
     '/cats/add-cat': addCatHandler
     },
