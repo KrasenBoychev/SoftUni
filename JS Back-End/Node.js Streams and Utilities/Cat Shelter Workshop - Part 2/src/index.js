@@ -4,6 +4,7 @@ const {homeHandler} = require('./handlers/home');
 const {staticFileHandler} = require('./handlers/static');
 const { addBreedHandler, postBreedHandler } = require('./handlers/addBreed');
 const { addCatHandler } = require('./handlers/addCat');
+const { createImage } = require('./createController');
 
 const routes = {
     'GET': {
