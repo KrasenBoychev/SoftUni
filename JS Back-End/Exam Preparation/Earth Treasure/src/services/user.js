@@ -1,14 +1,13 @@
 const { User } = require('../models/User');
 const bcrypt = require('bcrypt');
 
-//TODO set identity prop name based on exam description
 const identityName = 'email';
 
 async function register(identity, password) {
   const existing = await User.findOne({ [identityName]: identity });
 
   if (existing) {
-    throw new Error(`This ${identityName} is alredy in use`);
+    throw new Error(`This ${identityName} is already in use`);
   }
 
   const user = new User({
