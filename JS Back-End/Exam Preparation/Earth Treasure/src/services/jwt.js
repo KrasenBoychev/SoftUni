@@ -4,8 +4,8 @@ const secret = 'super secr3t';
 
 function createToken(userData) {
     const payload = {
-        email: userData,
-        id: userData._id
+        email: userData.email,
+        _id: userData._id
     };
 
     const token = jwt.sign(payload, secret, {

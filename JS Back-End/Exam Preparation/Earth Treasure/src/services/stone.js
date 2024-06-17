@@ -1,13 +1,11 @@
 const { Stone } = require('../models/Stone');
 
-//TODO replace with real data service according to exam description
-
 async function getAll() {
     return Stone.find().lean();
 }
 
 async function getRecent() {
-    return Stone.find().sort({ $natural: -1 }).limit(3).lean();
+    return await Stone.find().sort({ $natural: -1 }).limit(3).lean();
 }
 
 async function getById(id) {
@@ -55,7 +53,25 @@ async function update(id, data, userId) {
     return record;
 }
 
-//TODO add function to only update likes
+async function likeStone(stoneId, userId) {
+    const record = await Stone.findById(stoneId);
+
+    if (!record) {
+        throw new ReferenceError('Record not found ' + stoneId);
+    }
+
+    if (record.author.toString() == userId) {
+        throw new Error('Access denied');
+    }
+
+    if (record.likes.find(l => l.toString() == userId)) {
+        return;
+    }
+
+    record.likes.push(userId);
+
+    await record.save();
+}
 
 async function deleteById(id, userId) {
     const record = await Stone.findById(id);
@@ -77,5 +93,6 @@ module.exports = {
     getById,
     create,
     update,
+    likeStone,
     deleteById
 };
