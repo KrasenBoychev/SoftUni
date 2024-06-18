@@ -46,7 +46,6 @@ stoneRouter.post(
     .withMessage('description must be at least 10 characters long'),
   async (req, res) => {
     try {
-      //TODO add validation
       const validation = validationResult(req);
 
       if (validation.errors.length) {
