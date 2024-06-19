@@ -9,9 +9,10 @@ const homeRouter = Router();
 homeRouter.get('/', async (req, res) => {
     console.log(req.user);
 
-    const result = await login('krasen', '123');
-    const token = createToken(result);
-    res.cookie('token', token);
+    //This code creates a token and saves it in a cookie
+    // const result = await login('krasen', '123');
+    // const token = createToken(result);
+    // res.cookie('token', token);
 
     res.render('home');
 });

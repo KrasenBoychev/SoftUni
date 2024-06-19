@@ -58,6 +58,7 @@ async function deleteById(id, userId) {
 module.exports = {
     getAll,
     getById,
+    create,
     update,
     deleteById
 };
