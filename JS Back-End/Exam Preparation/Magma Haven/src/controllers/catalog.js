@@ -1,5 +1,6 @@
 const { Router } = require('express'); 
 const { getAll, getById } = require('../services/volcano');
+const { searchVolcanoes } = require('../services/volcano');
 
 const catalogRouter = Router();
 
@@ -24,6 +25,14 @@ catalogRouter.get('/catalog/:id', async (req, res) => {
     volcano.hasVoted = Boolean(volcano.voteList.find(v => v.toString() == req.user?._id));
 
     res.render('details', { volcano });
+});
+
+catalogRouter.get('/search', async (req, res) => {
+    const { name, typeVolcano } = req.query;
+
+    const volcanoes = await searchVolcanoes(name, typeVolcano);
+
+    res.render('search', { data: { name, typeVolcano }, volcanoes });
 });
 
 module.exports = { catalogRouter };

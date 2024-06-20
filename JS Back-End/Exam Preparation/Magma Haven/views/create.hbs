@@ -13,7 +13,7 @@
             <label>Image:</label>
             <input type="text" id="image" name="image" placeholder="http://..."  {{#if data.image}}value="{{data.image}}"{{/if}}>
             <label>Volcano Type:</label>
-            <select autocomplete="off" id="type" name="typeVolcano" {{#if data.typeVolcano}}value="data.typeVolcano" selected="data.typeVolcano"{{/if}}>
+            <select autocomplete="off" id="type" name="typeVolcano" {{#if data.typeVolcano}}value="{{data.typeVolcano}}" selected="{{data.typeVolcano}}"{{/if}}>
                 {{#if data.typeVolcano}}
                 <option value="{{data.typeVolcano}}" hidden="hidden" selected>{{data.typeVolcano}}</option>
                 {{else}}

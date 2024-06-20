@@ -4,14 +4,25 @@ async function getAll() {
     return Volcano.find().lean();
 }
 
-// TODO add search method
+async function searchVolcanoes(name, typeVolcano) {
+    const query = {};
+
+    if (name) {
+        query.name = new RegExp(name, 'i');
+    }
+
+    if (typeVolcano && typeVolcano != '---') {
+        query.typeVolcano = typeVolcano;
+    }
+
+    return Volcano.find(query).lean();
+}
 
 async function getById(id) {
     return Volcano.findById(id).lean();
 }
 
 async function create(data, authorId) {
-    //TODO extract properties from view model
     const record = new Volcano({
         name: data.name,
         location: data.location,
@@ -94,5 +105,6 @@ module.exports = {
     create,
     update,
     deleteById,
-    addVote
+    addVote,
+    searchVolcanoes
 };
