@@ -4,19 +4,31 @@ const { configHbs } = require('./config/configHbs');
 const { configExpress } = require('./config/configExpress');
 const { configRoutes } = require('./config/configRoutes');
 const { createToken, verifyToken } = require('./services/jwt');
-const { register } = require('./services/user');
+const { register, login } = require('./services/user');
 
 start();
 
 async function start() {
-    const app = express();
+  const app = express();
 
-    await configDatabase();
-    configHbs(app);
-    configExpress(app);
-    configRoutes(app);
+  await configDatabase();
+  configHbs(app);
+  configExpress(app);
+  configRoutes(app);
 
-    app.listen(3000, () => {
-        console.log('Server strated http://localhost:3000');
-    });
+  app.listen(3000, () => {
+    console.log('Server strated http://localhost:3000');
+    //test();
+  });
+}
+
+async function test() {
+  try {
+    const result = await login('krasen@abv.bg', '123');
+    const token = createToken(result);
+    console.log(token);
+  } catch (err) {
+    console.log('Caught error');
+    console.log(err.message);
+  }
 }

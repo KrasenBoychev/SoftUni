@@ -1,10 +1,9 @@
-//TODO import routers
-
 const { homeRouter } = require('../controllers/home');
+const { userRouter } = require('../controllers/user');
 
 function configRoutes(app) {
   app.use(homeRouter);
-  //TODO register routers
+  app.use(userRouter);
 }
 
 module.exports = { configRoutes };

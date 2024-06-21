@@ -1,8 +1,6 @@
 const { Schema, model, Types } = require('mongoose');
 
-// TODO replace with data model from exam description
-
-const dataSchema = new Schema({
+const electronicsSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -46,8 +44,8 @@ const dataSchema = new Schema({
   },
 });
 
-const Data = model('Data', dataSchema);
+const Electronics = model('Electronics', electronicsSchema);
 
-module.exports = { Data };
+module.exports = { Electronics };
 
 
