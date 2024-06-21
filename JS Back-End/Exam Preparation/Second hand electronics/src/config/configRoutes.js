@@ -8,6 +8,10 @@ function configRoutes(app) {
   app.use(userRouter);
   app.use(electronicsRouter);
   app.use(catalogRouter);
+
+  app.get('*', (req, res) => {
+    res.render('404');
+  });
 }
 
 module.exports = { configRoutes };
