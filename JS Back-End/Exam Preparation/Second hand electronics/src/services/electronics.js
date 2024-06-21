@@ -6,6 +6,20 @@ async function getAll() {
     return Electronics.find().lean();
 }
 
+async function searchElectronics(name, type) {
+    const query = {};
+
+    if (name) {
+        query.name = new RegExp(name, 'i');
+    }
+
+    if (type && type != '---') {
+        query.type = type;
+    }
+
+    return Electronics.find(query).lean();
+}
+
 async function getById(id) {
     return Electronics.findById(id).lean();
 }
