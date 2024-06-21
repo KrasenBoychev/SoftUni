@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAll, getById } = require('../services/electronics');
+const { getAll, getById, searchElectronics } = require('../services/electronics');
 
 
 const catalogRouter = Router();
@@ -26,13 +26,13 @@ catalogRouter.get('/catalog/:id', async (req, res) => {
     res.render('details', { electronics });
 });
 
-// catalogRouter.get('/search', async (req, res) => {
-//     const { name, typeVolcano } = req.query;
+catalogRouter.get('/search', async (req, res) => {
+    const { name, type } = req.query;
 
-//     const volcanoes = await searchVolcanoes(name, typeVolcano);
+    const electronics = await searchElectronics(name, type);
 
-//     res.render('search', { data: { name, typeVolcano }, volcanoes });
-// });
+    res.render('search', { data: { name, type }, electronics });
+});
 
 
 module.exports = { catalogRouter };
