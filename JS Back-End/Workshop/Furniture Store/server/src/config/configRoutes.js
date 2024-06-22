@@ -1,10 +1,9 @@
-//TODO import routers
-
-const { homeRouter } = require('../controllers/home');
+const { catalogRouter } = require('../controllers/catalog');
+const { userRouter } = require('../controllers/user');
 
 function configRoutes(app) {
-  app.use(homeRouter);
-  //TODO register routers
+  app.use('/data/catalog', catalogRouter);
+  app.use('/users', userRouter);
 }
 
 module.exports = { configRoutes };

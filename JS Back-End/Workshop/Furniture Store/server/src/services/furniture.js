@@ -1,19 +1,22 @@
-const {Data } = require('../models/Data');
-
-//TODO replace with real data service according to exam description
+const { Furniture } = require('../models/furniture');
 
 async function getAll() {
-    return Data.find().lean();
+    return Furniture.find().lean();
 }
 
 async function getById(id) {
-    return Data.findById(id).lean();
+    return Furniture.findById(id).lean();
 }
 
 async function create(data, authorId) {
-    //TODO extract properties from view model
-    const record = new Data({
-        prop: data.prop,
+    const record = new Furniture({
+        make: data.name,
+        model: data.model,
+        year: data.year,
+        description: data.description,
+        price: data.price,
+        img: data.img,
+        material: data.material,
         author: authorId
     });
 
@@ -23,7 +26,7 @@ async function create(data, authorId) {
 }
 
 async function update(id, data, userId) {
-    const record = await Data.findById(id);
+    const record = await Furniture.findById(id);
 
     if (!record) {
         throw new ReferenceError('Record not found ' + id);
@@ -33,8 +36,13 @@ async function update(id, data, userId) {
         throw new Error('Access denied');
     }
 
-    //TODO replace with real properties
-    record.prop = data.prop;
+    record.make = data.name;
+    record.model = data.model;
+    record.year = data.year;
+    record.description = data.description;
+    record.price = data.price;
+    record.img = data.img;
+    record.material = data.material;
 
     await record.save();
 
@@ -42,7 +50,7 @@ async function update(id, data, userId) {
 }
 
 async function deleteById(id, userId) {
-    const record = await Data.findById(id);
+    const record = await Furniture.findById(id);
 
     if (!record) {
         throw new ReferenceError('Record not found ' + id);
@@ -52,7 +60,7 @@ async function deleteById(id, userId) {
         throw new Error('Access denied');
     }
 
-    await Data.findByIdAndDelete(id);
+    await Furniture.findByIdAndDelete(id);
 }
 
 module.exports = {

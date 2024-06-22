@@ -1,16 +1,13 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const { session } = require('../middlewares/session');
+const { cors } = require('../middlewares/cors');
 
 const secret = 'cookie secr3t';
 
 function configExpress(app) {
-  app.use(cookieParser(secret));
+  app.use(cors());
   app.use(session());
-  //TODO add session middleware
-
-  app.use('/static', express.static('static'));
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
 }
 
 module.exports = { configExpress };

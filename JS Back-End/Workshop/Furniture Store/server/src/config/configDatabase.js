@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
-//require('../models/User');
-//require('../models/Data'); //TODO import real data model
-// TODO import models
+require('../models/User');
+require('../models/Furniture');
 
 async function configDatabase() {
-    //TODO set database name
-    const connectionsString = 'mongodb://localhost:27017/exam-db';
+    const connectionsString = 'mongodb://localhost:27017/furniture';
 
     await mongoose.connect(connectionsString);
 
