@@ -1,14 +1,14 @@
 <div class="register-box">
     <h1>Register</h1>
-    <form method="post">
+    <form id="registerForm" name="registerForm" autocomplete="off" method="post">
         <label>Username</label>
-        <input type="text" name="username" placeholder="Username.." {{#if errors}}value="{{data.username}}"{{/if}}>
+        <input type="text" name="username" placeholder="Username.."  autocomplete="off" {{#if errors}}value="{{data.username}}"{{/if}}>
         <label>Email</label>
-        <input type="text" name="email" placeholder="Email.." {{#if errors}}value="{{data.email}}"{{/if}}>
+        <input type="text" name="email" placeholder="Email.." autocomplete="off" {{#if errors}}value="{{data.email}}"{{/if}}>
         <label>Password</label>
-        <input type="password" name="password" placeholder="Password..">
+        <input type="password" name="password" placeholder="Password.." autocomplete="off">
         <label>Confirm Password</label>
-        <input type="password" name="repass" placeholder="Confirm Password..">
+        <input type="password" name="repass" placeholder="Confirm Password.." autocomplete="off">
         <input type="submit" value="Submit">
     </form>
     <p>Already have an account? <a href="/login">Login here</a></p>

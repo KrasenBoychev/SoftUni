@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getRecent, getAll, getById } = require('../services/recipes');
+const { getRecent, getAll, getById, searchRecipes } = require('../services/recipes');
 
 const homeRouter = Router();
 
@@ -28,6 +28,17 @@ homeRouter.get('/details/:id', async (req, res) => {
   
     res.render('details', { recipe, isOwner, hasRecommended });
   });
+
+  homeRouter.get('/search', async (req, res) => {
+    const { search } = req.query;
+
+    const title = search;
+
+    const recipes = await searchRecipes(title);
+
+    res.render('search', { data: { title }, recipes });
+});
+
 module.exports = {
     homeRouter
 };

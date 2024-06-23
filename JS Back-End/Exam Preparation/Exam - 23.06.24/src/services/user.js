@@ -7,12 +7,12 @@ async function register(identity, username, password) {
   const existing = await User.findOne({ [identityName]: identity });
 
   if (existing) {
-    throw new Error(`This ${identityName} is alredy in use`);
+    throw new Error(`This ${identityName} is already in use`);
   }
 
   const user = new User({
     [identityName]: identity,
-    username,
+    username: username,
     password: await bcrypt.hash(password, 10)
   });
 
