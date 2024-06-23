@@ -1,7 +1,7 @@
 function isUser() {
     return function(req, res, next) {
         if (!req.user) {
-            res.redirect('/login');
+            res.status(401).json({ code: 401, message: 'Missins credentials. Please login.' });
         } else {
             next();
         }

@@ -1,7 +1,11 @@
-const { Furniture } = require('../models/furniture');
+const { Furniture } = require('../models/Furniture');
 
 async function getAll() {
     return Furniture.find().lean();
+}
+
+async function getAuthorId(id) {
+    return Furniture.find({ author: id }).lean();
 }
 
 async function getById(id) {
@@ -10,7 +14,7 @@ async function getById(id) {
 
 async function create(data, authorId) {
     const record = new Furniture({
-        make: data.name,
+        make: data.make,
         model: data.model,
         year: data.year,
         description: data.description,
@@ -68,5 +72,6 @@ module.exports = {
     getById,
     create,
     update,
-    deleteById
+    deleteById,
+    getAuthorId
 };
