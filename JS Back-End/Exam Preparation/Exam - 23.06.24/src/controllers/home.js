@@ -7,7 +7,7 @@ const { createToken } = require('../services/jwt');
 const homeRouter = Router();
 
 homeRouter.get('/', async (req, res) => {
-    console.log(req.user);
+    //console.log(req.user);
 
     //This code creates a token and saves it in a cookie
     // const result = await login('krasen', '123');
