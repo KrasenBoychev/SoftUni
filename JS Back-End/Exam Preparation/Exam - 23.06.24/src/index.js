@@ -18,19 +18,14 @@ async function start() {
 
     app.listen(3000, () => {
         console.log('Server strated http://localhost:3000');
-        // test();
+        //test();
     });
 }
 
 async function test() {
     try {
-
-    //This code creates a token and saves it in a cookie
-    // const result = await login('krasen', '123');
-    // const token = createToken(result);
-    // res.cookie('token', token);
-    
-    // console.log(result); 
+        const result = await register('ivan@abv.bg', 'Bla Bla Bla Bla', '1234');
+        console.log(result); 
 
     } catch(err) {
         console.log('Caught error');
