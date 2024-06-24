@@ -4,7 +4,7 @@ async function getAll() {
     return Furniture.find().lean();
 }
 
-async function getAuthorId(id) {
+async function getByAuthorId(id) {
     return Furniture.find({ author: id }).lean();
 }
 
@@ -40,7 +40,7 @@ async function update(id, data, userId) {
         throw new Error('Access denied');
     }
 
-    record.make = data.name;
+    record.make = data.make;
     record.model = data.model;
     record.year = data.year;
     record.description = data.description;
@@ -73,5 +73,5 @@ module.exports = {
     create,
     update,
     deleteById,
-    getAuthorId
+    getByAuthorId
 };
