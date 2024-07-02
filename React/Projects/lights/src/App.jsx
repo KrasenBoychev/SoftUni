@@ -3,7 +3,7 @@ import Catalog from './components/Catalog';
 import Comments from './components/Comments';
 import Copyright from './components/Copyright';
 import CreateLight from './components/CreateLight';
-import Details from './components/Details';
+import Register from './components/Register';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Marketplace from './components/Marketplace';
@@ -16,9 +16,7 @@ function App() {
    
     <Header />
 
-    <CreateLight />
-
-    <Details />
+    <Register />
 
       {/* <Banner /> */}
 
