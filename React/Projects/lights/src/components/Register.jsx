@@ -1,26 +1,28 @@
+import { register } from '../../api/api';
 import './css/Login.css';
 import { useState } from 'react';
 
 export default function Register() {
 
-  const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
     const handleOnSubmit = async (e) => {
         e.preventDefault();
-        let result = await fetch(
-        'http://localhost:5000/', {
-            method: 'post',
-            body: JSON.stringify({ name, email }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        result = await result.json();
+        // let result = await fetch(
+        // 'http://localhost:5000', {
+        //     method: 'post',
+        //     body: JSON.stringify({ email, password }),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // });
+        // result = await result.json();
+        const result = await register(email, password);
         console.warn(result);
         if (result) {
             alert('Data saved succesfully');
             setEmail('');
-            setName('');
+            setPassword('');
         }
     };
 
@@ -29,10 +31,10 @@ export default function Register() {
     <>
             <h1>This is React WebApp </h1>
             <form action="">
-                <input type="text" placeholder="name"
-                value={name} onChange={(e) => setName(e.target.value)} />
                 <input type="email" placeholder="email"
                 value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="password" placeholder="password"
+                value={password} onChange={(e) => setPassword(e.target.value)} />
                 <button type="submit"
                 onClick={handleOnSubmit}>submit</button>
             </form>
