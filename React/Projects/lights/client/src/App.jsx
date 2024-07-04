@@ -11,12 +11,14 @@ import OurLights from './components/OurLights';
 import Services from './components/Services';
 
 function App() {
+  
+
   return (
     <>
    
     <Header />
 
-    <Register />
+    <Catalog />
 
       {/* <Banner /> */}
 

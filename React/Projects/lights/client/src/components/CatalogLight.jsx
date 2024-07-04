@@ -16,7 +16,7 @@ export default function CatalogLight() {
         <p className="item-price">100.00lv.</p>
       </div>
 
-      <div className="item-wrapper">
+      {/* <div className="item-wrapper">
         <div className="container_main">
           <img src="images/img-1.png" />
           <div className="overlay">
@@ -120,7 +120,7 @@ export default function CatalogLight() {
         </div>
         <p className="item-name">Varna Light</p>
         <p className="item-price">100.00lv.</p>
-      </div>
+      </div> */}
     </>
   );
 }

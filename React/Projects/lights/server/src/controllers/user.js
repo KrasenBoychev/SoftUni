@@ -3,11 +3,13 @@ const { createToken } = require('../services/jwt');
 const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 const { parseError } = require('../util');
+const { isUser, isGuest } = require('../middlewares/guards');
 
 const userRouter = Router();
 
 //test -> delete later
 userRouter.post('/', 
+    isGuest(),
     body('email').trim().isEmail().withMessage('Please enter valid email'),
     body('password').trim().isLength({ min: 3 }).withMessage('Password must be at least 3 characters'),
     async (req, res) => {

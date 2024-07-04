@@ -8,7 +8,7 @@ async function register(identity, password) {
   const existing = await User.findOne({ [identityName]: identity });
 
   if (existing) {
-    throw new Error(`This ${identityName} is alredy in use`);
+    throw new Error(`This ${identityName} is already in use`);
   }
 
   const user = new User({
