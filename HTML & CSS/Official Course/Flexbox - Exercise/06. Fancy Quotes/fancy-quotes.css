@@ -1,0 +1,98 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+body {
+    background-color: #EEE;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.container {
+    width: 80%;
+    margin: 40px auto;
+    display: flex;
+    gap: 20px;
+}
+
+.left-quotes {
+    display: flex;
+    flex-basis: 70%;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-quotes {
+    display: flex;
+    flex-basis: 30%;
+}
+
+.article-wrapper {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+i {
+    font-size: 40px;
+}
+
+.description {
+    padding-right: 20px;
+    font-size: small;
+    font-weight: 600;
+    color: rgba(128, 128, 128, 0.719);
+}
+
+.author {
+    padding-top: 15px;
+    font-weight: 900;
+}
+
+.circle {
+    width: 140px;
+    height: 140px;
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.circle>div {
+    width: 129px;
+    height: 129px;
+    border-radius: 50%;
+    background-color: green;
+}
+
+.right-quotes > .article-wrapper {
+    flex-direction: column;
+    gap: 20px;
+    flex-grow: 1;
+    align-items: start;
+}
+
+.right-quotes > .article-wrapper > .circle {
+    width: 100px;
+    height: 100px;
+}
+
+.right-quotes > .article-wrapper > .circle > div {
+    width: 89px;
+    height: 89px;
+}
