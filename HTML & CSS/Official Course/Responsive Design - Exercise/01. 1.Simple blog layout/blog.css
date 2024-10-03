@@ -1,0 +1,51 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #EEE;
+}
+
+.container {
+    width: 80%;
+    margin: 30px auto;
+    padding: 20px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    background-color: #FFF;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 3px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.container>* {
+    padding: 30px;
+    border: 1px solid grey;
+    border-radius: 3px;
+}
+
+header,
+footer {
+    flex: 0 0 100%;
+}
+
+main {
+    flex-grow: 7;
+}
+
+aside {
+    flex-grow: 3;
+}
+
+@media (max-width: 800px) {
+
+    main,
+    aside {
+        flex: 0 0 100%;
+    }
+}
