@@ -83,24 +83,24 @@ header ul {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex: 0 0 25%;
-    padding: 0 10px;
+    flex: 0 0 28%;
     height: 100%;
     background-color: #FFF;
     border-radius: 10px;
     border: 1px solid black;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    overflow: hidden;
 }
 
 .single-plan ul {
     flex: 0 0 50%;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 6px;
     align-items: flex-start;
     justify-content: end;
     font-size: 0.9rem;
-    padding-left: 25px;
+    padding-left: 35px;
     padding-right: 15px;
     text-align: left;
 }
@@ -118,6 +118,7 @@ header ul {
 
 .single-plan .prices {
     display: flex;
+    /* justify-content: space-between; */
 }
 
 .single-plan h2 {
@@ -126,9 +127,111 @@ header ul {
 
 .single-plan .try-for-month p{
     padding: 5px 30px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     background-color: #1DB954;
     color: #FFF;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
+.single-plan .prices {
+    background-color: black;
+    color: #FFF;
+}
+
+.single-plan .prices p {
+    margin: auto;
+    padding: 5px;
+    height: 80%;
+    align-content: center;
+}
+
+.border-white {
+    border-right: 1px solid #FFF;
+}
+
+.manage-plans {
+    display: flex;
+    margin-top: 250px;
+    padding: 0 60px;
+    height: 200px;
+}
+
+.manage-plans-advantages {
+    flex: 0 0 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.manage-plans-advantages h3 {
+    color: black;
+    font-size: 0.9rem;
+}
+
+.manage-plans-advantages p {
+    font-size: 0.9rem;
+    width: 90%;
+}
+
+.manage-plans-image {
+    flex: 0 0 40%;
+}
+
+.manage-plans-image img {
+    padding-left: 20px;
+    width: 80%;
+    height: 100%;
+}
+
+.premium-plan {
+    margin: 60px auto;
+    width: calc(56% + 150px);
+    text-align: center;
+}
+
+.premium-plan h2 {
+    margin-bottom: 20px;
+    color: black;
+}
+
+.premium-plan p {
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.premium-plan table {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.premium-plan table tr {
+    display: flex;
+    padding: 8px;
+    color: black;
+}
+
+.premium-plan table tr th {
+    flex: 0 0 70%;
+    text-align: left;
+}
+
+.premium-plan table tr td {
+    flex: 0 0 15%;
+}
+
+.premium-plan table tr:nth-child(odd) {
+    background-color: silver;
+}
+
+.premium-plan table tr:nth-child(even) {
+    background-color: #1db954b1;
+}
+
+footer {
+    padding: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+    background-color: black;
+    color: #FFF;
+}
