@@ -1,2 +1,327 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&family=Open+Sans:ital,wdth,wght@0,75..100,300..800;1,75..100,300..800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1.5;
+    box-sizing: inherit;
+    max-width: 100vw;
+    color: #3D3C3C;
+    ;
+    background-color: #C1BBBB;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+.container {
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+header {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.logo {
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    font-family: 'Oleo Script', serif;
+    color: #FFF;
+    font-size: 2rem;
+    font-weight: 100;
+    background-color: #57A390;
+    border-radius: 5px;
+    padding: 2px 8px;
+    margin-right: 10px;
+}
+
+nav ul {
+    color: #676868;
+    font-weight: 900;
+    display: flex;
+    gap: 30px;
+}
+
+nav ul li {
+    padding: 5px 8px;
+    border-radius: 5px;
+}
+
+nav ul li:first-child {
+    color: #FFF;
+    background-color: #000;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.welcome-msg {
+    width: 70%;
+    margin: auto;
+    padding: 40px;
+    background-color: #FFF;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    gap: 20px;
+}
+
+.welcome-text {
+    flex: 0 0 calc(60% - 20px);
+}
+
+.welcome-text h1 {
+    font-size: 2.3rem;
+    font-weight: 900;
+}
+
+.welcome-text p {
+    margin-top: 10px;
+    font-size: 1.8rem;
+    font-weight: 100;
+}
+
+.welcome-links {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.welcome-links button {
+    flex: 0 0 calc(50% - 5px);
+    padding: 10px 40px;
+    border-radius: 5px;
+    border: none;
+    font-weight: 900;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.link-lets-go {
+    color: #FFF;
+    background-color: #0090C5;
+}
+
+.link-lets-go span {
+    width: 35px;
+    color: #0090C5;
+    background-color: #FFF;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 900;
+}
+
+.link-more-info {
+    background-color: #F2F2F2;
+}
+
+.link-more-info span {
+    width: 35px;
+    color: #FFF;
+    background-color: #000;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 900;
+}
+
+.articles {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.articles article {
+    flex: 0 0 32%;
+    font-size: 0.7rem;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    line-height: 2;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.articles article img {
+    flex: 0 0 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-info {
+    flex: 0 0 50%;
+    background-color: #FFF;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.article-heading h2 {
+    font-weight: 900;
+}
+
+.website-more-info {
+    background-color: #FFF;
+}
+
+.website-more-info-wrapper {
+    width: 70%;
+    padding: 40px 0;
+    margin: auto;
+    display: flex;
+    gap: 30px;
+}
+
+.interesting-stuff {
+    flex: 0 0 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.interesting-stuff h3 {
+    font-size: 0.9rem;
+    font-weight: 900;
+}
+
+.img-colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.img-colors img {
+    width: calc(50% - 5px);
+    border-radius: 5px;
+}
+
+.interesting-stuff button, .all-about button {
+    width: 40%;
+    padding: 10px;
+    color: #FFF;
+    background-color: #0090C5;
+    border: none;
+    border-radius: 5px;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+}
+
+.all-about {
+    flex: 0 0 calc(70% - 30px);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.all-about h3 {
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.all-about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    font-size: 0.8rem;
+}
+
+.all-about button span {
+    width: 18px;
+    color: #0090C5;
+    background-color: #FFF;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+.bold-text {
+    font-weight: 600;
+}
+
+footer {
+    width: 70%;
+    margin: auto;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.footer-sections {
+    display: flex;
+    gap: 50px;
+}
+
+.footer-list li, .contact-us p, address, .copyrights {
+    font-size: 0.8rem;
+}
+
+.footer-list li {
+    text-decoration: underline;
+}
+
+.footer-sections section h4 {
+    margin-bottom: 20px;
+}
+
+.footer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.copyrights {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.icons-social-media {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.icons-social-media i {
+    font-size: large;
+}
+
+.contact-us {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
