@@ -1,1 +1,58 @@
+@media screen and (max-width: 600px) {
+    nav ul li {
+        display: none;
+    }
 
+    .menu-icon {
+        display: flex;
+        margin-right: 20px;
+    }
+
+    .menu-icon i {
+        font-size: xx-large;
+    }
+
+    .flex-center {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .site-header.flex-center>* {
+        flex: 0 0 50%;
+    }
+
+    .site-header>i {
+        left: 0;
+    }
+
+    .site-header>h1 {
+        bottom: 0;
+    }
+
+    .about {
+        display: flex;
+    }
+
+    .about>* {
+        flex: 0 0 50%;
+    }
+
+    .about-header {
+        bottom: 0;
+    }
+
+    .about-header.flex-center {
+        align-self: center;
+    }
+
+    .about-text {
+        margin-left: 15px;
+    }
+
+    .gallery {
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
