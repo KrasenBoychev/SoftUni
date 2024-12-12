@@ -3,13 +3,17 @@
         display: none;
     }
 
-    .menu-icon {
+    .checkbtn {
         display: flex;
-        margin-right: 20px;
+        margin-right: 15px;
     }
 
-    .menu-icon i {
-        font-size: xx-large;
+    nav {
+        flex-direction: row-reverse;
+    }
+
+    .logo {
+        order: 1;
     }
 
     .flex-center {
